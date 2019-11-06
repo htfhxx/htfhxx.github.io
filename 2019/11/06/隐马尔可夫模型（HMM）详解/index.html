@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。 欢迎纠错~ [TOC] 马尔可夫模型概念导入在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。 在某个星期天气的变化状态序列：晴朗 - 多云 - 雨天。 像交通信号灯一样，某一个状态只由前一个状态决定，这就是一个一阶马尔可夫模型。而像天气这样，天气状态间的转移仅依赖于前n天天气的状态，即状态间的转移仅依赖于前">
+<meta name="description" content="title: index.htmldate: 2018-07-05 12:01:30tags: mathjax: true 隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。 欢迎纠错~ [TOC] 马尔可夫模型概念导入在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。 在某个星期天气的变化状态序列：晴朗 - 多云 - 雨天。 像交通信号灯一样，某一个状态只">
 <meta property="og:type" content="article">
 <meta property="og:title" content="隐马尔可夫模型（HMM）详解">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;06&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。 欢迎纠错~ [TOC] 马尔可夫模型概念导入在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。 在某个星期天气的变化状态序列：晴朗 - 多云 - 雨天。 像交通信号灯一样，某一个状态只由前一个状态决定，这就是一个一阶马尔可夫模型。而像天气这样，天气状态间的转移仅依赖于前n天天气的状态，即状态间的转移仅依赖于前">
+<meta property="og:description" content="title: index.htmldate: 2018-07-05 12:01:30tags: mathjax: true 隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。 欢迎纠错~ [TOC] 马尔可夫模型概念导入在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。 在某个星期天气的变化状态序列：晴朗 - 多云 - 雨天。 像交通信号灯一样，某一个状态只">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;06&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets&#x2F;clip_image004.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;06&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets&#x2F;1.png">
@@ -97,7 +97,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;06&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets&#x2F;1571905516366.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;06&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets&#x2F;1571905527009.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;06&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets&#x2F;1571905543642.png">
-<meta property="og:updated_time" content="2019-11-06T15:59:54.825Z">
+<meta property="og:updated_time" content="2019-11-06T16:18:40.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;06&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets&#x2F;clip_image004.jpg">
 
@@ -309,7 +309,10 @@
       
 
       
-        <p>隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。</p>
+        <hr>
+<p>title: index.html<br>date: 2018-07-05 12:01:30<br>tags:</p>
+<p>mathjax: true</p>
+<p>隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。</p>
 <p>欢迎纠错~</p>
 <p>[TOC]</p>
 <h3 id="马尔可夫模型"><a href="#马尔可夫模型" class="headerlink" title="马尔可夫模型"></a>马尔可夫模型</h3><h4 id="概念导入"><a href="#概念导入" class="headerlink" title="概念导入"></a>概念导入</h4><p>在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。</p>

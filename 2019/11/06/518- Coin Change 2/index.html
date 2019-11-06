@@ -298,14 +298,7 @@
 
       
         <h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><p>You are given coins of different denominations and a total amount of money. Write a function to compute the number of combinations that make up that amount. You may assume that you have infinite number of each kind of coin.</p>
-<p>Example 1:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 5, coins = [1, 2, 5]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: there are four ways to make up the amount:</span><br><span class="line">5=5</span><br><span class="line">5=2+2+1</span><br><span class="line">5=2+1+1+1</span><br><span class="line">5=1+1+1+1+1</span><br></pre></td></tr></table></figure>
-<p>Example 2:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 3, coins = [2]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: the amount of 3 cannot be made up just with coins of 2.</span><br></pre></td></tr></table></figure>
-<p>Example 3:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 10, coins = [10] </span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
-<p>Note:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">You can assume that</span><br><span class="line"></span><br><span class="line">0 &lt;= amount &lt;= 5000</span><br><span class="line">1 &lt;= coin &lt;= 5000</span><br><span class="line">the number of coins is less than 500</span><br><span class="line">the answer is guaranteed to fit into signed 32-bit integer</span><br></pre></td></tr></table></figure>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 5, coins = [1, 2, 5]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: there are four ways to make up the amount:</span><br><span class="line">5=5</span><br><span class="line">5=2+2+1</span><br><span class="line">5=2+1+1+1</span><br><span class="line">5=1+1+1+1+1</span><br></pre></td></tr></table></figure><br>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 3, coins = [2]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: the amount of 3 cannot be made up just with coins of 2.</span><br></pre></td></tr></table></figure><br>Example 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 10, coins = [10] </span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure><br>Note:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">You can assume that</span><br><span class="line"></span><br><span class="line">0 &lt;= amount &lt;= 5000</span><br><span class="line">1 &lt;= coin &lt;= 5000</span><br><span class="line">the number of coins is less than 500</span><br><span class="line">the answer is guaranteed to fit into signed 32-bit integer</span><br></pre></td></tr></table></figure></p>
 <h5 id="提交链接"><a href="#提交链接" class="headerlink" title="提交链接"></a>提交链接</h5><p><a href="https://leetcode.com/problems/coin-change-2/" target="_blank" rel="noopener">https://leetcode.com/problems/coin-change-2/</a></p>
 <h5 id="代码思路"><a href="#代码思路" class="headerlink" title="代码思路"></a>代码思路</h5><p>coins=[1, 2, 5]   amount=5 dp[0]=1</p>
 <p>dp[1]-dp[5]:<br>0 0 0 0 0<br>1 1 1 1 1<br>1 2 2 3 3<br>1 2 2 3 4 </p>
@@ -670,6 +663,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 

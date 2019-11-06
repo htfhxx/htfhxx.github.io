@@ -317,13 +317,14 @@
 <p>像交通信号灯一样，某一个状态只由前一个状态决定，这就是一个一阶马尔可夫模型。而像天气这样，天气状态间的转移仅依赖于前n天天气的状态，即状态间的转移仅依赖于前n个状态的过程。这个过程就称为<strong>n阶马尔科夫模型</strong>。</p>
 <p>不通俗的讲，马尔可夫模型（Markovmodel）描述了一类重要的随机过程，随机过程又称随机函数，是随时间而随机变化的过程。</p>
 <h4 id="马尔可夫模型定义"><a href="#马尔可夫模型定义" class="headerlink" title="马尔可夫模型定义"></a><strong>马尔可夫模型定义</strong></h4><p>存在一类重要的随机过程：如果一个系统有N个状态$S_1$,$S_2$,$S_3$..$S_N$ 随着时间的推移，该系统从某一状态转移到另一状态。如果用$q_t$ 表示系统在时间t的状态变量，那么 t 时刻的状态取值为$S_j$(1&lt;=j&lt;=N)的概率取决于前t-1 个时刻(1, 2, …, t-1)的状态，该概率为：</p>
-<p>$$<br>p\left(q_{t}=S_{j} | q_{t-1}=S_{i}, q_{t-2}=S_{k}, \cdots\right)<br>$$</p>
-<ol>
+<script type="math/tex; mode=display">
+p\left(q_{t}=S_{j} | q_{t-1}=S_{i}, q_{t-2}=S_{k}, \cdots\right)</script><ol>
 <li><strong>假设一：</strong>如果在特定情况下，系统在时间t 的状态只与其在时间t-1 的状态相关，则该系统构成一个<strong>离散的一阶马尔可夫链</strong>：</li>
 </ol>
-<p>$$<br>p\left(q_{t}=S_{j} | q_{t-1}=S_{i}, q_{t-2}=S_{k}, \cdots\right)=p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)<br>$$</p>
-<ol>
-<li><strong>假设二：</strong>如果只考虑独立于时间t的随机过程，状态与时间无关，那么<br>$$<br>p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)=a_{i j}, \quad 1 \leq i, j \leq N<br>$$</li>
+<script type="math/tex; mode=display">
+p\left(q_{t}=S_{j} | q_{t-1}=S_{i}, q_{t-2}=S_{k}, \cdots\right)=p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)</script><ol>
+<li><strong>假设二：</strong>如果只考虑独立于时间t的随机过程，状态与时间无关，那么<script type="math/tex; mode=display">
+p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)=a_{i j}, \quad 1 \leq i, j \leq N</script></li>
 </ol>
 <p>   即：t时刻状态的概率取决于前t-1 个时刻(1, 2, …, t-1)的状态,且状态的转换与时间无关，则<strong>该随机过程</strong>就是<strong>马尔可夫模型</strong>。</p>
 <h3 id="隐马尔可夫模型"><a href="#隐马尔可夫模型" class="headerlink" title="隐马尔可夫模型"></a>隐马尔可夫模型</h3><h4 id="概念导入-1"><a href="#概念导入-1" class="headerlink" title="概念导入"></a>概念导入</h4><p>在马尔可夫模型中，每个状态代表了一个可观察的事件，所以，马尔可夫模型有时又称作可视马尔可夫模型（visibleMarkovmodel，VMM），这在某种程度上限制了模型的适应性。</p>
@@ -335,12 +336,9 @@
 <p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1.png" alt="1"></p>
 <h4 id="HMM的组成"><a href="#HMM的组成" class="headerlink" title="HMM的组成"></a>HMM的组成</h4><p>例如，N个袋子，每个袋子中有M种不同颜色的球。选择一个袋子，取出一个球，得到球的颜色。</p>
 <ol>
-<li><p>状态数为N(袋子的数量)</p>
-</li>
-<li><p>每个状态可能的符号数M(不同颜色球的数目)</p>
-</li>
-<li><p>状态转移概率矩阵A＝$a_{ij}$(从一只袋子(状态Si) 转向另一只袋子(状态Sj ) 取球的概率)</p>
-</li>
+<li>状态数为N(袋子的数量)</li>
+<li>每个状态可能的符号数M(不同颜色球的数目)</li>
+<li>状态转移概率矩阵A＝$a_{ij}$(从一只袋子(状态Si) 转向另一只袋子(状态Sj ) 取球的概率)</li>
 <li><p>从状态Sj 观察到某一特定符号vk 的概率分布矩阵为：$B=b_j(k)$  (从第j个袋子中取出第k种颜色的球的概率)</p>
 </li>
 <li><p>初始状态的概率分布为：$\pi=\pi_{i}$</p>
@@ -378,7 +376,9 @@
 <p>对于上面那个（天气）例子，将有3^3 = 27种不同的天气序列可能性，因此，观察序列的概率是：Pr(dry,damp,soggy | HMM) = Pr(dry,damp,soggy | sunny,sunny,sunny) + Pr(dry,damp,soggy | sunny,sunny ,cloudy) + Pr(dry,damp,soggy | sunny,sunny ,rainy) + . . . . Pr(dry,damp,soggy | rainy,rainy ,rainy)</p>
 <p>用这种方式计算观察序列概率极为昂贵，特别对于大的模型或较长的序列，因此我们可以利用这些概率的时间不变性来减少问题的复杂度。</p>
 <p><strong>思路二：采用动态规划——前向算法</strong></p>
-<p> 基本思想：定义前向变量$α<em>t(i)$  ：t时刻状态为$S_i$且观察状态为$O_t$ 的概率<br>$$<br>\alpha</em>{t}(i)=p\left(O_{1} O_{2} \cdots \underline{O_{t}}, q_{t}=S_{i} | \mu\right)<br>$$<br> 如果可以高效地计算$α_t(i)$，就可以高效地求得$p(O|\mu)$。</p>
+<p> 基本思想：定义前向变量$α_t(i)$  ：t时刻状态为$S_i$且观察状态为$O_t$ 的概率</p>
+<script type="math/tex; mode=display">
+\alpha_{t}(i)=p\left(O_{1} O_{2} \cdots \underline{O_{t}}, q_{t}=S_{i} | \mu\right)</script><p> 如果可以高效地计算$α_t(i)$，就可以高效地求得$p(O|\mu)$。</p>
 <p> <img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571903774343.png" alt="1571903774343"></p>
 <p>蓝色部分是：从t时刻的各个状态$S_i$得到t时刻的观察状态$O_t$的概率</p>
 <p>黑色部分是：从t时刻的各个状态$S_i$得到t+1时刻的各个状态</p>
@@ -407,9 +407,10 @@
 <p>状态序列中的每个状态都单独地具有概率，对于每个时刻$t(1 \leq t \leq T)$, 寻找$q_t$ 使得$\gamma_{t}(i)=p\left(q_{t}=S_{i} | O, \mu\right)$最大。——<strong>近似算法</strong></p>
 <p>问题：每一个状态单独最优不一定使整体的状态序列最优，两个最优的状态之间的转移概率可能为0</p>
 <p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905343398.png" alt="1571905343398"></p>
-<p>解释(2)：在给定模型$\mu$和观察序列O的条件下求概率最大的状态序列<strong>——Viterbi 算法: 动态搜索最优状态序</strong><br>$$<br>\widehat{Q}=\underset{Q}{\arg \max } p(Q | O, \mu)<br>$$</p>
-<h4 id="Viterbi-搜索算法-1"><a href="#Viterbi-搜索算法-1" class="headerlink" title="Viterbi 搜索算法"></a><strong>Viterbi 搜索算法</strong></h4><p>搜索过程大概如下：</p>
-<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905575248.png" alt="1571905575248">)<img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905516366.png" alt="1571905516366"></p>
+<p>解释(2)：在给定模型$\mu$和观察序列O的条件下求概率最大的状态序列<strong>——Viterbi 算法: 动态搜索最优状态序</strong></p>
+<script type="math/tex; mode=display">
+\widehat{Q}=\underset{Q}{\arg \max } p(Q | O, \mu)</script><h4 id="Viterbi-搜索算法-1"><a href="#Viterbi-搜索算法-1" class="headerlink" title="Viterbi 搜索算法"></a><strong>Viterbi 搜索算法</strong></h4><p>搜索过程大概如下：</p>
+<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905575248.png" alt="1571905575248"><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905516366.png" alt="1571905516366"></p>
 <p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905527009.png" alt="1571905527009"></p>
 <p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905543642.png" alt="1571905543642"></p>
 <p>每个时刻都求得每个状态的概率，并求得最大概率对应的上一时刻的状态。</p>
@@ -419,14 +420,14 @@
 <p>概率最大的路径变量：$\psi_{1}(i)=0$</p>
 </li>
 <li><p>递推计算：</p>
-<p>$\delta_{t}(j)=\max <em>{1 \leq i \leq N}\left[\delta</em>{t-1}(i) \cdot a_{i j}\right] \cdot b_{j}\left(O_{t}\right), \quad 2 \leq t \leq T, \quad 1 \leq j \leq N$</p>
+<p>$\delta_{t}(j)=\max _{1 \leq i \leq N}\left[\delta_{t-1}(i) \cdot a_{i j}\right] \cdot b_{j}\left(O_{t}\right), \quad 2 \leq t \leq T, \quad 1 \leq j \leq N$</p>
 <p>$\psi_{t}(j)=\underset{1 \leq i \leq N}{\arg \max }\left[\delta_{t-1}(i) \cdot a_{i j}\right] \cdot b_{j}\left(O_{t}\right), 2 \leq t \leq T, 1 \leq i \leq N$</p>
 </li>
 <li><p>结束：</p>
-<p>$\widehat{Q}<em>{T}=\underset{1 \leq i \leq N}{\operatorname{argmax}}\left[\delta</em>{T}(i)\right], \quad \widehat{p}\left(\widehat{Q}<em>{T}\right)=\max _{1 \leq i \leq N} \delta</em>{T}(i)$</p>
+<p>$\widehat{Q}_{T}=\underset{1 \leq i \leq N}{\operatorname{argmax}}\left[\delta_{T}(i)\right], \quad \widehat{p}\left(\widehat{Q}_{T}\right)=\max _{1 \leq i \leq N} \delta_{T}(i)$</p>
 </li>
 <li><p>通过回溯得到路径（状态序列）：</p>
-<p>$\widehat{q}<em>{t}=\psi</em>{t+1}\left(\widehat{q}_{t+1}\right), \quad t=T-1, T-2, \cdots, 1$</p>
+<p>$\widehat{q}_{t}=\psi_{t+1}\left(\widehat{q}_{t+1}\right), \quad t=T-1, T-2, \cdots, 1$</p>
 </li>
 </ol>
 <h4 id="参数学习"><a href="#参数学习" class="headerlink" title="参数学习"></a>参数学习</h4><p><strong>对于学习问题（Learning）</strong></p>
@@ -804,6 +805,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 

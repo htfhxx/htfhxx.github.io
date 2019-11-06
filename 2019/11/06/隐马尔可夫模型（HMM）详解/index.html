@@ -79,12 +79,27 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;index.html">
+<meta name="description" content="隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。 欢迎纠错~ [TOC] 马尔可夫模型概念导入在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。 在某个星期天气的变化状态序列：晴朗 - 多云 - 雨天。 像交通信号灯一样，某一个状态只由前一个状态决定，这就是一个一阶马尔可夫模型。而像天气这样，天气状态间的转移仅依赖于前n天天气的状态，即状态间的转移仅依赖于前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="隐马尔可夫模型（HMM）详解">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;06&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。 欢迎纠错~ [TOC] 马尔可夫模型概念导入在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。 在某个星期天气的变化状态序列：晴朗 - 多云 - 雨天。 像交通信号灯一样，某一个状态只由前一个状态决定，这就是一个一阶马尔可夫模型。而像天气这样，天气状态间的转移仅依赖于前n天天气的状态，即状态间的转移仅依赖于前">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cclip_image004.jpg">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1.png">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cclip_image006.png">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571903774343.png">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571904662026.png">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571904725005.png">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905343398.png">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905575248.png">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905516366.png">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905527009.png">
+<meta property="og:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905543642.png">
+<meta property="og:updated_time" content="2019-10-24T13:40:38.699Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cclip_image004.jpg">
 
 
 
@@ -114,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/11/06/隐马尔可夫模型（HMM）详解/"/>
 
 
 
 
 
-  <title>Hexo</title>
+  <title>隐马尔可夫模型（HMM）详解 | Hexo</title>
   
 
 
@@ -139,8 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -213,9 +227,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -245,9 +259,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/06/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3/" itemprop="url">隐马尔可夫模型（HMM）详解</a></h1>
+          <h1 class="post-title" itemprop="name headline">隐马尔可夫模型（HMM）详解</h1>
         
 
         <div class="post-meta">
@@ -297,9 +309,7 @@
       
 
       
-        
-          
-            <p>隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。</p>
+        <p>隐马尔可夫模型的详细版本，添加了实例与具体的公式，便于理解。</p>
 <p>欢迎纠错~</p>
 <p>[TOC]</p>
 <h3 id="马尔可夫模型"><a href="#马尔可夫模型" class="headerlink" title="马尔可夫模型"></a>马尔可夫模型</h3><h4 id="概念导入"><a href="#概念导入" class="headerlink" title="概念导入"></a>概念导入</h4><p>在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。</p>
@@ -442,8 +452,6 @@
 <p>《统计学习方法》</p>
 <p>其他网络资料（侵删）</p>
 
-          
-        
       
     </div>
     
@@ -460,147 +468,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/06/518-%20Coin%20Change%202/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/06/518-%20Coin%20Change%202/" itemprop="url">518- Coin Change 2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-06T22:43:17+08:00">
-                2019-11-06
-              </time>
+              <a href="/2019/11/06/518-%20Coin%20Change%202/" rel="next" title="518- Coin Change 2">
+                <i class="fa fa-chevron-left"></i> 518- Coin Change 2
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><p>You are given coins of different denominations and a total amount of money. Write a function to compute the number of combinations that make up that amount. You may assume that you have infinite number of each kind of coin.</p>
-<p>Example 1:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 5, coins = [1, 2, 5]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: there are four ways to make up the amount:</span><br><span class="line">5=5</span><br><span class="line">5=2+2+1</span><br><span class="line">5=2+1+1+1</span><br><span class="line">5=1+1+1+1+1</span><br></pre></td></tr></table></figure>
-<p>Example 2:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 3, coins = [2]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: the amount of 3 cannot be made up just with coins of 2.</span><br></pre></td></tr></table></figure>
-<p>Example 3:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 10, coins = [10] </span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
-<p>Note:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">You can assume that</span><br><span class="line"></span><br><span class="line">0 &lt;= amount &lt;= 5000</span><br><span class="line">1 &lt;= coin &lt;= 5000</span><br><span class="line">the number of coins is less than 500</span><br><span class="line">the answer is guaranteed to fit into signed 32-bit integer</span><br></pre></td></tr></table></figure>
-<h5 id="提交链接"><a href="#提交链接" class="headerlink" title="提交链接"></a>提交链接</h5><p><a href="https://leetcode.com/problems/coin-change-2/" target="_blank" rel="noopener">https://leetcode.com/problems/coin-change-2/</a></p>
-<h5 id="代码思路"><a href="#代码思路" class="headerlink" title="代码思路"></a>代码思路</h5><p>coins=[1, 2, 5]   amount=5 dp[0]=1</p>
-<p>dp[1]-dp[5]:<br>0 0 0 0 0<br>1 1 1 1 1<br>1 2 2 3 3<br>1 2 2 3 4 </p>
-<p>dp[amount]可以定义为累积值为amount的方法数</p>
-<p>整个过程可以看做是：<br>每次对coins的迭代相当于加入了一种新硬币<br>每次对amount的迭代就是加入新硬币之后对累积值为amount的方法数的更新</p>
-<p>更新过程为：<br>目前累积值dp[amount]，只使用了前i-1种硬币<br>累积值amount-coins[i]向累积值amount变化的过程中加入了新硬币，添加了一种新方法<br>amount-coins[i]  -&gt; amount    方法数： 1<br>0  -&gt;      amount-coins[i]    方法数：dp[amount-coins[i]]<br>因此：dp[j]=dp[j]+dp[j-coins[i]]</p>
-<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int change(int amount, vector&lt;int&gt;&amp; coins) &#123;</span><br><span class="line">        if(amount==0)</span><br><span class="line">            return 1;</span><br><span class="line">        if(coins.empty()==true || amount&lt;0)  </span><br><span class="line">            return 0;</span><br><span class="line">        vector&lt;int&gt; dp(amount+1,0);</span><br><span class="line">        dp[0]=1;  //重要</span><br><span class="line">        for(int i=0;i&lt;coins.size();i++)&#123;</span><br><span class="line">            for(int j=coins[i];j&lt;=amount;j++)&#123;</span><br><span class="line">                dp[j]=dp[j]+dp[j-coins[i]];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[amount];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -610,261 +499,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/06/test-my-site/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/06/test-my-site/" itemprop="url">test_my_site</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-06T21:27:05+08:00">
-                2019-11-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/06/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/06/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-06T21:24:23+08:00">
-                2019-11-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -872,6 +511,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -892,8 +535,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -935,6 +587,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#马尔可夫模型"><span class="nav-number">1.</span> <span class="nav-text">马尔可夫模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念导入"><span class="nav-number">1.1.</span> <span class="nav-text">概念导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#马尔可夫模型定义"><span class="nav-number">1.2.</span> <span class="nav-text">马尔可夫模型定义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐马尔可夫模型"><span class="nav-number">2.</span> <span class="nav-text">隐马尔可夫模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念导入-1"><span class="nav-number">2.1.</span> <span class="nav-text">概念导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HMM的组成"><span class="nav-number">2.2.</span> <span class="nav-text">HMM的组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三个问题"><span class="nav-number">2.3.</span> <span class="nav-text">三个问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前向算法"><span class="nav-number">2.4.</span> <span class="nav-text">前向算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后向算法"><span class="nav-number">2.5.</span> <span class="nav-text">后向算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Viterbi-搜索算法"><span class="nav-number">2.6.</span> <span class="nav-text">Viterbi 搜索算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解“最优”的状态序列？"><span class="nav-number">2.7.</span> <span class="nav-text">如何理解“最优”的状态序列？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Viterbi-搜索算法-1"><span class="nav-number">2.8.</span> <span class="nav-text">Viterbi 搜索算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数学习"><span class="nav-number">2.9.</span> <span class="nav-text">参数学习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HMM应用"><span class="nav-number">3.</span> <span class="nav-text">HMM应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#中文分词问题"><span class="nav-number">3.1.</span> <span class="nav-text">中文分词问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1075,6 +743,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

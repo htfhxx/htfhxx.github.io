@@ -319,10 +319,10 @@
 <h3 id="隐马尔可夫模型"><a href="#隐马尔可夫模型" class="headerlink" title="隐马尔可夫模型"></a>隐马尔可夫模型</h3><h4 id="概念导入-1"><a href="#概念导入-1" class="headerlink" title="概念导入"></a>概念导入</h4><p>在马尔可夫模型中，每个状态代表了一个可观察的事件，所以，马尔可夫模型有时又称作可视马尔可夫模型（visibleMarkovmodel，VMM），这在某种程度上限制了模型的适应性。</p>
 <p>对于盲人来说也许不能够直接获取到天气的观察情况，但是他可以通过触摸树叶通过树叶的干燥程度判断天气的状态。于是天气就是一个隐藏的状态，树叶的干燥程度是一个可观察的状态，于是我们就有了两组状态，一个是不可观察、隐藏的状态（天气），一个是可观察的状态（树叶），我们希望设计一种算法，在不能够直接观察天气的情况下，通过树叶和马尔可夫假设来预测天气。</p>
 <p>以此为例，一个一阶的马尔可夫过程描述：</p>
-<p> <img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cclip_image004.jpg" alt="clip_image004"></p>
+<p> <img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/clip_image004.jpg" alt="clip_image004"></p>
 <p>在隐马尔可夫模型（HMM）中，我们<strong>不知道模型具体的状态序列</strong>，<strong>只知道状态转移的概率</strong>，即模型的状态转换过程是不可观察的。</p>
 <p>因此，该模型是一个<strong>双重随机过程</strong>，包括<strong>模型的状态转换</strong>和<strong>特定状态下可观察事件的随机</strong>。</p>
-<p><img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1.png" alt="1"></p>
+<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1.png" alt="1"></p>
 <h4 id="HMM的组成"><a href="#HMM的组成" class="headerlink" title="HMM的组成"></a>HMM的组成</h4><p>例如，N个袋子，每个袋子中有M种不同颜色的球。选择一个袋子，取出一个球，得到球的颜色。</p>
 <ol>
 <li><p>状态数为N(袋子的数量)</p>
@@ -363,13 +363,13 @@
 <p>给定HMM，即$\mu=[π, A,B]$，求某个观察序列的概率。</p>
 <p>例如：给定一个天气的隐马尔可夫模型，包括第一天的天气概率分布，天气转移概率矩阵，特定天气下树叶的湿度概率分布。<strong>求第一天湿度为1，第二天湿度为2，第三天湿度为3的概率。</strong></p>
 <p><strong>思路一：找到所有状态序列，得到各状态概率，得到每种状态概率对应的观察概率，求和。</strong> </p>
-<p><img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cclip_image006.png" alt="clip_image006"></p>
+<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/clip_image006.png" alt="clip_image006"></p>
 <p>即：找到每一个可能的隐藏状态，并且将这些隐藏状态下的观察序列概率相加。</p>
 <p>对于上面那个（天气）例子，将有3^3 = 27种不同的天气序列可能性，因此，观察序列的概率是：Pr(dry,damp,soggy | HMM) = Pr(dry,damp,soggy | sunny,sunny,sunny) + Pr(dry,damp,soggy | sunny,sunny ,cloudy) + Pr(dry,damp,soggy | sunny,sunny ,rainy) + . . . . Pr(dry,damp,soggy | rainy,rainy ,rainy)</p>
 <p>用这种方式计算观察序列概率极为昂贵，特别对于大的模型或较长的序列，因此我们可以利用这些概率的时间不变性来减少问题的复杂度。</p>
 <p><strong>思路二：采用动态规划——前向算法</strong></p>
 <p> 基本思想：定义前向变量$α<em>t(i)$  ：t时刻状态为$S_i$且观察状态为$O_t$ 的概率<br>$$<br>\alpha</em>{t}(i)=p\left(O_{1} O_{2} \cdots \underline{O_{t}}, q_{t}=S_{i} | \mu\right)<br>$$<br> 如果可以高效地计算$α_t(i)$，就可以高效地求得$p(O|\mu)$。</p>
-<p> <img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571903774343.png" alt="1571903774343"></p>
+<p> <img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571903774343.png" alt="1571903774343"></p>
 <p>蓝色部分是：从t时刻的各个状态$S_i$得到t时刻的观察状态$O_t$的概率</p>
 <p>黑色部分是：从t时刻的各个状态$S_i$得到t+1时刻的各个状态</p>
 <p> 即：</p>
@@ -379,8 +379,8 @@
 <li>结束，输出：$p(O | \mu)=\sum_{i=1}^{N} \alpha_{T}(i)$</li>
 </ol>
 <h4 id="后向算法"><a href="#后向算法" class="headerlink" title="后向算法"></a>后向算法</h4><p>定义后向变量$\beta_t(i)$是在给定了模型 $\mu=[π, A,B]$和假定在时间t 状态为$S_i$的条件下，模型输出<br>观察序列$O_{t+1} O_{t+2} \cdots {O_{T}}$ 的概率：</p>
-<p><img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571904662026.png" alt="1571904662026"></p>
-<p><img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571904725005.png" alt="1571904725005"></p>
+<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571904662026.png" alt="1571904662026"></p>
+<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571904725005.png" alt="1571904725005"></p>
 <p>蓝色部分是：从t+1时刻的各个状态$S_i$得到t+1时刻的观察状态$O_t$的概率</p>
 <p>黑色部分是：从t+1时刻的各个状态$S_i$得到t时刻的各个状态</p>
 <p> 即：</p>
@@ -396,12 +396,12 @@
 <h4 id="如何理解“最优”的状态序列？"><a href="#如何理解“最优”的状态序列？" class="headerlink" title="如何理解“最优”的状态序列？"></a>如何理解“最优”的状态序列？</h4><p>解释(1)：</p>
 <p>状态序列中的每个状态都单独地具有概率，对于每个时刻$t(1 \leq t \leq T)$, 寻找$q_t$ 使得$\gamma_{t}(i)=p\left(q_{t}=S_{i} | O, \mu\right)$最大。——<strong>近似算法</strong></p>
 <p>问题：每一个状态单独最优不一定使整体的状态序列最优，两个最优的状态之间的转移概率可能为0</p>
-<p><img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905343398.png" alt="1571905343398"></p>
+<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905343398.png" alt="1571905343398"></p>
 <p>解释(2)：在给定模型$\mu$和观察序列O的条件下求概率最大的状态序列<strong>——Viterbi 算法: 动态搜索最优状态序</strong><br>$$<br>\widehat{Q}=\underset{Q}{\arg \max } p(Q | O, \mu)<br>$$</p>
 <h4 id="Viterbi-搜索算法-1"><a href="#Viterbi-搜索算法-1" class="headerlink" title="Viterbi 搜索算法"></a><strong>Viterbi 搜索算法</strong></h4><p>搜索过程大概如下：</p>
-<p><img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905575248.png" alt="1571905575248">)<img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905516366.png" alt="1571905516366"></p>
-<p><img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905527009.png" alt="1571905527009"></p>
-<p><img src="C:%5CUsers%5Chtfhxx%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571905543642.png" alt="1571905543642"></p>
+<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905575248.png" alt="1571905575248">)<img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905516366.png" alt="1571905516366"></p>
+<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905527009.png" alt="1571905527009"></p>
+<p><img src="%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%88HMM%EF%BC%89%E8%AF%A6%E8%A7%A3.assets/1571905543642.png" alt="1571905543642"></p>
 <p>每个时刻都求得每个状态的概率，并求得最大概率对应的上一时刻的状态。</p>
 <p><strong>算法描述</strong></p>
 <ol>

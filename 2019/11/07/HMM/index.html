@@ -368,7 +368,7 @@ p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)=a_{i j}, \quad 1 \leq i, j \leq N</scr
 <p>给定HMM，即$\mu=[π, A,B]$，求某个观察序列的概率。</p>
 <p>例如：给定一个天气的隐马尔可夫模型，包括第一天的天气概率分布，天气转移概率矩阵，特定天气下树叶的湿度概率分布。<strong>求第一天湿度为1，第二天湿度为2，第三天湿度为3的概率。</strong></p>
 <p><strong>思路一：找到所有状态序列，得到各状态概率，得到每种状态概率对应的观察概率，求和。</strong> </p>
-<p><img src="/.com//clip_image006.png" alt="clip_image006"></p>
+<p><img src="/clip_image006.png" alt="clip_image006"></p>
 <p>即：找到每一个可能的隐藏状态，并且将这些隐藏状态下的观察序列概率相加。</p>
 <p>对于上面那个（天气）例子，将有3^3 = 27种不同的天气序列可能性，因此，观察序列的概率是：Pr(dry,damp,soggy | HMM) = Pr(dry,damp,soggy | sunny,sunny,sunny) + Pr(dry,damp,soggy | sunny,sunny ,cloudy) + Pr(dry,damp,soggy | sunny,sunny ,rainy) + . . . . Pr(dry,damp,soggy | rainy,rainy ,rainy)</p>
 <p>用这种方式计算观察序列概率极为昂贵，特别对于大的模型或较长的序列，因此我们可以利用这些概率的时间不变性来减少问题的复杂度。</p>

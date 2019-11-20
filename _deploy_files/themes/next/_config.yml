@@ -92,10 +92,10 @@ index_with_subtitle: false
 # Value before `||` delimeter is the target link.
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, question icon will be loaded.
 menu:
-  首页: /
-  文章分类: /文章分类
-  个人介绍: /个人介绍
-  站内搜索: /站内搜索
+  首页: home
+  文章分类: books.png
+  个人介绍: address-card
+  站内搜索: search-dollar
   #about: /about/ || user
   #tags: /tags/ || tags
   #categories: /categories/ || th
@@ -170,7 +170,7 @@ links_layout: block
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
-#avatar: /images/avatar.gif
+avatar: /images/avatar.jpg
 
 # Table Of Contents in the Sidebar
 toc:
@@ -232,7 +232,7 @@ excerpt_description: true
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
-  enable: false
+  enable: true
   length: 150
 
 # Post meta display settings

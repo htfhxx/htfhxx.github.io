@@ -1,8 +1,13 @@
 ---
 title: 隐马尔可夫(HMM)详解
 date: 2019-11-07 23:48:53
-tags:
+author: 长腿咚咚咚
 mathjax: true
+categories: 概率图模型
+tags:
+  - HMM
+  - 隐马尔可夫
+  - 概率图模型
 ---
 
 

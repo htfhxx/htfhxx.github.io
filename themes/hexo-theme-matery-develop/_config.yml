@@ -2,26 +2,26 @@
 # 配置菜单导航的名称、路径和图标icon.
 menu:
   Index:
-    url: /
+    url: /首页
     icon: fas fa-home
-  Tags:
-    url: /tags
-    icon: fas fa-tags
   Categories:
-    url: /categories
+    url: /文章分类
     icon: fas fa-bookmark
+  Tags:
+    url: /标签
+    icon: fas fa-tags
   Archives:
-    url: /archives
+    url: /时间线
     icon: fas fa-archive
   About:
-    url: /about
+    url: /关于
     icon: fas fa-user-circle
-  Contact:
-    url: /contact
-    icon: fas fa-comments
-  Friends:
-    url: /friends
-    icon: fas fa-address-book
+  # Contact:
+  #   url: /contact
+  #   icon: fas fa-comments
+  # Friends:
+  #   url: /friends
+  #   icon: fas fa-address-book
   # 二级菜单写法如下
   #Medias:
   #  icon: fas fa-list
@@ -127,14 +127,14 @@ indexbtn:
 # icon/button will not show up if you leave the corresponding socialLink empty
 # 首页 banner 中的第二行个人信息配置，留空即不启用
 socialLink:
-  github:  # https://github.com/xxx
-  email: # xxx@xxx.com
+  github:   https://github.com/htfhxx
+  email:  htfhxx@outlook.com
   facebook: # https://www.facebook.com/xxx
   twitter: # https://twitter.com/xxx
   qq: # 123456789
   weibo: # https://weibo.com/xxx
-  zhihu: # https://www.zhihu.com/xxx
-  rss: true # true、false
+  zhihu: https://www.zhihu.com/people/bei-sheng-82-78/activities
+  rss: false # true、false
 
 # Whether to activate the Post TOC, and Configure which title types are supported by TOC support.
 # You can add `toc: false` to the Front-matter of a post to turn off the TOC.
@@ -186,7 +186,7 @@ wordCount:
   postWordCount: true
   min2read: true
   totalCount: true
-  
+
 
 
 # 文章信息--需要 hexo-wordcount 插件

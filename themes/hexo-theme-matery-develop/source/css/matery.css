@@ -172,7 +172,7 @@ code {
     z-index: 1;
     filter: invert(50%);
     cursor: pointer;
-} 
+}
 
 .code-expand {
     position: absolute;
@@ -1443,7 +1443,7 @@ thead {
     left: 0;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 30%;
     box-shadow: 0 0 0 4px #ffffff, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -1618,7 +1618,7 @@ thead {
     border: 1px solid #0f9d58;
     background: radial-gradient(#4cbf30, #0f9d58);
     font-size: 0.9rem;
-    border-radius: 50%;
+    border-radius: 10%;
     box-shadow: 0 4px 6px rgba(50, 50, 93, .21), 0 2px 3px rgba(0, 0, 0, .1);
 }
 

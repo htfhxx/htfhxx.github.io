@@ -44,8 +44,8 @@ menu:
 time:
   enable: true
   year: 2019 # 年份
-  month: 06 # 月份
-  date: 28 # 日期
+  month: 11 # 月份
+  date: 07 # 日期
   hour: 00 # 小时
   minute: 00 # 分钟
   second: 00 # 秒
@@ -67,7 +67,7 @@ dream:
   enable: true
   showTitle: true
   title: 念念不忘，必有回响
-  text: 在从市中心通往郊区的地铁上，有略显劳累靠在窗边假寐的年轻人，有黑黝黝的民工漏着洁白的牙，有貌不惊人的中年人捧着看不懂名字的英文读物，还有倚着立柱望着他们一言不发的我自己。   &nbsp  &nbsp 大城市的光鲜亮丽下隐藏着奔忙着的人们，他们在下了地铁后奔跑着争抢着去赶下一班地铁，或许他们可以在这个没有网没有风景的地方思考一些问题，可是却不得不与挤满人的地铁外没挤上的人们进行没有感情的对视。 &nbsp &nbsp 生活总是夹杂着意外的匆匆忙忙，没有人知道自己的努力会换来怎样的结果，也没有人能思考清楚自己的奔忙带来的实际意义。但是被拥挤的地铁人群"簇拥"着朝前走，总能有那么一个机会，触碰到下一站的日光。
+  text: <br>在从市中心通往郊区的地铁上  <br>有略显劳累，靠在窗边假寐的年轻人  <br>有黑黝黝的民工，漏着洁白的牙 <br>有貌不惊人的中年人，捧着看不懂名字的英文读物  <br>还有倚着立柱望着他们一言不发的,我自己   </br>  <br>大城市的光鲜亮丽下，隐藏着奔忙着的人们   <br>他们在下了地铁后，奔跑着争抢着去赶下一班地铁    <br> 或许他们可以在这个没有网没有风景的地方思考一些问题   <br>可是却不得不，与挤满人的地铁外没挤上的人们进行没有感情的对视   </br>  <br>生活，总是夹杂着意外的匆匆忙忙   <br>没有人知道自己的努力会换来怎样的结果  <br>也没有人能思考清楚，自己的奔忙带来的实际意义  <br>但是被拥挤的地铁人群"簇拥"着朝前走  <br>总能有那么一个机会  <br>触碰到下一站的日光
 
 # Whether to display the musics.
 # 是否在首页显示音乐.
@@ -118,10 +118,10 @@ logo: /medias/logo.png
 # including the display name of the button, the font awesome icon, and the hyperlink to the button.
 # 首页 banner 中的第二个按钮的配置，包括按钮的显示名称、font awesome图标和按钮的超链接.
 indexbtn:
-  enable: true
+  enable: false
   name: Github
   icon: fab fa-github-alt
-  url: https://github.com/blinkfox/hexo-theme-matery
+  url: https://github.com/htfhxx
 
 # The configurations of the second line of home banner
 # icon/button will not show up if you leave the corresponding socialLink empty
@@ -163,7 +163,7 @@ reward:
 # minCharNumber: Approve copyright information by copying at least how many characters.
 # 是否激活复制文章时追加博客和作者的版权信息.
 copyright:
-  enable: false
+  enable: true
   minCharNumber: 120 # 至少复制多少个字符就追加版权信息.
   description: 本文章著作权归作者所有，任何形式的转载都请注明出处。
 
@@ -206,14 +206,14 @@ clicklove:
 # 在”关于”页面中配置个人信息，包括头像、职业和个人介绍.
 profile:
   avatar: /medias/avatar.jpg
-  career: Software Engineer
-  introduction: If you wish to succeed, you should use persistence as your good friend, experience as your reference, prudence as your brother and hope as your sentry.
+  career: NLP Algorithm Engineer
+  introduction: Hold in heart, blossom around.
 
 # config my projects informations in about page.
 # If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的项目"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 myProjects:
-  enable: true
+  enable: false
   data:
     hexo-theme-matery:
       icon: fas fa-file-alt
@@ -235,7 +235,7 @@ myProjects:
 # If you don't want to display this `My Skills` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的技能"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 mySkills:
-  enable: true
+  enable: false
   data:
     Java:
       background: 'linear-gradient(to right, #FF0066 0%, #FF00CC 100%)'
@@ -260,7 +260,7 @@ mySkills:
 # If you don't want to display this `Gallery` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的相册"图片，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 myGallery:
-  enable: true
+  enable: false
   data:
     - /medias/featureimages/0.jpg
     - /medias/featureimages/1.jpg
@@ -273,7 +273,7 @@ postCalendar: true
 # the Gitalk config，default disabled
 # Gitalk 评论模块的配置，默认为不激活
 gitalk:
-  enable: false
+  enable: true
   owner:
   repo:
   oauth:
@@ -321,8 +321,8 @@ valine:
 # Whether to display fork me on github icon and link, default true, You can change it to your repo address
 # 配置是否在 header 中显示 fork me on github 的图标，默认为true，你可以修改为你的仓库地址.
 githubLink:
-  enable: true
-  url: https://github.com/blinkfox/hexo-theme-matery
+  enable: false
+  url: https://github.com/htfhxx
   title: Fork Me
 
 # The password verification feature of read post. To use this feature,

@@ -274,12 +274,12 @@ postCalendar: true
 # Gitalk 评论模块的配置，默认为不激活
 gitalk:
   enable: true
-  owner:
-  repo:
+  owner: 'htfhxx'
+  repo: htfhxx.github.io
   oauth:
-    clientId:
-    clientSecret:
-  admin:
+    clientId: 0f55ef3d0a2699e72e81
+    clientSecret: 94acec9c55d8c11b6495652efe90b5d03789f534
+  admin: ['htfhxx']
 
 # the Gitment config，default disabled
 # Gitment 评论模块的配置，默认为不激活

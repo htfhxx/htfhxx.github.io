@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/hellospeak.dir/hellospeak.cpp.o CMakeFiles/hellospeak.dir/speak.cpp.o  -o hellospeak -rdynamic 

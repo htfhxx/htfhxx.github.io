@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../MathFunctions/speak.h
+iostream
+-
+
+/home/huotengfei/code/cmake/test_cmake_lib/hellospeak.cpp
+speak.h
+/home/huotengfei/code/cmake/test_cmake_lib/speak.h
+

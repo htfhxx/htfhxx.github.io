@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/huotengfei/code/cmake/test_cmake_muti/hellospeak.cpp
+speak.h
+/home/huotengfei/code/cmake/test_cmake_muti/speak.h
+
+/home/huotengfei/code/cmake/test_cmake_muti/speak.cpp
+speak.h
+/home/huotengfei/code/cmake/test_cmake_muti/speak.h
+
+/home/huotengfei/code/cmake/test_cmake_muti/speak.h
+iostream
+-
+

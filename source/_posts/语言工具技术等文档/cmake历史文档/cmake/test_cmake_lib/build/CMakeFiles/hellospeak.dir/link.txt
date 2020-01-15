@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/hellospeak.dir/hellospeak.cpp.o  -o hellospeak -rdynamic MathFunctions/libMathFunctions.so -Wl,-rpath,/home/huotengfei/code/cmake/test_cmake_lib/build/MathFunctions 

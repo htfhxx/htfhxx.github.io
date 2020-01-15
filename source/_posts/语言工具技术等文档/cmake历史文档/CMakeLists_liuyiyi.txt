@@ -1,0 +1,266 @@
+#设置CMAKE最小版本
+cmake_minimum_required(VERSION 0.1)
+
+#设置工程名称
+PROJECT(GolaxyTAP)
+
+#变量的设置
+set(CMAKE_INSTALL_PREFIX ".")  #指定安装目录
+
+
+# CMake 中有一个变量 CMAKE_BUILD_TYPE 
+#可以的取值是 Debug Release RelWithDebInfo 和 MinSizeRel。
+#指定单配置生成器上的构建类型
+SET(CMAKE_BUILD_TYPE Release ON)  
+
+#编译C文件时的选项，如-g；也可以通过add_definitions添加编译选项
+#括号内是GCC常用参数 
+#-Wall gcc尽可能多的给出编译信息
+#-fmessage-length根据控制台的宽度自动换行
+SET(CMAKE_C_FLAGS  "-O2 -pipe -fPIC -Wall -fmessage-length=0") 
+SET(CMAKE_CXX_FLAGS "-O2 -pipe -fPIC -Wall -fmessage-length=0") 
+
+
+#通过add_definitions添加编译选项
+add_definitions("-O2 -fPIC -fpermissive")
+
+#头文件目录 
+INCLUDE_DIRECTORIES(
+ ${CMAKE_SOURCE_DIR}/include/
+ ${CMAKE_SOURCE_DIR}/include/extern/
+  ${CMAKE_SOURCE_DIR}/include/extern/thrift/
+ ${CMAKE_SOURCE_DIR}/include/extern/blas/
+ ${CMAKE_SOURCE_DIR}/include/extern/judyhash/
+ ${CMAKE_SOURCE_DIR}/include/extern/Judy
+)
+
+
+#链接库搜索路径
+LINK_DIRECTORIES(
+ ${CMAKE_SOURCE_DIR}
+)
+
+#在当前及以下的路径，从编译命令行中取消（由add_definitions命令添加的）标志。
+REMOVE_DEFINITIONS( -DUSE_LICENSE ) 
+
+
+#链接库搜索路径
+LINK_DIRECTORIES(/usr/local/lib
+		 ${PROJECT_SOURCE_DIR}/lib/thrift
+		 ${PROJECT_SOURCE_DIR}/lib/WordSeg
+		)
+
+#如果SET(BUILD_SHARED_LIBS ON)后，默认生成的为动态库。
+SET(BUILD_SHARED_LIBS ON)
+
+#设置变量GolaxyTAP_SOURCES，包括生成库的各个源文件
+SET(GolaxyTAP_SOURCES
+			src/extern/svm.cpp
+			src/extern/linear.cpp
+			src/extern/tron.cpp
+			src/extern/blas/daxpy.c
+			src/extern/blas/ddot.c
+			src/extern/blas/dnrm2.c
+			src/extern/blas/dscal.c
+			src/extern/Cache.cc
+			src/extern/UserKernel.cc
+			src/extern/general.cc
+			src/extern/IOTorch.cc
+			src/extern/Kernel.cc
+			src/extern/StandardSVM.cc
+			src/extern/SVM.cc
+			src/common/Logger.cpp
+                        src/common/LoggerProxy.cpp
+                        src/common/InstanceCreator.cpp
+                        src/common/thread/FastMutex.cpp
+                        src/common/thread/FastMutex_POSIX.cpp
+                        src/common/thread/Mutex_POSIX.cpp
+                        src/common/thread/SimpleThreadPool.cpp
+                        src/common/thread/ThreadPool.cpp
+                        src/utility/Utility.cpp
+                        src/utility/BufferPool.cpp
+			src/utility/CharIterator.cpp
+                        src/utility/strtokenizer.cpp
+                        src/utility/GBKCharacterUtility.cpp
+                        src/utility/UTF8CharacterUtility.cpp
+                        src/utility/BasicKeyValueParser.cpp
+                        src/utility/BasicXMLParser.cpp
+                        src/utility/BufferedFileReader.cpp
+                        src/utility/BufferedFileWriter.cpp
+                        src/utility/LinuxDirectoryIterator.cpp
+                        src/configure/BasicParamParser.cpp
+                        src/configure/Parameter.cpp
+                        src/analyzer/Analyzer.cpp
+                        src/analyzer/BasicEWordTokenFilter.cpp
+                        src/analyzer/NegationTokenFilter.cpp
+                        src/analyzer/SkipNegationTokenFilter.cpp
+                        src/analyzer/BasicNgramTokenFilter.cpp
+                        src/analyzer/SimpleEnNegationTokenFilter.cpp
+                        src/analyzer/CharacterLexer.cpp
+                        src/analyzer/GBKCharacterLexer.cpp
+                        src/analyzer/UTF8CharacterLexer.cpp
+                        src/analyzer/Tokenizer.cpp
+                        src/analyzer/BasicTokenizer.cpp
+                        src/analyzer/BasicWeiboTokenizer.cpp
+ 			src/analyzer/ChNGramTokenizer.cpp
+                        src/analyzer/TrieDictMaxForwardTokenizer.cpp
+                        src/analyzer/ComplexMaxMatchTokenizer.cpp
+                        src/analyzer/SentenceTokenizer.cpp
+#                        src/analyzer/WuCRFTokenizer.cpp
+                        src/trainset/DirDocReader.cpp
+                        src/trainset/XMLFileDocReader.cpp
+                        src/trainset/Label.cpp
+                        src/trainset/DirXMLFileDocReader.cpp
+                        src/trainset/DirLineDocReader.cpp
+                        src/trainset/Instance.cpp
+                        src/modular/centroidbuilder/CentroidBuilder.cpp
+                        src/modular/centroidbuilder/StandardCentroidBuilder.cpp
+                        src/modular/centroidtrainalgor/AveragingTrainAlgor.cpp
+                        src/modular/centroidtrainalgor/CentroidTrainAlgor.cpp
+                        src/modular/centroidtrainalgor/DragPushTrainAlgor.cpp
+                        src/modular/centroidtrainalgor/RocchioTrainAlgor.cpp
+			src/modular/centroidtrainalgor/SVMTorchTrainAlgor.cpp
+			src/modular/centroidtrainalgor/LibSVMTrainAlgor.cpp
+			src/modular/centroidtrainalgor/LibLinearTrainAlgor.cpp
+			src/modular/centroidtrainalgor/MultiLevelLibLinearTrainAlgor.cpp
+                        src/modular/centroidupdater/CentroidUpdater.cpp
+                        src/modular/centroidupdater/StandardCentroidUpdater.cpp
+                        src/modular/centroidupdatealgor/CentroidUpdateAlgor.cpp
+                        src/modular/centroidupdatealgor/PerceptronUpdateAlgor.cpp
+			src/modular/centroidupdatealgor/StandardCentroidUpdateAlgor.cpp
+			src/modular/cluster/ClusterExecutor.cpp
+                        src/modular/cluster/clustermodular/ClusterModularFactory.cpp
+                        src/modular/cluster/clustermodular/StandardClusterModularFactory.cpp
+                        src/modular/cluster/clustermodular/VectorInstance.cpp
+                        src/modular/cluster/clustermodular/VectorClusterInstanceBuilder.cpp
+                        src/modular/cluster/clustermodular/VectorClusterPrototype.cpp
+                        src/modular/cluster/clustermodular/CosineSimilarityScorer.cpp
+                        src/modular/cluster/clustermodular/RWMDClusterModularFactory.cpp
+                        src/modular/cluster/clustermodular/RWMDSimilarityScorer.cpp
+                        src/modular/cluster/clustermodular/ReviewClusterModularFactory.cpp
+                        src/modular/cluster/clustermodular/ReviewClusterInstance.cpp
+                        src/modular/cluster/clustermodular/ReviewClusterInstanceBuilder.cpp
+                        src/modular/cluster/clustermodular/ReviewClusterPrototype.cpp
+                        src/modular/cluster/clustermodular/ReviewSimilarityScorer.cpp
+                        src/modular/cluster/algorithm/AffinityPropagationClusterAlogr.cpp
+                        src/modular/cluster/algorithm/KMeansClusterAlgor.cpp
+                        src/modular/cluster/algorithm/SinglePassClusterAlgor.cpp
+                        src/modular/cluster/algorithm/ParallelClusterAlgor.cpp
+                        src/modular/cluster/algorithm/HierarchicalClusterAlogr.cpp
+                        src/modular/similarity/DocVectorInstance.cpp
+                        src/modular/similarity/DocVectorInstanceBuilder.cpp
+                        src/modular/similarity/CosineDocSimScorer.cpp
+                        src/modular/similarity/RWMDDocSimScorer.cpp
+                        src/modular/similarity/SimilarityModularFactory.cpp
+                        src/modular/similarity/StandardSimilarityModularFactory.cpp
+			src/modular/docvectorbuilder/Bo1WordWeighter.cpp
+			src/modular/docvectorbuilder/DocVectorBuilder.cpp
+			src/modular/docvectorbuilder/SentiOrientedDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/PositionalDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/StandardDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/TargetAwarePositionalDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/WeightedDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/WordWeighter.cpp
+			src/modular/docvectorbuilder/WordVecDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/WordExpandDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/CNNDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/StdConvDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/DCNNDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/TargetAwareStdConvDocVectorBuilder.cpp
+			src/modular/docvectorbuilder/LDADocVectorBuilder.cpp
+			src/modular/general/Vocabulary.cpp
+			src/modular/general/Centroid.cpp
+			src/modular/general/StandardTokenizedDocIterator.cpp
+			src/modular/general/StdInstanceIterator.cpp
+			src/modular/keywordmatcher/KeywordMatcher.cpp
+			src/modular/positionweighter/PositionWeighter.cpp
+			src/modular/positionweighter/SentiOrientedPositionWeighter.cpp
+			src/modular/positionweighter/StandardTargetAwarePositionWeighter.cpp
+			src/modular/positionweighter/SentiOrientedTargetAwarePositionWeighter.cpp
+			src/modular/sentilabelextractor/SentiLabel.cpp
+		        src/modular/sentilabelextractor/SimpleSentiLabelExtractor.cpp
+		        src/modular/sentilabelextractor/TemplateSentiLabelExtractor.cpp
+			src/modular/emotionlabelextractor/EmotionLabel.cpp
+			src/modular/emotionlabelextractor/BasicEmotionLabelExtractor.cpp
+			src/modular/lexcionsentiscorer/SentiLabelScoreComputer.cpp
+			src/modular/lexcionsentiscorer/LexcionSentiScorer.cpp
+			src/modular/lexcionsentiscorer/TargetAwareSentiLabelSentiScorer.cpp
+			src/modular/lexcionsentiscorer/SentiLabelSentiScorer.cpp
+			src/modular/lexcionsentiscorer/WeightedSentiLexcion.cpp
+			src/modular/textanalyzer/TextAnalyzer.cpp
+			src/modular/textprocessor/Text.cpp
+			src/modular/textprocessor/TextProcessor.cpp
+			src/modular/rule/BasicRule.cpp
+			src/modular/dupremover/DupRemover.cpp
+			src/modular/dupremover/SinglePassDupRemover.cpp
+			src/modular/dupremover/SimpleDupRemover.cpp
+			src/modular/dupremover/SimHashDupRemover.cpp
+			src/modular/template/BasicTemplateParser.cpp
+			src/modular/template/Template.cpp
+			src/application/negativeindex/NegativeIndexCalculator.cpp
+			src/application/sentiment/LexcionSentiScorerTokenizedDocFilter.cpp
+			src/application/sentiment/classifier/SentiClassifierFactory.cpp
+			src/application/sentiment/classifier/CentroidSentiClassifier.cpp
+			src/application/sentiment/classifier/SentiLexcionSentiClassifier.cpp
+			src/application/sentiment/classifier/CombineSentiClassifier.cpp
+			src/application/sentiment/classifier/HybridSentiClassifier.cpp
+			src/application/sentiment/classifier/TargetAwareSentiLexcionSentiClassifier.cpp
+			src/application/sentiment/classifier/TargetAwareCentroidSentiClassifier.cpp
+			src/application/sentiment/classifier/WeightedCentroidSentiClassifier.cpp
+			src/application/sentiment/classifier/CombineTargetAwareSentiClassifier.cpp
+			src/application/sentiment/classifier/CNNSentiClassifier.cpp
+			src/application/sentiment/classifier/GBDTSentiClassifier.cpp
+			src/application/sentiment/classifier/LenovoAspectLevelSentiClassifier.cpp
+			src/application/sentiment/trainer/SentiCentroidTrainer.cpp
+			src/application/sentiment/trainer/StandardSentiCentroidTrainer.cpp
+			src/application/emotionclassifier/EmotionClassifier.cpp
+			src/application/textclassify/trainer/CentroidTrainer.cpp
+			src/application/textclassify/trainer/StandardCentroidTrainer.cpp
+			src/application/textclassify/classifier/TextClassifier.cpp
+			src/application/textclassify/classifier/CentroidTextClassifier.cpp
+ 			src/application/textclassify/classifier/VSMCentroidTextClassifier.cpp
+			src/application/textclassify/classifier/CombineTextClassifier.cpp
+			src/application/textclassify/classifier/TextClassifierFactory.cpp
+			src/application/textclassify/classifier/RuleBasedClassifier.cpp
+			src/application/textclassify/classifier/KeywordBasedClassifier.cpp
+			src/application/textclassify/classifier/StdConvTextClassifier.cpp
+			src/application/sentisummary/ClusteringHandler.cpp
+		        src/application/sentisummary/SentiSummarizerBase.cpp
+			src/application/sentisummary/FlatSentiSummarizer.cpp
+			src/application/sentisummary/StructualSentiSummarizer.cpp
+			src/application/sentisummary/FlatSentiSummarizerByClustering.cpp
+			src/application/sentisummary/StructualSentiSummarizerByClustering.cpp
+			src/application/reviewmining/TypicalOpinionExtractorByCluster.cpp
+			src/application/topicfilter/StdTopicFilter.cpp
+		        src/tool/GfnVocabularyBuild.cpp
+			src/tool/GfnCentroidTrain.cpp
+		        src/tool/GfnSentiCentroidTrain.cpp
+			src/tool/GfnKeywordDictBuild.cpp
+			src/tool/GfnTopWordsExtract.cpp
+			src/tool/GfnTrieDictBuild.cpp
+			src/tool/GfnNewWordDetect.cpp
+#			src/api/NewSentiClassifierAPI.cpp
+			src/api/SentiSummAPI.cpp
+			src/api/TextClassifierAPI.cpp
+			src/api/TargetAwareSentiClassifierAPI.cpp
+			src/api/StruSentiSummAPI.cpp
+			src/api/TopicClusteringAPI.cpp
+			src/api/NegaIdxCalculatorAPI.cpp
+			src/api/TextSimilarityAPI.cpp
+			src/api/ThreadPoolAPI.cpp
+			src/api/KeywordExtractAPI.cpp
+			src/api/SimHashAPI.cpp
+			src/api/SegmentAPI.cpp
+			src/api/SupportDetectAPI.cpp
+			src/api/EmotionClassifierAPI.cpp
+			src/api/TopicFilterAPI.cpp
+		 	src/api/SentiClassifierAPI.cpp
+		)
+#设置成静态库
+ADD_LIBRARY(GolaxyTAP STATIC ${GolaxyTAP_SOURCES})
+
+#这些命令仅用于与旧版本的CMake兼容。不要在新代码中使用它们。
+#已过时。请改用install（TARGETS）命令。
+#创建规则以将列出的目标安装到给定目录中。
+INSTALL_TARGETS(/install/lib GolaxyTAP)
+ 

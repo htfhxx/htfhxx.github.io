@@ -1,0 +1,2 @@
+/home/huotengfei/code/cmake/test_cmake_lib/build/MathFunctions/CMakeFiles/MathFunctions.dir
+/home/huotengfei/code/cmake/test_cmake_lib/build/CMakeFiles/hellospeak.dir

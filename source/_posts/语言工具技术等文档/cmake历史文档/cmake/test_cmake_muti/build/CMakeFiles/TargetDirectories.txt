@@ -1,1 +1,0 @@
-/home/huotengfei/code/cmake/test_cmake_muti/build/CMakeFiles/hellospeak.dir

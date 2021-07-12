@@ -12,7 +12,11 @@ tags:
 
 [TOC]
 
-### 1. Windows 和linux下执行单文件
+代码见：https://github.com/htfhxx/cmake_htfhxx
+
+
+
+## 1. Windows 和linux下执行单文件
 
 在windows环境下，大家都熟悉怎么编写并执行一份代码：
 
@@ -52,7 +56,7 @@ tags:
 
  
 
-### 2. Windows 和linux下执行多文件or项目
+## 2. Windows 和linux下执行多文件or项目
 
 Windows自不必多说，在编译器下编译运行main函数即可
 
@@ -80,7 +84,7 @@ Windows自不必多说，在编译器下编译运行main函数即可
 
  
 
-### 3. 解决多文件编译的困难：makefile
+## 3. 解决多文件编译的困难：makefile
 
  
 
@@ -102,7 +106,7 @@ Makefile大致内容就是要编译两个文件得到hellospeak.o和speak.o，�
 
  
 
-### 4. Cmake工具:编译运行文件
+## 4. Cmake工具:编译运行文件
 
 如果没有安装的话就通过sudo apt-get install cmake命令安装cmake工具：
 
@@ -160,7 +164,7 @@ cmakelist.txt文件（内容撰写待会再说）：
 
  
 
-### 5. 使用cmake方便的编译执行单文件Demo
+## 5. 使用cmake方便的编译执行单文件Demo
 
 先分析上一例子中的cmakelists.txt：
 
@@ -184,7 +188,7 @@ add_executable(HelloWorld main.cpp)
 
  
 
-### 6. 使用cmake方便的编译执行多文件项目
+## 6. 使用cmake方便的编译执行多文件项目
 
  两个cpp文件一个.h文件和一个build，这次我们试着用cmake编译执行多文件。
 
@@ -210,7 +214,7 @@ add_executable(HelloWorld main.cpp)
 
  
 
-### 7. 一个复杂的例子：关于CMakelists子目录 and 生成库
+## 7. 一个复杂的例子：关于CMakelists子目录 and 生成库
 
  
 
@@ -256,7 +260,7 @@ add_executable(HelloWorld main.cpp)
 
  
 
-### 8. 总结cmakelists.txt的整理内容
+## 8. 总结cmakelists.txt的整理内容
 
  cmakelists.txt内容不需区分大小写。
 

@@ -4,7 +4,7 @@ date: 2019-12-07
 author: 长腿咚咚咚
 toc: true
 mathjax: true
-categories: machine-learning
+categories: 机器学习
 tags:
 	- 概率图模型-CRF
 ---

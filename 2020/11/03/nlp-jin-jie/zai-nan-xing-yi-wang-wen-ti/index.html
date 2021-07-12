@@ -1,0 +1,1260 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="灾难性遗忘问题, 长腿咚咚咚的个人博客">
+    <meta name="description" content="1 灾难性遗忘1.1 简介连续学习：根据任务A训练模型后，再根据任务B训练模型，此时对任务A进行测试，还可以维持其重要内容
+人工神经网络的连续学习出现问题：由于当前的神经网络对于任务A的参数与任务B的参数基本无关，使得当任务B训练完成后，该">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>灾难性遗忘问题 | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        灾难性遗忘问题
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%81%BE%E9%9A%BE%E6%80%A7%E9%81%97%E5%BF%98%E9%97%AE%E9%A2%98/">
+                                <span class="chip bg-color">灾难性遗忘问题</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                NLP进阶
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-11-03
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    11 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2><span id="1-灾难性遗忘">1 灾难性遗忘</span></h2><h3><span id="11-简介">1.1 简介</span></h3><p>连续学习：根据任务A训练模型后，再根据任务B训练模型，此时对任务A进行测试，还可以维持其重要内容</p>
+<p>人工神经网络的连续学习出现问题：由于当前的神经网络对于任务A的参数与任务B的参数基本无关，使得当任务B训练完成后，该网络无法给出任务A的结果</p>
+<p>灾难消失：在网络顺序训练多重任务时，对先前任务的重要权重无法保留，称之为灾难性消失。</p>
+<h3><span id="12-遗忘的体现">1.2 遗忘的体现</span></h3><p>各种论文是如何体现灾难性遗忘的？</p>
+<ul>
+<li>顺序学习若干任务、若干Atari2600游戏。之前训练的任务效果变化 [3]</li>
+<li>原预训练语言模型与当前fine-tune模型的参数距离 [2]</li>
+</ul>
+<ul>
+<li><strong>[11] Learning and Evaluating General Linguistic Intelligence 2019 arxiv</strong></li>
+</ul>
+<p>Catastrophic forgetting in a continual learning setup on unsupervised −→ SQuAD −→ MNLI (top) and unsupervised −→ SQuAD −→ TriviaQA (bottom).</p>
+<ul>
+<li><strong>[12] Does an LSTM forget more than a CNN? An empirical study of catastrophic forgetting in NLP 2019 ALTA</strong></li>
+</ul>
+<p>旨在了解导致连续学习中遗忘的因素。 主要发现是CNN的遗忘少于LSTM。 实验显示，最大池化是底层的操作，与LSTM相比，它有助于CNN减轻遗忘。 还发现，将艰巨的任务放在任务序列的末尾，可以减少遗忘。 </p>
+<p>本文还分析了微调上下文嵌入对灾难性遗忘的影响，发现在持续学习设置中，使用嵌入作为特征提取器优于微调。</p>
+<h3><span id="13-连续学习方法分类">1.3 连续学习方法分类</span></h3><ul>
+<li><strong>Replay-based or Rehearsal method</strong>   示例重播方法   存储过去的样本，并定期重播它们。在模型学习新任务的同时混合原来任务的数据。</li>
+<li><strong>Parameter isolation-based methods</strong>   通过为每个任务更新一组参数并将其冻结为新任务来避免忘记</li>
+<li><strong>Ensembling:</strong> 当模型学习新任务的时候，<strong>增加新的模型</strong>（可以是显式或者隐式的方式），使得多个任务实质还是对应多个模型，最后把多个模型的预测进行整合。增加子模型的方式固然好，但是每多一个新任务就多一个子模型，对学习效率和存储都是一个很大的挑战。</li>
+<li><strong>Regularization-based methods</strong>  建议使用额外的正则化术语来回忆以前的知识。在网络参数更新的时候<strong>增加限制</strong>，使得网络在学习新任务的时候不影响之前的知识。<ul>
+<li>data-focused 以数据为中心的方法通过从预先训练的模型中进行知识提炼来规范新任务学习</li>
+<li>prior-focused 在学习新任务时，以先验为重点的方法将预训练参数的分布视为先验<ul>
+<li>优先先验的方法，能使模型能够更有效地从预先训练的模型参数中学习更多的常识。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>NLP预训练模型中的知识遗忘问题主要集中在微调上<ul>
+<li>fine-tuning tricks [2] [4] [5] [7] </li>
+</ul>
+</li>
+</ul>
+<h2><span id="2-具体工作-nn">2 具体工作 - NN</span></h2><h3><span id="21-针对nn">2.1 针对NN</span></h3><ul>
+<li><strong>[3] Overcoming catastrophic forgetting in neural networks    2017 deepmind PNAS</strong>  </li>
+</ul>
+<p>连续学习导致了灾难性遗忘。</p>
+<p>有可能克服这种局限性并训练网络，这些网络可以维持他们长期未经历的任务的专业知识。 </p>
+<p>EWC 通过选择性地减慢对那些任务重要的权重的学习来记住旧任务。 </p>
+<p>在网络参数更新的时候增加限制，使得网络在学习新任务的时候不影响之前的知识。</p>
+<p>下图非立体图：</p>
+<p><img src="/2020/11/03/nlp-jin-jie/zai-nan-xing-yi-wang-wen-ti/image-20201103203946336.png" alt="image-20201103203946336" style="zoom:50%;"></p>
+<p>先训练了一个task1的网络，然后直接在task2上fine-tune（上图蓝色）。</p>
+<p>问题是，学到task2之后，就会基本忘记task1了（catastrophic forgetting）</p>
+<p>那设个限制，在task2上更新网络的时候，不能离第一个网络的参数太远，也就是相对于之前的网络参数上加了l2 regularizaiton（上图绿色）</p>
+<p>这样还不行。考虑到网络中有些参数没用有些参数有用，让重要的参数别变太多，就更新不重要的参数（上图红色）</p>
+<ul>
+<li>[6] A Multi-Task Learning Framework for Overcoming the Catastrophic Forgetting in Automatic Speech Recognition  2019 arxiv </li>
+</ul>
+<p>现有自动语音识别（ASR）系统适合目标领域时，例如微调，再训练，经常使用转移学习。 </p>
+<p>在这些过程中，系统参数可能与先前学习的参数有很大的偏差。 因此，系统训练过程很难从目标领域学习知识，同时又不忘记先前的学习过程中的知识，这被称为灾难性遗忘（CF）。 </p>
+<p>本文提出一种新颖的ASR多任务学习训练框架。认为保留原始知识和学习新知识分别是两个独立的任务。 一方面，我们限制新参数不要偏离原始参数太远，并在忘记原始知识时惩罚新系统。 另一方面，我们强迫新系统快速解决新知识。 然后，采用MTL机制来获得两个任务之间的平衡。 </p>
+<ul>
+<li><strong>[13] An Embarrassingly Simple Approach for Transfer Learning from Pretrained Language Models 2019 NAACL  -pc</strong></li>
+</ul>
+<p>提出了一种概念上简单有效的转移学习方法，用于解决灾难性遗忘问题，文本分类任务。 </p>
+<p>具体来说，我们将特定于任务的优化函数与辅助语言模型目标结合在一起，该目标可以在培训过程中进行调整。 这样可以保留语言模型捕获的语言规则，同时可以进行充分的调整以解决目标任务。 </p>
+<p>我们的方法不需要预先训练或微调网络的各个组成部分，而我们只需一步就可以对模型进行端到端训练。</p>
+<ul>
+<li><strong>[10] Forget Me Not: Reducing Catastrophic Forgetting for Domain Adaptation in Reading Comprehension 2020 IJCNN</strong></li>
+</ul>
+<p>机器阅读理解任务的灾难性遗忘</p>
+<p>不从源域访问数据，引入辅助惩罚项，规范化微调过程</p>
+<h3><span id="22-预训练模型-fine-tune">2.2 预训练模型 Fine-tune</span></h3><ul>
+<li><strong>[4] Universal Language Model Fine-tuning for Text Classification 2018 ACL</strong></li>
+</ul>
+<p>一种微调方法，文本分类任务，引入判别性微调倾斜的三角形学习率和针对LM的微调逐渐解冻</p>
+<ul>
+<li><strong>[5] Mixout: Effective Regularization to Finetune Large-scale Pretrained Language Models 2020 ICLR</strong></li>
+</ul>
+<p>一种微调方法，提出dropout的方式将预训练的参数随机混合到下游模型中来减少BERT微调中的遗忘。</p>
+<p>只有少量训练实例可用来fine-tune时，会降低性能。</p>
+<p>本文介绍了一种新的正则化技术mixout。</p>
+<ul>
+<li>[7] Side-tuning: Network adaptation via additive side networks  2019 arxiv</li>
+</ul>
+<p>对于fine-tune，本文提出了一种简单的替代方法：side-tuning<br>side-tuning 通过训练轻型side网络来适应预训练的网络，该网络通过求和与<strong>（未更改的）</strong>预训练网络融合。</p>
+<p>这种简单的方法与现有解决方案一样好，甚至更好，它解决了一些 微调，固定功能和其他常见方法的基本问题，特别是，侧调不太容易过度拟合，渐近一致，并且不会在增量学习中遭受灾难性的遗忘。</p>
+<ul>
+<li><strong>[2] Recall and Learn: Fine-tuning Deep Pretrained Language Models with Less Forgetting EMNLP 2020 <a href="https://arxiv.org/pdf/2004.12651.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2004.12651.pdf</a></strong></li>
+</ul>
+<p>动机：预训练+微调这样的迁移学习会遇到灾难性的遗忘问题。</p>
+<p>主要工作：提出一种 recall-and-learn 机制，共同学习预训练任务和下游任务。</p>
+<p>主要贡献：采用多任务学习的思想解决微调深度预训练语言模型的灾难性遗忘问题；提出预训练仿真和目标转移机制，在没有预训练任务数据的情况下实现多任务微调；提供了开源的优化器</p>
+<pre><code>灾难性遗忘问题是sequential trasfer learning的一个普遍问题，其体现在遗忘之前的知识而在目标领域上过度拟合。
+目前已有的工作主要集中在fine-tune的trick上，[23] 引入判别性微调倾斜的三角形学习率和针对LM的微调逐渐解冻，[36] 提出dropout的方式将预训练的参数随机混合到下游模型中来减少BERT微调中的遗忘；
+不同于顺序的进行预训练和下游任务的训练，多任务学习同时进行两者。但是这些多任务学习的工作 1要使用大规模预训练数据 2我们只下游任务的性能。
+因此本文提出一种Recall—and-learn机制，在fine-tune过程中采用预训练作为辅助学习任务。
+本文贡献的两方面：Pretraining Simulation解决大规模预训练数据不可获取的问题；Objective Shifting将多任务学习的目标逐渐转移到下游任务目标（本质上就是动态的调整loss比例）
+</code></pre><p>实验：General Language Understanding Evaluation (GLUE) benchmark （9个任务）</p>
+<p>思考：如果只在乎下游任务，灾难性的遗忘问题好像不太重要？（再调研一下灾难性遗忘的体现与分析）</p>
+<h3><span id="23-其他">2.3 其他</span></h3><p>知识注入PLM的知识遗忘问题</p>
+<ul>
+<li><strong>[1] K-Adapter: Infusing Knowledge into Pre-Trained Models with Adapters</strong></li>
+</ul>
+<p>动机：将知识注入大型预训练模型，现有方法会更新原始参数，遭受灾难性的遗忘。</p>
+<p>主要工作：提出K-Adapter，保持原始预训练模型参数固定，并支持知识注入。</p>
+<p><img src="/2020/11/03/nlp-jin-jie/zai-nan-xing-yi-wang-wen-ti/image-20201028102828012.png" alt="image-20201028102828012"></p>
+<p>之前的工作都更新了预训练模型的参数，导致灾难性遗忘之前注入的知识。</p>
+<p>通过集成紧凑的神经模型（适配器）来实现的</p>
+<p><img src="/2020/11/03/nlp-jin-jie/zai-nan-xing-yi-wang-wen-ti/image-20201028103214978.png" alt="image-20201028103214978"></p>
+<p>比较大的问题：只有实验结果ok，没有分析遗忘程度的减少</p>
+<h2><span id="idea">IDEA?</span></h2><p><strong>一般的灾难性遗忘：</strong></p>
+<ul>
+<li>在任务A上train一个model_1，任务A效果ok；</li>
+<li>然后将model_1在任务B上继续train得到model_2，任务B效果ok；</li>
+</ul>
+<p>然而这个时候model_2在任务A上的效果比model_1差</p>
+<p><strong>预训练模型的灾难性遗忘场景：</strong></p>
+<pre><code>* pretrain 得到PLM
+* fine-tune 得到 模型fine-tune1   
+fine-tune过程中，造成了预训练过程学到的内容 灾难性的遗忘，导致目标任务效果没有那么理想
+但目前没有找到有分析遗忘具体体现在哪的工作，只有通过fine-tune的效果提升来体现
+</code></pre><pre><code>* pretrain 得到PLM
+* 任务1上fine-tune 得到 模型fine-tune1
+* fine-tune1 在任务2 上fine-tune 得到 模型fine-tune2
+</code></pre><pre><code>model_1(PLM)进行fine-tune，model_4和model_3的效果哪个好？
+（真实场景？）
+- 小批量数据A 对PLM进行fine-tune  得到model_2
+- 又来了一批数据B 使用B对model_2进行fine-tune  得到model_3
+
+（真实场景2，但是ab数据集大）
+- 小批量数据A 对PLM进行fine-tune  得到model_2
+- 又来了一批数据B 使用A+B对model_2进行fine-tune  得到model_4
+
+（不真实的场景）
+-- 所有数据A+B一口气全到位 对PLM进行fine-tune  得到model_5
+</code></pre><p>基于 预训练模型的灾难性遗忘问题挖掘了几个研究点：</p>
+<p>针对预训练+fine-tune的过程（遗忘预训练）</p>
+<ol>
+<li>预训练模型fine tune时对之前pretrain内容的遗忘 如何体现？</li>
+<li>预训练模型fine tune后对之前pretrain内容的遗忘问题如何解决？</li>
+</ol>
+<p>针对预训练+多次fine-tune的过程（遗忘预训练+之前的fine-tune）</p>
+<ol>
+<li>预训练模型多次fine-tune过程的遗忘分析（更多的是因为pretrain过程的进一步的遗忘 还是上一fine-tune阶段的遗忘）</li>
+<li>预训练模型多次fine tune时，对之前finetune内容的遗忘问题。（预训练模型迁移学习下的增量学习）</li>
+</ol>
+<p>问题比较大，暂时很难找到一个切入点，暂时搁置一下，目前先做面向匹配任务的预训练模型。</p>
+<h2><span id="reference">Reference</span></h2><p><a href="https://blog.csdn.net/u010195841/article/details/69257897" target="_blank" rel="noopener">https://blog.csdn.net/u010195841/article/details/69257897</a></p>
+<p><a href="https://www.cnblogs.com/chason95/articles/9892560.html" target="_blank" rel="noopener">https://www.cnblogs.com/chason95/articles/9892560.html</a></p>
+<p><a href="https://blog.csdn.net/zyy617532750/article/details/104217399" target="_blank" rel="noopener">https://blog.csdn.net/zyy617532750/article/details/104217399</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2020/11/03/nlp-jin-jie/zai-nan-xing-yi-wang-wen-ti/">http://htfhxx.github.io/2020/11/03/nlp-jin-jie/zai-nan-xing-yi-wang-wen-ti/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E7%81%BE%E9%9A%BE%E6%80%A7%E9%81%97%E5%BF%98%E9%97%AE%E9%A2%98/">
+                                    <span class="chip bg-color">灾难性遗忘问题</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2020-11-03T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/11/18/yu-yan-gong-ju-ji-zhu-deng-wen-dang/faiss/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Faiss">
+                        
+                        <span class="card-title">Faiss</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            需求是，基于句子级别的向量，从海量候选项中挑选最合适的候选。
+一般情况下，是求出query的向量，以及所有候选的向量，计算他们之间的相似度，得到top1。
+奈何太慢~
+1. FaissFaiss是一个高效的相似性搜索和稠密向量聚类库。
+它包
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-11-18
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AF%AD%E8%A8%80%E5%B7%A5%E5%85%B7%E6%8A%80%E6%9C%AF%E7%AD%89%E6%96%87%E6%A1%A3/" class="post-category">
+                                    语言工具技术等文档
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Faiss/">
+                        <span class="chip bg-color">Faiss</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/10/22/nlp-jin-jie/shen-du-wen-ben-pi-pei-survey2020/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="深度文本匹配survey2020">
+                        
+                        <span class="card-title">深度文本匹配survey2020</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 深度文本匹配1.1 方法概述传统文本匹配方法
+传统的文本匹配技术有BoW、VSM、TF-IDF、 BM25、Jaccord、SimHash等算法，如BM25算法通过网络字段对查询字段的覆盖程度来计算两者间的匹配得分，得分越高的网页与查询
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                    NLP进阶
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E6%96%87%E6%9C%AC%E5%8C%B9%E9%85%8Dsurvey/">
+                        <span class="chip bg-color">深度文本匹配survey</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">133.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

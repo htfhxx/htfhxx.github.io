@@ -5,12 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="C++常用API, 长腿咚咚咚的个人博客">
-    <meta name="description" content="arrary
-int number[5];//= {1,2,3,4,5};    //数组初始化
-int *number=new int[5];        //数组初始化
-
-swap(number[i],number[j]);
-incl">
+    <meta name="description" content="Trick
+第一个判浮点数相等要用fabs(x -y) &amp;lt;= eps，不能用x==y，const double eps = 1e-6;
+判断奇偶数，用x%2!=0 而不是x%2==1，因为c++里余数可以是奇数
+常用
+rand()%1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -354,14 +353,14 @@ incl">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    545
+                    829
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    4 分
                 </div>
                 
 				
@@ -377,14 +376,25 @@ incl">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>arrary</p>
+                <p>Trick</p>
+<pre><code>第一个判浮点数相等要用fabs(x -y) &lt;= eps，不能用x==y，const double eps = 1e-6;
+判断奇偶数，用x%2!=0 而不是x%2==1，因为c++里余数可以是奇数
+</code></pre><p>常用</p>
+<pre><code>rand()%100; 生成0-99的随机数
+INX_MAX
+INT_MIN
+
+// 遍历
+for(int i=0;i&lt;n;i++) a[i]
+for(char c: a) c
+</code></pre><p>arrary</p>
 <pre><code>int number[5];//= {1,2,3,4,5};    //数组初始化
 int *number=new int[5];        //数组初始化
+int[][] dp = new int[5][5];   //数组初始化
 
 swap(number[i],number[j]);
-</code></pre><p>include<algorithm></algorithm></p>
-<pre><code>sort(array,array+length);     //0-(length-1)数组排序
-bool cmp(const int &amp;a,const int &amp;b) return a&gt;b;   //没有官方封装的快
+</code></pre><h1><span id="include">include<algorithm></algorithm></span></h1><pre><code>sort(array,array+length);     //0-(length-1)数组排序
+static bool cmp(const int &amp;a,const int &amp;b) return a&gt;b;   //没有官方封装的快 静态成员函数与普通成员函数的根本区别在于：普通成员函数有 this 指针，可以访问类中的任意成员；而静态成员函数没有 this 指针，只能访问静态成员（包括静态成员变量和静态成员函数）。
 sort(array,array+length,cmp);  //0-(length-1)数组排序-降序
 </code></pre><h1><span id="include">include<math></math></span></h1><pre><code>fabs(number); //绝对值,abs只针对整数
 sqt(number); //开方
@@ -392,6 +402,8 @@ sqt(number); //开方
 memset(a,0,sizeof(a));
 string subS=str.substr(begin_index,length);  //获取子串
 string subS=str.substr(begin_index);
+position = str.find(&quot;jk&quot;);    
+int b = to_string(a);
 </code></pre><h1><span id="include">include<vector></vector></span></h1><pre><code>//初始化vector
 vector&lt;int&gt; v;  
 vector&lt;int&gt; v(n+1,-1); //n+1个数，初始化-1
@@ -399,36 +411,47 @@ vector&lt;int&gt;({1,2,3,4});//直接加入元素
 vector&lt;int&gt;(); //返回一个空的容器
 vector&lt;vector&lt;int&gt;&gt; v;
 vector&lt;vector&lt;int&gt;&gt; v(n,vector&lt;int&gt;(n,0));
+vector&lt;string&gt; board(n,string(n,&#39;.&#39;));   
 
 v.size();    v[0].size();
-v.empty();  
+v.empty();  判断是否空
 v.push_back(x);
 v.pop_back(x);  
 v.clear(); //清空元素，但不回收空间
+v.erase(idx); // 清空某个元素
+v.erase(idx, last) // 清空[idx, last) 的区间
 
 swap(v[i],v[j]);
 sort(result.begin(),result.end());  //排列
+count(nums.begin(), nums.end()); //计数
+reverse(nums.begin(),nums.end());   //翻转
+reverse(nums.begin(),nums.begin()+k);   //翻转前k个
 </code></pre><h1><span id="include">include<stack></stack></span></h1><pre><code>stack&lt;int&gt; s;
 s.empty();
 s.push(value);
 s.top();
 s.pop();
+s.size();
 </code></pre><h1><span id="include">include<queue></queue></span></h1><pre><code>queue&lt;int&gt; q;
 q.empty();
 q.push(value);
 q.front();
 s.pop();
-</code></pre><h1><span id="include">include<map></map></span></h1><pre><code>map&lt;int,int&gt; m;   //初始化
+</code></pre><h1><span id="include">include<map></map></span></h1><pre><code>map&lt;int,int&gt; m;   //初始化 int类型的value初始化默认为0
 m[key]=val;     //赋值
 m.erase(key);   m.erase(iter);   //去掉-key或指针
+m.find(key)!=m.end();
 
 for(auto iter=m.begin();iter!=m.end();iter++){
     cout &lt;&lt; iter-&gt;first &lt;&lt; &quot; : &quot; &lt;&lt; iter-&gt;second &lt;&lt; endl; //注意是&quot;-&gt;&quot;不是&quot;.&quot;&quot;
 }
+for(auto &amp;m : M){
+    cout&lt;&lt;m.first&lt;&lt;endl;
+}
 //map中的元素按照key顺序排列，在对顺序有要求的问题中使用map，查找速度上慢于哈希实现的unordered_map
 </code></pre><h1><span id="include">include<priority_queue></priority_queue></span></h1><pre><code>priority_queue&lt;int&gt; Q;  //大顶堆
-priority_queue&lt;int,vector&lt;int&gt;,less&lt;int&gt;&gt; Q;  //大顶堆
-priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt;&gt; Q;//小顶堆
+# priority_queue&lt;int,vector&lt;int&gt;,less&lt;int&gt;&gt; Q;  //大顶堆
+priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt;&gt; // 小顶堆 Q;//小顶堆
 
 priority_queue&lt;pair&lt;int,int&gt;&gt; pQ;    //pair
 pQ.push(make_pair(value1,value2));
@@ -436,9 +459,14 @@ Q.top();
 Q.empty();
 Q.size();
 Q.pop();
-</code></pre><h1><span id="include">include<set></set></span></h1><pre><code>unordered_set&lt;int&gt; hash;
+</code></pre><p>===========================================================================</p>
+<h1><span id="include">include<set></set></span></h1><pre><code>unordered_set&lt;int&gt; hash;
 unordered_set &lt;int&gt; hash(_vector.begin(), _vector.end());
 hash.find(val)!=hash.end();
+
+hash.insert(val);
+
+*(hash.begin())   // 首个值
 </code></pre><h1><span id="include">include<list></list></span></h1><pre><code>list&lt;int&gt; l;
 l.begin();  l.end();
 l.size();
@@ -450,7 +478,8 @@ q.push_back(value);
 q.empty();
 q.front();
 q.back();
-s.pop();
+q.pop_back();
+q.pop_front()
 </code></pre><h1><span id="include-自动排序的set">include<multiset>  //自动排序的set</multiset></span></h1><pre><code>multiset&lt;int, greater&lt;int&gt; &gt; leastNums;  //从大到小排序
 
 leastNums.end();  //最后一个元素之后的迭代器，不是最后一个元素
@@ -717,7 +746,7 @@ result=vector&lt;int&gt; (leastNumbers.begin(),leastNumbers.end());
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/11/28/zi-ran-yu-yan-chu-li-ji-chu/transformer-de-jian-ji-xiang-jie-shi/">
+                <a href="/2019/11/28/shen-du-xue-xi-yu-nlp-ji-chu/transformer-de-jian-ji-xiang-jie-shi/">
                     <div class="card-image">
                         
                         
@@ -743,8 +772,8 @@ result=vector&lt;int&gt; (leastNumbers.begin(),leastNumbers.end());
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/nlp%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    nlp基础
+                            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8ENLP%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    深度学习与NLP基础
                                 </a>
                             
                             
@@ -1001,7 +1030,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.7k</span>&nbsp;字
+                class="white-color">133.9k</span>&nbsp;字
             
             
             

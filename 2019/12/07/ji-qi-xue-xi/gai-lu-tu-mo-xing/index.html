@@ -7,7 +7,7 @@
     <meta name="keywords" content="概率图模型, 长腿咚咚咚的个人博客">
     <meta name="description" content="[TOC]
 1 概率图模型机器学习最重要的任务，是根据一些己观察到的证据（例如训练样本）来对感兴趣的未知变量（例如类别标记）进行估计和推测。
-而概率图模型就是概率图模型（probabilistic graphical model）是一类用图">
+概率图模型（probabilistic graphical model）是一类用图来表达变量相关关">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -329,8 +329,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/machine-learning/" class="post-category">
-                                machine-learning
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
                             </a>
                         
                     </div>
@@ -376,7 +376,7 @@
             <div id="articleContent">
                 <p>[TOC]</p>
 <h2><span id="1-概率图模型">1 概率图模型</span></h2><p>机器学习最重要的任务，是根据一些己观察到的证据（例如训练样本）来对感兴趣的未知变量（例如类别标记）进行估计和推测。</p>
-<p>而概率图模型就是概率图模型（probabilistic graphical model）是一类用图来表达变量相关关系的概率模型。</p>
+<p>概率图模型（probabilistic graphical model）是一类用图来表达变量相关关系的概率模型。</p>
 <p>它以图为表示工具，最常见的是用一个结点表示一个或一组随机变量，结点之间的边表示变量间的概率相关关系，即”变量关系图”。</p>
 <ul>
 <li>节点表示随机变量/状态，边表示概率关系<ul>
@@ -444,10 +444,12 @@ p\left(x_{4} | x_{1}, x_{2}, x_{3}\right)=p\left(x_{4} | x_{2}\right)</script><p
 </li>
 </ul>
 <p><img src="/2019/12/07/ji-qi-xue-xi/gai-lu-tu-mo-xing/1578154236713.png" alt="1578154236713" style="zoom:50%;"></p>
-<h2><span id="4-生成式模型与称判别式模型">4 生成式模型与称判别式模型</span></h2><p>判别式模型（DiscriminativeModel）是直接学习决策函数f(x)或者直接求得条件概率分布p(y|x;θ)。常见的判别式模型有线性回归模型、支持向量机SVM等。</p>
+<h2><span id="4-生成式模型与称判别式模型">4 生成式模型与称判别式模型</span></h2><p>生成模型是<strong>对联合概率分布$P(X,Y,Z)$进行建模</strong>，在给定观测集合X的情况下，<strong>计算边缘分布</strong>$P(X)$来<strong>得到对变量的推断</strong>。</p>
+<script type="math/tex; mode=display">
+P(Y | X) = P(X, Y) / P(X) = \sum_{Z}{P(X,Y,Z)} / \sum_{Y, Z}{P(X,Y,Z)}</script><p>判别式模型直接<strong>对条件概率分布$P(Y,Z | X)$进行建模。</strong></p>
+<script type="math/tex; mode=display">
+P(Y | X) = \sum_{Z}{P(Y,Z | X)}</script><p>判别式模型（DiscriminativeModel）是直接学习决策函数f(x)或者直接求得条件概率分布p(y|x;θ)。常见的判别式模型有线性回归模型、支持向量机SVM等。</p>
 <p><strong>对条件分布进行建模。</strong></p>
-<p>生成式模型（GenerativeModel）由数据学习联合概率分布p(x,y)，然后通过贝叶斯公式来求得p(yi|x)，然后选取使得p(yi|x)最大的yi。例如朴素贝叶斯模型和隐马尔可夫模型。</p>
-<p><strong>对联合分布进行建模。</strong></p>
 <h2><span id="5-自然语言处理中概率图模型的演变">5 自然语言处理中概率图模型的演变</span></h2><p>横向：由点到线（序列结构）、到面（图结构）。</p>
 <p>纵向：在一定条件下生成式模型（genmodel）转变为判别式模型（discriminativemodel）</p>
 <p><img src="/2019/12/07/ji-qi-xue-xi/gai-lu-tu-mo-xing/clip_image002.jpg" alt="img"></p>
@@ -751,8 +753,8 @@ p\left(x_{4} | x_{1}, x_{2}, x_{3}\right)=p\left(x_{4} | x_{2}\right)</script><p
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/machine-learning/" class="post-category">
-                                    machine-learning
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
                                 </a>
                             
                             
@@ -777,27 +779,23 @@ p\left(x_{4} | x_{1}, x_{2}, x_{3}\right)=p\left(x_{4} | x_{2}\right)</script><p
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/12/07/ji-qi-xue-xi/ji-cheng-xue-xi/">
+                <a href="/2019/12/07/shen-du-xue-xi-yu-nlp-ji-chu/attention/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="集成学习">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Attention">
                         
-                        <span class="card-title">集成学习</span>
+                        <span class="card-title">Attention</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             [TOC]
-1 集成学习目前的集成学习有两大类：
+1 Basic Attention1.1 Attention 定义
+对于Attention机制的整个计算过程，可以总结为以下三个过程：
 
-个体学习器之间不存在强依赖关系，可以同时生成、并行计算
-个体学习器之间存在强依赖关系，必须串行生成
-
-1的代表：Bagging、随机森林
-2的代表：Boosting、AdaBoost
-2 
+socre 函数： 根据 Query 与 Key 计算两者之间的相似性或相关性， 即 so
                         
                     </div>
                     <div class="publish-info">
@@ -808,8 +806,8 @@ p\left(x_{4} | x_{1}, x_{2}, x_{3}\right)=p\left(x_{4} | x_{2}\right)</script><p
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/machine-learning/" class="post-category">
-                                    machine-learning
+                            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8ENLP%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    深度学习与NLP基础
                                 </a>
                             
                             
@@ -819,8 +817,8 @@ p\left(x_{4} | x_{1}, x_{2}, x_{3}\right)=p\left(x_{4} | x_{2}\right)</script><p
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/">
-                        <span class="chip bg-color">集成学习</span>
+                    <a href="/tags/Attention/">
+                        <span class="chip bg-color">Attention</span>
                     </a>
                     
                 </div>
@@ -1014,7 +1012,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.7k</span>&nbsp;字
+                class="white-color">133.9k</span>&nbsp;字
             
             
             

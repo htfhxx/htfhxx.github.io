@@ -1,0 +1,1483 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="ElasticSearch, 长腿咚咚咚的个人博客">
+    <meta name="description" content="2020.07.18再次完善
+本文倾向于讨论涉及ES检索应用过程的原理和特性，对底层和架构不过多关注。
+1. ElasticSearchElasticsearch 是一个实时的分布式存储、搜索、分析的引擎。
+相比于数据库为什么要用Elast">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>ElasticSearch | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        ElasticSearch
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/ElasticSearch/">
+                                <span class="chip bg-color">ElasticSearch</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E8%AF%AD%E8%A8%80%E5%B7%A5%E5%85%B7%E6%8A%80%E6%9C%AF%E7%AD%89%E6%96%87%E6%A1%A3/" class="post-category">
+                                语言工具技术等文档
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-05-30
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    14 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>2020.07.18再次完善</p>
+<p>本文倾向于讨论涉及ES检索应用过程的原理和特性，对底层和架构不过多关注。</p>
+<h2><span id="1-elasticsearch">1. ElasticSearch</span></h2><p>Elasticsearch 是一个实时的分布式存储、搜索、分析的引擎。</p>
+<p>相比于数据库为什么要用Elasticsearch：Elasticsearch的强大之处就是可以<strong>模糊查询</strong></p>
+<h3><span id="11-术语">1.1 术语</span></h3><p><strong>Index</strong>：相当于数据库的Table</p>
+<p><strong>Document</strong>：Document相当于数据库的一行记录</p>
+<p><strong>Field</strong>：相当于数据库的Column的概念</p>
+<p><strong>Mapping</strong>：相当于数据库的Schema的概念</p>
+<p><strong>DSL</strong>：相当于数据库的SQL</p>
+<p><img src="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/v2-814655822e4782d6277b7bc0b0c420d6_720w.jpg" alt="img" style="zoom:50%;"></p>
+<h3><span id="12-dsl">1.2 DSL</span></h3><p>包括query（查询）、size（返回数量）等，最常用的还是query</p>
+<h4><span id="121-简单单一查询">1.2.1 简单单一查询</span></h4><ul>
+<li>match（匹配查询）</li>
+<li>range（范围查询）</li>
+<li>term（确切查询）</li>
+<li>…</li>
+</ul>
+<p>简单单一查询 - 匹配查询 - match：</p>
+<pre><code># 检索product_name字段包含“toothbrush&#39;的数据
+dsl_1 = {
+  &quot;query&quot;: {
+    &quot;match&quot;: {
+      &quot;product_name&quot;: &quot;toothbrush&quot;
+    }
+  }
+}
+</code></pre><pre><code># 检索product_name字段包含“PHILIPS”或“toothbrush&#39;的数据，越多越靠前
+dsl_2 = {
+  &quot;query&quot;: {
+    &quot;match&quot;: {
+      &quot;product_name&quot;: &quot;PHILIPS toothbrush&quot;
+    }
+  }
+}
+# 检索product_name字段包含“PHILIPS toothbrush&quot;的数据 - match_phrase
+dsl_3 = {
+  &quot;query&quot;: {
+    &quot;match_phrase&quot;: {
+      &quot;product_name&quot;: &quot;PHILIPS toothbrush&quot;
+    }
+  }
+}
+本质上dsl_3等价于以下dsl_4，dsl_4的and改为or等价于dsl_2
+dsl_4 = {
+  &quot;query&quot;: {
+    &quot;match&quot;: {
+      &quot;product_name&quot;: {
+        &quot;query&quot;: &quot;PHILIPS toothbrush&quot;,
+        &quot;operator&quot;: &quot;and&quot;
+      }
+     }
+   }
+}
+</code></pre><p>简单单一查询 - 范围匹配 - range：</p>
+<pre><code># 检索price字段包含&gt;=30的数据：
+dsl = {
+  &quot;query&quot;: {
+    &quot;range&quot;: {
+      &quot;price&quot;: {
+        &quot;gte&quot;: 30
+      }
+    }
+  }
+}
+</code></pre><p>简单单一查询 - 完全匹配 - term terms：</p>
+<pre><code># 检索product_name字段等于“PHILIPS&#39;的数据
+dsl_1 = {
+  &quot;query&quot;: {
+    &quot;term&quot;: {
+      &quot;product_name&quot;: &quot;PHILIPS&quot;
+    }
+  }
+}
+# 检索product_name字段等于“PHILIPS&#39;或“Shell&quot;的数据
+dsl_1 = {
+  &quot;query&quot;: {
+    &quot;terms&quot;: {
+      &quot;product_name&quot;: [
+          &quot;PHILIPS&quot;,
+          &quot;Shell&quot;
+      ]
+    }
+  }
+}
+</code></pre><p>还有很多，比如match_all、multi_match、match_phrase、exists、missing、prefix等等</p>
+<h4><span id="122-复合查询">1.2.2 复合查询</span></h4><p>复合查询 - bool</p>
+<ul>
+<li><p>must（必须满足）</p>
+</li>
+<li><p>must_not（必须不满足）</p>
+</li>
+<li><p>should（尽量满足）</p>
+</li>
+<li><p>filter（筛选） ： filter底下本质上也是个query，其下的是单一查询字段match、range、term等</p>
+</li>
+<li><p>…</p>
+</li>
+</ul>
+<pre><code>
+dsl = {
+    &#39;query&#39;: {
+        &#39;bool&#39;: {
+            &quot;must&quot;: {
+                &quot;product_name&quot;: &quot;toothbrush&quot;
+            },
+            &quot;must_not&quot;: {
+                  &quot;match&quot;: {
+                    &quot;product_ID&quot;: &quot;HX6730&quot;
+                  }
+            },
+            &quot;should&quot;: {
+                  &quot;match&quot;: {
+                    &quot;product_desc&quot;: &quot;刷头&quot;
+                  }
+            }
+            &quot;filter&quot;: {
+                &quot;range&quot;: {
+                    &quot;price&quot;: {
+                            &quot;gt&quot;: 400
+                    }
+                }
+                &quot;term&quot;: {
+                      &quot;product_name&quot;: &quot;PHILIPS&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre><h3><span id="13-检索原理">1.3 检索原理</span></h3><h4><span id="131-底层数据原理">1.3.1 底层数据原理</span></h4><p>底层数据结构基于 树状的term+倒排索引</p>
+<p><img src="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/v2-ada6a56e22eaa7541552527f64e59e17_720w.jpg" alt="img"></p>
+<p><img src="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/v2-570f46821186218748e6f6e34658f568_720w.jpg" alt="img"></p>
+<p>插入数据时，先对数据进行分词，分出来的词的集合叫Term Dictionary；</p>
+<p>Term Dictionary抽象出一个词前缀 Term Index，放入内存中，方便查找且速度快。</p>
+<p>每个term会对应一个文档列表Posting list， 会根据一些编码技术等对数据压缩和求交并集等；</p>
+<h4><span id="132-结构化查询原理">1.3.2 结构化查询原理</span></h4><p>结构化查询（Structured search） 是指对那些具有内在结构数据的查询，是对查询的另外一个层次划分</p>
+<p>比如日期、时间和数字都是结构化的，因为它们有精确的格式，常用于范围以及值大小的比较查询</p>
+<p>有些文本在某些场景下也是结构化的，是有限的离散的词语的集合，比如性别只有”男“和”女“</p>
+<p>结构化查询的结果：要么存于集合之中，要么存在集合之外</p>
+<p>结构化查询没有”相似“的概念，所以一般情况下不会给该类查询进行打分，提高性能</p>
+<h4><span id="133-词项查询原理">1.3.3 词项查询原理</span></h4><p>词项查询大概有以下查询：</p>
+<pre class=" language-lang-text"><code class="language-lang-text">1. Term Query：词项精确匹配
+2. Range Query：范围查询
+3. Exists Query: 是否存在判断查询
+4. Prefix Query：前缀查询
+5. Wildcard Query：通配符查询
+</code></pre>
+<p>在 ES 中 ，词项查询不做分词处理，会直接将输入作为一个整体去倒排索引中查询</p>
+<p>词项查询是对倒排索引的词项精确匹配，它不会对词的多样性进行处理，比如大小写转换之类的</p>
+<h4><span id="134-全文查询原理">1.3.4 全文查询原理</span></h4><p>全文查询大概有以下查询：</p>
+<pre class=" language-lang-text"><code class="language-lang-text">1. Match Query：匹配查询，拆分成多个独立的词进行查询然后汇总
+2. Match Phrase Query：语句查询
+3. Query String Query：通过在 URL 中使用 q 参数进行查询，相关说明参考上一篇文章 [Elasticsearch 入门学习](https://zhuanlan.zhihu.com/p/104215274)
+4. Match Phrase Prefix Query：和 Match Phrase Query 类似，只是在匹配时，容许对最后一个词的前缀进行匹配 
+5. Multi Match Query：同时对多个字段搜索匹配
+</code></pre>
+<p>基于全文的查询，索引和搜索时都会进行分词，待查询字符串会先由分词器进行分词然后生成一个供查询的词项列表</p>
+<p><strong>全文的查询会对分词项列表中每个分词进行底层查询，最后在上层进行结果的合并，并为每个查询到的文档生成一个算分</strong></p>
+<p>拿一个例子看出是怎么整合的：</p>
+<pre><code>dsl = {
+    &quot;size&quot;: 1,
+    &#39;query&#39;: {
+        &#39;bool&#39;: {
+            &quot;must&quot;: {
+                &quot;match&quot;: {&quot;content&quot;: &quot;我 靠&quot;}
+            }
+        }
+    }
+}
+hits = es.search(index=&quot;qa_data&quot;, body=dsl, explain=True)
+print(hits)   # 自己整理换行真是难受，早知道整个小工具用了
+
+{
+    &#39;took&#39;: 2, 
+    &#39;timed_out&#39;: False, 
+    &#39;_shards&#39;: {
+        &#39;total&#39;: 1, 
+        &#39;successful&#39;: 1, 
+        &#39;skipped&#39;: 0, 
+        &#39;failed&#39;: 0
+    },
+    &#39;hits&#39;: {
+    &#39;total&#39;: {
+        &#39;value&#39;: 10000, 
+        &#39;relation&#39;: &#39;gte&#39;
+    }, 
+    &#39;max_score&#39;: 9.72023, 
+    &#39;hits&#39;: [{
+        &#39;_shard&#39;: &#39;[qa_data][0]&#39;, 
+        &#39;_node&#39;: &#39;256T2YHuTJCxS4X2uW-hMA&#39;, 
+        &#39;_index&#39;: &#39;qa_data&#39;, 
+        &#39;_type&#39;: &#39;_doc&#39;,
+        &#39;_id&#39;: &#39;ROaF0XUBY0Yp--9b1MZE&#39;, 
+        &#39;_score&#39;: 9.72023,
+        &#39;_source&#39;: {&#39;pid&#39;: &#39;qid_4791148485424909447&#39;, 
+        &#39;content&#39;: &#39;我们若靠圣灵得生，就当靠圣灵行事，不随从肉体行事，不犯罪&#39;},
+        &#39;_explanation&#39;: {
+            &#39;value&#39;: 9.72023, 
+            &#39;description&#39;: &#39;sum of:&#39;, 
+            &#39;details&#39;: [{
+                &#39;value&#39;: 2.1879215, 
+                &#39;description&#39;: &#39;weight(content:我 in 236854) [PerFieldSimilarity], result of:&#39;,
+                &#39;details&#39;: [{
+                    &#39;value&#39;: 2.1879215, &#39;description&#39;: &#39;score(freq=1.0), computed as boost * idf * tf from:&#39;,
+                    &#39;details&#39;: [
+                        {&#39;value&#39;: 2.2, &#39;description&#39;: &#39;boost&#39;, &#39;details&#39;: []}, 
+                        {&#39;value&#39;: 2.1715496,&#39;description&#39;: &#39;idf, computed as log(1 + (N - n + 0.5) / (n + 0.5)) from:&#39;,
+                            &#39;details&#39;: [
+                                {&#39;value&#39;: 31505,&#39;description&#39;: &#39;n, number of documents containing term&#39;,&#39;details&#39;: []},
+                                {&#39;value&#39;: 276361,&#39;description&#39;: &#39;N, total number of documents with field&#39;,&#39;details&#39;: []}
+                            ]
+                        },
+                        {
+                        &#39;value&#39;: 0.4579724,
+                        &#39;description&#39;: &#39;tf, computed as freq / (freq + k1 * (1 - b + b * dl / avgdl)) from:&#39;,
+                        &#39;details&#39;: [
+                             {&#39;value&#39;: 1.0, &#39;description&#39;: &#39;freq, occurrences of term within document&#39;,
+                              &#39;details&#39;: []},
+                             {&#39;value&#39;: 1.2, &#39;description&#39;: &#39;k1, term saturation parameter&#39;,
+                              &#39;details&#39;: []},
+                             {&#39;value&#39;: 0.75, &#39;description&#39;: &#39;b, length normalization parameter&#39;,
+                              &#39;details&#39;: []},
+                             {&#39;value&#39;: 25.0, &#39;description&#39;: &#39;dl, length of field&#39;, &#39;details&#39;: []},
+                             {&#39;value&#39;: 25.465807, &#39;description&#39;: &#39;avgdl, average length of field&#39;,
+                              &#39;details&#39;: []}
+                            ]
+                        }
+                    ]
+                }]
+            },
+            {
+            &#39;value&#39;: 7.532309, 
+            &#39;description&#39;: &#39;weight(content:靠 in 236854) [PerFieldSimilarity], result of:&#39;,
+            &#39;details&#39;: [{
+                &#39;value&#39;: 7.532309, &#39;description&#39;: &#39;score(freq=2.0), computed as boost * idf * tf from:&#39;,
+                &#39;details&#39;: [
+                    {&#39;value&#39;: 2.2, &#39;description&#39;: &#39;boost&#39;, &#39;details&#39;: []}, 
+                    {&#39;value&#39;: 5.4498615,&#39;description&#39;: &#39;idf, computed as log(1 + (N - n + 0.5) / (n + 0.5)) from:&#39;,
+                    &#39;details&#39;: [
+                        {&#39;value&#39;: 1187,&#39;description&#39;: &#39;n, number of documents containing term&#39;,&#39;details&#39;: []},
+                        {&#39;value&#39;: 276361,&#39;description&#39;: &#39;N, total number of documents with field&#39;,&#39;details&#39;: []}]},
+                        {&#39;value&#39;: 0.6282319, &#39;description&#39;: &#39;tf, computed as freq / (freq + k1 * (1 - b + b * dl / avgdl)) from:&#39;,
+                             &#39;details&#39;: [
+                             {&#39;value&#39;: 2.0, &#39;description&#39;: &#39;freq, occurrences of term within document&#39;,
+                              &#39;details&#39;: []},
+                             {&#39;value&#39;: 1.2, &#39;description&#39;: &#39;k1, term saturation parameter&#39;,
+                              &#39;details&#39;: []},
+                             {&#39;value&#39;: 0.75, &#39;description&#39;: &#39;b, length normalization parameter&#39;,
+                              &#39;details&#39;: []},
+                             {&#39;value&#39;: 25.0, &#39;description&#39;: &#39;dl, length of field&#39;, &#39;details&#39;: []},
+                             {&#39;value&#39;: 25.465807, &#39;description&#39;: &#39;avgdl, average length of field&#39;,
+                              &#39;details&#39;: []}
+                              ]
+                        }
+                ]}
+            ]}
+
+      ]}}]}}
+</code></pre><p>从上面的结果可以看出来，使用”我靠“来检索得到：“我们若靠圣灵得生，就当靠圣灵行事，不随从肉体行事，不犯罪”</p>
+<p>主要是算出，“我”字的TF-IDF值与“靠”字TF-IDF值的加和，其中TF-IDF值是按照boost <em> idf </em> tf 来计算得到的。</p>
+<h2><span id="2-python对接es检索应用">2. Python对接ES检索应用</span></h2><h3><span id="21-windows下环境搭建">2.1 windows下环境搭建</span></h3><h4><span id="211-安装java-se环境">2.1.1 安装Java SE环境</span></h4><p>安装jdk：<a href="https://www.oracle.com/java/technologies/javase-downloads.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase-downloads.html</a></p>
+<p>windows下配置<strong>JAVA_HOME</strong>环境变量（自行百度）</p>
+<h4><span id="212-安装es">2.1.2 安装ES</span></h4><p>官方下载中心：<a href="https://www.elastic.co/cn/downloads/elasticsearch" target="_blank" rel="noopener">https://www.elastic.co/cn/downloads/elasticsearch</a></p>
+<p>安装后打开bin目录下的elasticsearch.bat，浏览器输入<a href="http://localhost:9200后显示如下信息即为安装成功" target="_blank" rel="noopener">http://localhost:9200后显示如下信息即为安装成功</a></p>
+<p><img src="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/image-20201119105040286.png" alt="image-20201119105040286"></p>
+<h4><span id="213-安装head插件可选建议安装">2.1.3 安装head插件(可选，建议安装)</span></h4><ol>
+<li><p>安装node.js：<a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a>   node -v可以检测是否成功</p>
+</li>
+<li><p>在elasticsearch-head-master目录下执行 npm install -g grunt-cli<br>grunt 是基于Node.js的项目构建工具，可以进行打包压缩、测试、执行等等的工作，head插件就是通过grunt启动。 grunt -version可以检测是否成功‘<br><img src="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/image-20200718214302194.png" alt="image-20200718214302194"></p>
+</li>
+<li><p>下载并解压elasticsearch-head-master 到安装目录下，例如我的D:\software\elasticsearch-7.8.0-windows-x86_64\elasticsearch-7.8.0\elasticsearch-head-master<br>elasticsearch-head-master 的可用版本： <a href="https://codeload.github.com/mobz/elasticsearch-head/zip/master" target="_blank" rel="noopener">https://codeload.github.com/mobz/elasticsearch-head/zip/master</a> </p>
+</li>
+<li><p>配置 elasticsearch-7.8.0\config\elasticsearch.yml</p>
+<pre><code>network.host: 0.0.0.0   # 设成0.0.0.0让任何人都可以访问(个人使用没事，线上服务别这样)
+http.port: 9200
+http.cors.enabled: true   # 解决elasticsearch-head 集群健康值: 未连接问题
+http.cors.allow-origin: &quot;*&quot;
+</code></pre></li>
+<li><p>在elasticsearch-head-master目录下执行<strong>npm install</strong> 安装依赖（windows 下用git bash）</p>
+</li>
+<li><p>修改elasticsearch-head-master配置，修改服务器监听地址:<strong>Gruntfile.js</strong> </p>
+</li>
+</ol>
+<pre><code>connect: {
+            server: {
+                options: {
+                    port: 9100,
+                    base: &#39;.&#39;,
+                    keepalive: true,
+                    hostname: &#39;*&#39;
+                }
+            }
+        }
+</code></pre><ol>
+<li><p>继续在git bash,该目录下执行<strong>grunt server</strong> 命令，启动head服务</p>
+</li>
+<li><p>访问head管理页面，地址:<a href="http://localhost:9100/" target="_blank" rel="noopener">http://localhost:9100/</a> </p>
+<p><img src="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/image-20200718210608007.png" alt="image-20200718210608007"></p>
+</li>
+</ol>
+<p>上面的都是跟着reference某篇顺着下来的，一切顺利没遇到别的情况。</p>
+<h4><span id="214-python依赖安装">2.1.4 python依赖安装</span></h4><p>pip install elasticsearch</p>
+<p>启动服务—安装目录下的bin目录下，cmd中：</p>
+<p>D:\software\elasticsearch-7.8.0-windows-x86_64\elasticsearch-7.8.0\bin</p>
+<pre><code>启动   elasticsearch-service.bat start   
+停止   elasticsearch-service.bat stop
+</code></pre><p>或者单机该文件和关闭cmd来启动和停止</p>
+<h4><span id="215-再次使用">2.1.5 再次使用</span></h4><pre><code>D:\software\elasticsearch-7.8.0-windows-x86_64\elasticsearch-7.8.0\elasticsearch-head-master
+
+**grunt server** 命令，启动head服务
+</code></pre><h3><span id="22-python-操作">2.2 python 操作</span></h3><pre><code>from elasticsearch import Elasticsearch
+</code></pre><h4><span id="221-index操作">2.2.1 index操作</span></h4><p>index是必须的，类似数据库名。</p>
+<p><strong>创建一个Index</strong></p>
+<pre class=" language-lang-python"><code class="language-lang-python">#  by default we connect to localhost:9200
+es = Elasticsearch()   
+# create an index in elasticsearch, ignore status code 400(index already exists)
+result = es.indices.create(index='songname', ignore=400)
+print(result)
+</code></pre>
+<p>运行结果：</p>
+<pre><code># 成功则为：{&#39;acknowledged&#39;: True, &#39;shards_acknowledged&#39;: True, &#39;index&#39;: &#39;news&#39;}
+# 由于index已经存在了，重新运行则为：{&#39;error&#39;: {&#39;root_cause&#39;: [{&#39;type&#39;: &#39;resource_already_exists_exception&#39;, &#39;reason&#39;: &#39;index [news/K_gOfdJHRb2_BenLKPQNug] already exists&#39;, &#39;index_uuid&#39;: &#39;K_gOfdJHRb2_BenLKPQNug&#39;, &#39;index&#39;: &#39;news&#39;}], &#39;type&#39;: &#39;resource_already_exists_exception&#39;, &#39;reason&#39;: &#39;index [news/K_gOfdJHRb2_BenLKPQNug] already exists&#39;, &#39;index_uuid&#39;: &#39;K_gOfdJHRb2_BenLKPQNug&#39;, &#39;index&#39;: &#39;news&#39;}, &#39;status&#39;: 400}
+</code></pre><p><strong>删除一个index</strong></p>
+<pre><code>result = es.indices.delete(index=&#39;songname&#39;, ignore=[400, 404])
+</code></pre><p>可以通过在git bash 中运行‘ curl -X GET ‘<a href="http://localhost:9200/_cat/indices?v" target="_blank" rel="noopener">http://localhost:9200/_cat/indices?v</a>‘  ’ 查看当前index</p>
+<p><img src="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/image-20200718211521012-1605667607033.png" alt="image-20200718211521012"></p>
+<h4><span id="222-插入数据">2.2.2 插入数据</span></h4><p>这是插入数据or更新数据的命令，可以自定义id，也可以分配。</p>
+<pre><code>es.index(index=&#39;music&#39;, body = {&#39;song_id&#39;:song_id,&#39;comment&#39;:comment }) 
+es.index(index=&#39;music&#39;, id=123, body = {&#39;song_id&#39;:song_id,&#39;comment&#39;:comment })
+</code></pre><p>然后可以在head端看到已经导入的数据</p>
+<p><img src="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/image-20200718231228824-1605667598445.png" alt="image-20200718231228824" style="zoom:50%;"></p>
+<p><img src="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/image-20200718231609075-1605667602227.png" alt="image-20200718231609075"></p>
+<h4><span id="223-查询数据">2.2.3 查询数据</span></h4><p>直接无条件查询，可以搜索到所有结果</p>
+<pre><code>result = es.search(index=&#39;news&#39;)
+print(result) # 会得到一个字典，里面包含各种信息，以及最终的结果
+</code></pre><p>我这里的例子是一个song_id对应一堆comment，我存入的数据的数据结构为：</p>
+<pre><code>{
+    song_id : song_id,
+    comment : comment
+}
+</code></pre><p>通过更复杂一点的dsl 查询办法，限制song_id的对应，然后再通过lyric去检索comment</p>
+<pre><code>dsl = {
+    &quot;size&quot;: 5,
+    &#39;query&#39;: {
+        &#39;bool&#39;: {
+            &#39;filter&#39;: [{&quot;term&quot;: {&quot;song_id&quot;: song_id}}],
+            &quot;must&quot;: {
+                   &quot;match&quot;: {&quot;comment&quot;: &#39;&#39;.join(lyric)}
+               }
+        }
+    }
+}
+result = es.search(index=&#39;music&#39;, body=dsl)
+for hit in result[&#39;hits&#39;][&#39;hits&#39;]:
+    sorted_comment.append(hit[&#39;_source&#39;][&#39;comment&#39;])
+print(sorted_comment)
+</code></pre><p>最终搞定一个简单的检索应用，也达到了我的要求。</p>
+<p>因为数据结构很简单，所以并没有涉及太多复杂的内容，之后再用到再来补充。</p>
+<h2><span id="reference">Reference</span></h2><p><a href="https://github.com/elastic/elasticsearch-py" target="_blank" rel="noopener">https://github.com/elastic/elasticsearch-py</a></p>
+<p><a href="https://blog.csdn.net/wufaliang003/article/details/81368365" target="_blank" rel="noopener">https://blog.csdn.net/wufaliang003/article/details/81368365</a></p>
+<p><a href="https://www.cnblogs.com/gangle/p/9328257.html" target="_blank" rel="noopener">https://www.cnblogs.com/gangle/p/9328257.html</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html</a></p>
+<p><a href="https://www.zhihu.com/question/323811022" target="_blank" rel="noopener">https://www.zhihu.com/question/323811022</a></p>
+<p><a href="https://www.cnblogs.com/sddai/p/11061412.html" target="_blank" rel="noopener">https://www.cnblogs.com/sddai/p/11061412.html</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/46400723" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/46400723</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/104631505" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/104631505</a></p>
+<p><a href="https://my.oschina.net/stanleysun/blog/1594220" target="_blank" rel="noopener">https://my.oschina.net/stanleysun/blog/1594220</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/">http://htfhxx.github.io/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/ElasticSearch/">
+                                    <span class="chip bg-color">ElasticSearch</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2020-05-30T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/07/07/nlp-jin-jie/nlp-zhong-de-dui-ou-xue-xi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="NLP中的对偶学习">
+                        
+                        <span class="card-title">NLP中的对偶学习</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 介绍1.1 2016-NIPS-Dual Learning for Machine Translation神经机器翻译（NMT）的训练需要数以千万计的双语句子对。为了解决此培训数据瓶颈，开发了一种双重学习机制，该机制可使NMT系统通过双
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-07
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                    NLP进阶
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/NLP%E4%B8%AD%E7%9A%84%E5%AF%B9%E5%81%B6%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">NLP中的对偶学习</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="文本生成特异性">
+                        
+                        <span class="card-title">文本生成特异性</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            [TOC]
+1 问题背景文本生成的安全响应问题，例如在对话领域，容易生成无意义的安全回答，例如”我不知道“。
+倾向于返回高频但毫无意义响应的原因，一部分在于以往的方法针对一对一关系进行建模，忽略了可能的一对多的关系。
+目前的方法汇总：
+
+找
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                    NLP进阶
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90%E7%89%B9%E5%BC%82%E6%80%A7/">
+                        <span class="chip bg-color">文本生成特异性</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">133.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

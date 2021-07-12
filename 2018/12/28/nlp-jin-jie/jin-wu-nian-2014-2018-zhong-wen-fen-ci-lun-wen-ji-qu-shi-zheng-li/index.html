@@ -1,0 +1,1594 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="近五年(2014-2018)中文分词论文及趋势整理, 长腿咚咚咚的个人博客">
+    <meta name="description" content="[TOC]
+1. 前言整理了近五年中文分词的文章，意图探索研究趋势。
+文章来源来自于几大nlp顶会：ACL、EMNLP、COLING、NAACL.
+在阅读16、17年文章的时候，发现了引用了这些文章的来自于AAAI、IJCAI的一些文章，也">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>近五年(2014-2018)中文分词论文及趋势整理 | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        近五年(2014-2018)中文分词论文及趋势整理
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%BF%91%E4%BA%94%E5%B9%B4-2014-2018-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E8%AE%BA%E6%96%87%E5%8F%8A%E8%B6%8B%E5%8A%BF%E6%95%B4%E7%90%86/">
+                                <span class="chip bg-color">近五年(2014-2018)中文分词论文及趋势整理</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                NLP进阶
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-12-28
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    22 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>[TOC]</p>
+<h2><span id="1-前言">1. 前言</span></h2><p>整理了近五年中文分词的文章，意图探索研究趋势。</p>
+<p>文章来源来自于几大nlp顶会：ACL、EMNLP、COLING、NAACL.</p>
+<p>在阅读16、17年文章的时候，发现了引用了这些文章的来自于AAAI、IJCAI的一些文章，也算是一个小Tip。</p>
+<p>主要从以下几方面进行总结：</p>
+<pre><code>论文名
+作者
+机构
+主要工作（解决了什么）
+主要方法（使用了什么）
+数据集
+取得的成果
+缺陷和不足
+下一步工作
+</code></pre><p>简要的统计与总结如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>2014</th>
+<th>2015</th>
+<th>2016</th>
+<th>2017</th>
+<th>2018</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACL</td>
+<td>5</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>0</td>
+<td>15</td>
+</tr>
+<tr>
+<td>EMNLP</td>
+<td>3</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>8</td>
+</tr>
+<tr>
+<td>NAACL</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>COLING</td>
+<td>1</td>
+<td>/</td>
+<td>0</td>
+<td>/</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>AAAI</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>IJCAI</td>
+<td>/</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Count</td>
+<td>9</td>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>4</td>
+<td>32</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>ps：“/”代表未进行统计或当年未举办会议</p>
+<p>自己总结的一些趋势（不够专业，仅供参考）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>2014</th>
+<th>2015</th>
+<th>2016</th>
+<th>2017</th>
+<th>2018</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无监督</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>半监督</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>有监督</td>
+<td>6</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>神经网络</td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+<td>4</td>
+</tr>
+<tr>
+<td>传统方法</td>
+<td>8</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>联合建模</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>特定领域</td>
+<td>专利</td>
+<td></td>
+<td></td>
+<td>微文本</td>
+<td>医学</td>
+</tr>
+<tr>
+<td>重点在于搭建or改进神经网络</td>
+<td>1/9</td>
+<td>3/5</td>
+<td>3/5</td>
+<td>3/7</td>
+<td>2/4</td>
+</tr>
+<tr>
+<td>解决领域适配问题</td>
+<td>3/9</td>
+<td>1/5</td>
+<td>0/5</td>
+<td>2/7</td>
+<td>3/4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>2014</th>
+<th>2015</th>
+<th>2016</th>
+<th>2017</th>
+<th>2018</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无监督分词 *  2</td>
+<td>双语半监督</td>
+<td></td>
+<td>joint S&amp;T task 词性标注，联合学习</td>
+<td></td>
+</tr>
+<tr>
+<td>领域适配问题 *  2  扩充语料库 全部和部分标注数据</td>
+<td>神经网络、嵌入匹配</td>
+<td>神经网络分词模型</td>
+<td>更简单、更快、更准确。神经网络模型</td>
+<td>改进模型—pretrained  embeddings、dropout、超参数调整</td>
+</tr>
+<tr>
+<td>神经网络分词模型</td>
+<td>门控递归神经网络，</td>
+<td></td>
+<td>对抗性多准则学习</td>
+<td>新的医学领域中文分词框架</td>
+</tr>
+<tr>
+<td>有监督模型精度  单词与字符结合的模型</td>
+<td>LSTM</td>
+<td>汉语自动分词用于口语理解和命名实体识别</td>
+<td>多粒度中文分词，构建了数据集</td>
+<td>利用未标记和部分标记的数据来完成跨领域的CWS任务</td>
+</tr>
+<tr>
+<td>用于机器翻译的分词</td>
+<td></td>
+<td>基于依赖的门控递归神经网络</td>
+<td>丰富的外部资源（预训练方法），以加强神经分词</td>
+<td>词典与神经网络相结合</td>
+</tr>
+<tr>
+<td>专利领域模型精度  手动标注并改进CRF</td>
+<td>CRF改进，提升OOV召回率</td>
+<td>基于词的汉语分割神经网络模型</td>
+<td>中文微文本分割</td>
+<td></td>
+</tr>
+<tr>
+<td>半监督分词 词典  CRF</td>
+<td></td>
+<td>汉语分词评价指标</td>
+<td>半监督神经网络的词-上下文字符嵌入</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>小说，神经网络，跨领域</td>
+<td>半监督联合模型</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2><span id="2-具体整理内容">2. 具体整理内容</span></h2><h3><span id="21-2014年">2.1 2014年</span></h3><p><strong>论文名：A Joint Model for Unsupervised Chinese Word Segmentation</strong></p>
+<p><strong>作者：</strong>Miaohong Chen  Baobao Chang  Wenzhe Pei</p>
+<p><strong>机构：</strong>教育部计算语言学重点实验室， 北京大学电子工程与计算机科学学院</p>
+<p><strong>主要工作（解决了什么）：</strong>一种无监督中文分词的联合模型，提升了分词的精读</p>
+<p><strong>主要方法（使用了什么）：</strong>结合了基于字符的模型、非参数贝叶斯语言模型和基于良好性的模型的优点。</p>
+<p><strong>数据集：</strong> PKU and MSRA </p>
+<p><strong>取得的成果：</strong>提高了无监督分词模型的精度、较强的中文分词歧义解决能力</p>
+<p><strong>论文名：Effective Document-Level Features for Chinese Patent Word Segmentation</strong></p>
+<p><strong>作者：</strong>Si Li     Nianwen Xue</p>
+<p><strong>机构：</strong>Brandeis大学中文处理组</p>
+<p><strong>主要工作（解决了什么）：</strong>手工分割了大量的专利数据，设计了文档级的特性来捕捉专利中科学和技术术语的分布特征，</p>
+<p><strong>主要方法（使用了什么）：</strong>CRF模型，提取了字符、词语、文档级别的特征</p>
+<p><strong>数据集：</strong>142 Chinese patents（自己标注）</p>
+<p><strong>取得的成果：</strong>解决了专利领域的分词问题</p>
+<p><strong>论文名：Domain Adaptation for CRF-based Chinese Word Segmentation using</strong></p>
+<p><strong>Free Annotations</strong></p>
+<p><strong>作者：</strong>Yijia Liu , Yue Zhang , Wanxiang Che , Ting Liu , Fan Wu</p>
+<p><strong>机构：</strong>新加坡科技与设计大学，麻省理工学院社会计算和信息检索研究中心，哈尔滨工业大学</p>
+<p><strong>主要工作（解决了什么）：</strong>通过将各种免费标注源转换为部分标注数据的一致形式。并构造一种可以同时使用全部标注和部分标注数据进行训练的CRF变体，研究了分词的<strong>领域适配问题</strong>。</p>
+<p><strong>数据集：</strong>自由数据+免费标注数据</p>
+<p><strong>取得的成果：</strong>研究了分词的<strong>领域适配问题。</strong>自由数据的有效性，发现它们对于提高分割精度是有用的。</p>
+<p><strong>论文名：</strong>Max-Margin Tensor Neural Network for Chinese Word Segmentation</p>
+<p><strong>作者：</strong>Wenzhe Pei Tao Ge Baobao Chang∗</p>
+<p><strong>机构：</strong>教育部计算语言学重点实验室，北京大学电子工程与计算机科学学院</p>
+<p><strong>主要工作（解决了什么）：</strong>提出了一种新的中文分词神经网络模型——最大边缘张量神经网络(MMTNN)，显式地模拟了标签和上下文字符之间的交互。提出了一种有效地提高模型效率和避免过拟合风险的张量因子分解方法。</p>
+<p><strong>主要方法（使用了什么）：</strong>模型明确地模拟了标签和上下文字符之间的交互，从而获取了更多的语义信息。在神经网络模型中引入张量分解用于序列标记任务，加快了模型的训练和推理，防止了过拟合。</p>
+<p><strong>数据集：</strong>PKU and MSRA datasets</p>
+<p><strong>取得的成果：</strong>我们的模型比以前的神经网络模型具有更好的性能，并且我们的模型可以在最小的特征工程条件下获得具有竞争力的性能。</p>
+<p><strong>下一步工作：</strong>进一步扩展模型，并将其应用于其他结构预测问题。</p>
+<p><strong>论文名：</strong>Automatic Corpus Expansion for Chinese Word Segmentation by Exploiting the Redundancy of Web Information</p>
+<p><strong>作者：</strong>Xipeng Qiu, ChaoChao Huang and Xuanjing Huang</p>
+<p><strong>机构：</strong>上海市智能信息处理重点实验室，复旦大学计算机科学学院</p>
+<p><strong>主要工作（解决了什么）：</strong>处理一个新的领域而没有足够的标注语料库时，监督方法就不能很好地工作。</p>
+<p>提出了一种自动扩充外域文本训练语料库的方法</p>
+<p><strong>主要方法（使用了什么）：</strong>通过网络提供的大量相关的容易分割的句子，来分割一个复杂和不确定的分段。挑选出一些可靠的分段句，并将它们添加到语料库中，从而扩充语料库。</p>
+<p><strong>数据集：</strong>both CTB6.0 and CTB7.0 datasets</p>
+<p><strong>取得的成果：</strong>提出了一种自动扩充外域文本训练语料库的方法</p>
+<p><strong>下一步工作：</strong>我们的方法的长期目标是建立一个在线的、不断学习的系统，能够识别困难的任务，并从众包中寻求帮助。</p>
+<p><strong>论文名：</strong>Two Knives Cut Better Than One:Chinese Word Segmentation with Dual Decomposition</p>
+<p><strong>作者：</strong>Mengqiu Wang、Rob Voigt、Christopher D. Manning</p>
+<p><strong>机构：</strong>Stanford University  （Computer Science &amp; Linguistics） Department</p>
+<p><strong>主要工作（解决了什么）：</strong>中文分词主要有两种方法:基于单词的分词和基于字符的分词，两种方法各具优势。先前的研究表明，将这两种模型结合起来可以提高分割性能。提出了一种有效地结合两种分割方案的强度的方法，使用一种有效的双分解算法进行联合推理。</p>
+<p><strong>主要方法（使用了什么）：</strong></p>
+<p><strong>数据集：</strong>SIGHAN 2005  第二届国际汉语分词</p>
+<p><strong>取得的成果：</strong>本文提出了一种基于对偶分解的中文分词方法。可以对现有的CWS系统进行联合解码，比单独的任何一个系统都更加准确和一致，实现了迄今为止在该任务的标准数据集上所报告的最佳性能。</p>
+<p><strong>论文名：</strong>Empirical Study of Unsupervised Chinese Word Segmentation Methods for SMT on Large-scale Corpora</p>
+<p><strong>作者：</strong>Xiaolin Wang、 Masao Utiyama 、Andrew Finch、 Eiichiro Sumita</p>
+<p><strong>机构：</strong>国家信息与通信技术研究所 （日本？）</p>
+<p><strong>主要工作（解决了什么）：</strong>无监督分词(UWS)可以在没有标注数据的情况下为统计机器翻译(SMT)提供领域自适应分词，双语的UWS甚至可以优化分词的对齐。提出了一种有效的统一的基于pyp的单语和双语无监督方法。</p>
+<p><strong>主要方法（使用了什么）：</strong>本研究旨在为统计机器翻译建立一个更好的中文分词模型。该算法利用基于双语特征的对齐自动学习的词界信息，提出了一种较好的分割模型。</p>
+<p><strong>数据集：</strong>Chinese SIGHAN-MSR corpus</p>
+<p><strong>取得的成果：</strong>提高无监督分词模型的精度</p>
+<p><strong>论文名：</strong>Semi-Supervised Chinese Word Segmentation Using Partial-Label Learning With Conditional Random Fields 基于条件随机场的部分标签学习的半监督中文分词方法</p>
+<p><strong>作者：</strong>Fan Yang 、Paul Vozila </p>
+<p><strong>机构：</strong>Nuance Communications Inc. 从事语音识别软件、图像处理软件及输入法软件研发销售的公司</p>
+<p><strong>主要工作（解决了什么）：</strong>Wikipedia数据中的标点符号和实体标记在句子中定义了一些单词边界。采用条件随机场的部分标签学习方法，将这些有价值的知识用于半监督汉语分词。</p>
+<p><strong>数据集：</strong>CTB-6 corpus</p>
+<p><strong>取得的成果：</strong>CTB-6 test set is 95.98% in F-measure</p>
+<p><strong>论文名：</strong>Toward Better Chinese Word Segmentation for SMT via Bilingual Constraints</p>
+<p><strong>作者：</strong>Xiaodong Zeng、 Lidia S. Chao、 Derek F. Wong、 Isabel Trancoso、 Liang Tian</p>
+<p><strong>机构：</strong>澳门大学计算机与信息科学系</p>
+<p><strong>主要工作（解决了什么）：</strong>针对SMT任务提出了一种新的CWS模型。该模型的目的是维护树库数据的语言分割监督，同时集成由bitexts产生的有用的双语分割。</p>
+<p><strong>主要方法（使用了什么）：</strong>从基于字符的对齐中学习词的边界; 将学习到的单词边界编码为GP约束; 在GP约束下，利用PR框架对CRFs模型进行训练。</p>
+<p><strong>数据集：</strong>BLEU、NIST、METEOR 机器翻译质量</p>
+<p><strong>取得的成果：</strong>该模型能较好地实现用于机器翻译的分词</p>
+<h3><span id="22-2015年">2.2 2015年</span></h3><p><strong>论文名：</strong>Semi-supervised Chinese Word Segmentation based on Bilingual</p>
+<p>Information</p>
+<p><strong>作者：</strong>Wei Chen、Bo Xu</p>
+<p><strong>机构：</strong>自动化所</p>
+<p><strong>主要工作（解决了什么）：</strong>半监督的分词模型，包含三个层次的双语语言特征学习的层叠对数线性模型</p>
+<p><strong>数据集：</strong>1998人民日报语料库、Bakeoff-2  PKU、AS</p>
+<p><strong>取得的成果：</strong>精度超过优于目前最先进的单语和双语半监督方法。</p>
+<p><strong>论文名：</strong>Gated Recursive Neural Network for Chinese Word Segmentation</p>
+<p><strong>作者：</strong>Xinchi Chen, Xipeng Qiu∗ , Chenxi Zhu, Xuanjing Huang</p>
+<p><strong>机构：</strong>复旦大学上海市智能信息处理重点实验室</p>
+<p><strong>主要工作（解决了什么）：</strong>提出了一种用于中文分词的门控递归神经网络(GRNN)。由于GRNN相对较深，我们还采用了一种有监督的分层训练方法来避免梯度扩散问题。</p>
+<p><strong>数据集：</strong>PKU, MSRA and CTB6  NLPCC 2015 dataset微博文本</p>
+<p><strong>取得的成果：</strong>模型优于以往的神经网络模型和最先进的方法。</p>
+<p><strong>下一步工作：</strong>GRNN在其他序列标记任务上的应用。</p>
+<p><strong>论文名：</strong>Long Short-Term Memory Neural Networks for Chinese Word Segmentation</p>
+<p><strong>作者：</strong>Xinchi Chen, Xipeng Qiu∗ , Chenxi Zhu, Pengfei Liu, Xuanjing Huang</p>
+<p><strong>机构：</strong>复旦大学上海市智能信息处理重点实验室</p>
+<p><strong>主要工作（解决了什么）：</strong>提出了一种新的汉语分词神经网络模型，采用长短时记忆(LSTM)神经网络</p>
+<p><strong>数据集：</strong>PKU, MSRA and CTB6 </p>
+<p><strong>取得的成果：</strong>模型优于以往的神经网络模型和最先进的方法。</p>
+<p><strong>下一步工作：</strong>改为双向</p>
+<p><strong>论文名：</strong>Synthetic Word Parsing Improves Chinese Word Segmentation</p>
+<p><strong>作者：</strong>Fei Cheng、 Kevin Duh、 Yuji Matsumoto</p>
+<p><strong>机构：</strong>奈良信息科学研究所</p>
+<p><strong>主要工作（解决了什么）：</strong>提出了一种利用人工分词器提高汉语分词性能的新方法，该解析器分析单词的内部结构，并试图将未登录词转换为词汇内的细粒度子单词。我们提出了一个管道CWS系统，该系统首先预测这种细粒度的分割，然后对输出进行分段，以重构原始的分词标准。</p>
+<p><strong>数据集：</strong>PKU和MSR</p>
+<p><strong>取得的成果：</strong>提升了精度。在OOV召回方面有了实质性的改进。</p>
+<p><strong>论文名：</strong>Accurate Linear-Time Chinese Word Segmentation via Embedding Matching</p>
+<p><strong>作者：</strong>Jianqiang Ma 、Erhard Hinrichs</p>
+<p><strong>机构：</strong>德国图宾根大学语言学部</p>
+<p><strong>主要工作（解决了什么）：</strong>本文提出了一种嵌入匹配的中文分词方法，该方法对传统的序列标记框架进行了推广，并利用了分布式表示的优点。在此基础上，提出了一种基于基准语料库的贪心分割算法。</p>
+<p><strong>数据集：</strong>PKU  MSR</p>
+<p><strong>取得的成果：</strong>提升了精度</p>
+<h3><span id="23-2016年">2.3 2016年</span></h3><p><strong>论文名：</strong>Neural Word Segmentation Learning for Chinese</p>
+<p><strong>作者：</strong>Deng Cai and Hai Zhao∗</p>
+<p><strong>机构：</strong>上交计算机系</p>
+<p><strong>主要工作（解决了什么）：</strong>在本文中，我们提出了一种新的神经网络框架，它彻底消除了上下文窗口，可以利用完整的分割历史。我们的模型采用基于字符的门控组合神经网络生成候选词的分布式表示，然后将其输入长期短期记忆(LSTM)语言评分模型。</p>
+<p><strong>主要方法（使用了什么）：</strong>新的中文分词神经网络框架</p>
+<p><strong>数据集：</strong>PKU、MSR</p>
+<p><strong>取得的成果：</strong>提升精度。神经网络分词模型</p>
+<p><strong>论文名：</strong>An Empirical Study of Automatic Chinese Word Segmentation for Spoken Language Understanding and Named Entity Recognition 汉语自动分词用于口语理解和命名实体识别的实证研究</p>
+<p><strong>作者：</strong>Wencan Luo∗     Fan Yang</p>
+<p><strong>机构：</strong>匹兹堡大学</p>
+<p><strong>主要工作（解决了什么）：</strong>分词通常被认为是许多汉语自然语言处理任务的第一步，但它对这些后续任务的影响却相对缺乏研究。在对新数据应用现有的分词器时，如何解决不匹配问题?一个更好的分词器会产生更好的NLP后续任务性能吗?</p>
+<p><strong>主要方法（使用了什么）：</strong>将分词输出作为附加特征，采用部分学习的自适应技术，利用n-best分词表。</p>
+<p><strong>数据集：CTB6、PKU、NER、</strong>NER 3-fol</p>
+<p><strong>取得的成果：</strong>解决分词应用到新数据不匹配的问题—3个方法。（提高了SLU、NER精度）</p>
+<p><strong>论文名：</strong>A New Psychometric-inspired Evaluation Metric for Chinese Word Segmentation</p>
+<p><strong>作者：</strong>Peng Qian Xipeng Qiu∗ Xuanjing Huang</p>
+<p><strong>机构：</strong>复旦大学上海智能信息处理重点实验室</p>
+<p><strong>主要工作（解决了什么）：</strong>一种新的基于心理测量学的汉语分词评价指标</p>
+<p><strong>主要方法（使用了什么）：</strong>从心理测量学的基本思想入手，在困难与容易、奖励与惩罚之间取得平衡，提高评价的准确性。</p>
+<p><strong>数据集：PKU、MSR、NCC</strong></p>
+<p><strong>取得的成果：</strong>一种新的基于心理测量学的汉语分词评价指标。实际评价结果表明，所提出的评价指标给出的评价结果更加合理、易于区分，与人的评价结果具有较好的相关性。传统的精度、召回率和F-score。</p>
+<p><strong>论文名：</strong>Dependency-based Gated Recursive Neural Network for Chinese Word Segmentation</p>
+<p><strong>作者：</strong>Jingjing Xu and Xu Sun</p>
+<p><strong>机构：</strong>北京大学计算机语言学教育部重点实验室</p>
+<p><strong>主要工作（解决了什么）：</strong>一种基于依赖的门控递归神经网络</p>
+<p><strong>主要方法（使用了什么）：</strong>为了将局部特征与长距离依赖相结合，提出了一种基于依赖的门控递归神经网络。局部特征首先由双向长短期记忆网络收集，然后通过门控递归神经网络将其组合并细化为长距离依赖。</p>
+<p><strong>数据集：PKU、MSRA、CTB6</strong></p>
+<p><strong>取得的成果：提高了精度</strong></p>
+<p><strong>论文名：</strong>Transition-Based Neural Word Segmentation</p>
+<p><strong>作者：</strong>Meishan Zhang1 and Yue Zhang2 and Guohong Fu1</p>
+<p><strong>机构：</strong>黑龙江大学计算机科学与技术学院</p>
+<p><strong>主要工作（解决了什么）：</strong>一种基于词的中文分词神经模型，将人工设计的离散特征替换为基于词的分词框架中的神经特征。</p>
+<p><strong>数据集：</strong>PKU、MSR</p>
+<p><strong>取得的成果：</strong>基于词的汉语分割神经网络模型。该模型可以方便地利用离散特征，从而得到了一个与以往工作相比性能最好的组合模型。提高精度。</p>
+<h3><span id="24-2017年">2.4 2017年</span></h3><p><strong>论文名：</strong>Fast and Accurate Neural Word Segmentation for Chinese</p>
+<p><strong>作者：</strong>Deng Cai1,2, Hai Zhao1,2,∗, Zhisong Zhang1,2, Yuan Xin3, Yongjian Wu3, Feiyue Huang3</p>
+<p><strong>机构：</strong>上海交通大学计算机科学与工程系</p>
+<p><strong>主要工作（解决了什么）：</strong>现有神经模型的训练和工作过程都存在计算效率低下的问题。提出了一种具有均衡的字和字符嵌入输入的贪婪神经词分割器，以克服现有的缺陷。</p>
+<p><strong>主要方法（使用了什么）：</strong>一种新型的字符 - 字平衡机制，用于字的表示生成。通过去掉不必要的设计，建立更有效的字符组合模型。最大间隔训练期间的早期更新策略。</p>
+<p><strong>数据集：PKU  95.8、MSR 97.1 （速度快）</strong></p>
+<p><strong>取得的成果：</strong>更简单、更快、更准确。神经网络模型</p>
+<p><strong>论文名：</strong>Adversarial Multi-Criteria Learning for Chinese Word Segmentation </p>
+<p>汉语分词的对抗性多准则学习</p>
+<p><strong>作者：</strong>Xinchi Chen, Zhan Shi, Xipeng Qiu∗ , Xuanjing Huang</p>
+<p><strong>机构：</strong>复旦大学上海智能信息处理重点实验室</p>
+<p><strong>主要工作（解决了什么）：</strong>提出了针对CWS的对抗性多准则学习，将来自多个异构分割准则的共享知识集成在一起。</p>
+<p><strong>数据集：</strong>MSRA AS PKU CTB CKIP CITYU NCC SXU</p>
+<p><strong>取得的成果：</strong>在8个具有异构分割标准的语料库上的实验表明，与单标准学习相比，每个语料库的性能都有了显著的提高。</p>
+<p><strong>论文名：</strong>Multi-Grained Chinese Word Segmentation     </p>
+<p><strong>作者：</strong>Chen Gong, Zhenghua Li∗ , Min Zhang, Xinzhou Jiang</p>
+<p><strong>机构：</strong>苏州大学</p>
+<p><strong>主要工作（解决了什么）：</strong>利用三个SWS数据集的注释异构性，构建了用于模型训练和调优的大型伪MWS数据集。然后我们用真正的MWS注释手工注释1500个测试句子。提出了三种将MWS转换为构成解析和序列标记的基准测试方法。</p>
+<p><strong>数据集：CTB、MSR、PPD</strong></p>
+<p><strong>取得的成果：</strong>提出并解决了多粒度中文分词。</p>
+<p><strong>论文名：</strong>Neural Word Segmentation with Rich Pretraining</p>
+<p><strong>作者：</strong>Jie Yang∗ and Yue Zhang∗ and Fei Dong</p>
+<p><strong>机构：</strong>新加坡科技与设计大学</p>
+<p><strong>主要工作（解决了什么）：</strong>对大型中文文本进行预处理，嵌入字符和单词，可以提高分割准确率</p>
+<p><strong>主要方法（使用了什么）：</strong>预训练是利用外部资源提高精度的一种方法</p>
+<p><strong>数据集：</strong>CTB6  96.2  PKU 96.3  MSR 97.5  AS 95.7  CityU 96.9  Weibo 95.5</p>
+<p><strong>取得的成果：</strong>研究了丰富的外部资源（预训练方法），以加强神经分词。。</p>
+<p><strong>论文名：</strong>Segmenting Chinese Microtext: Joint Informal-Word Detection and Segmentation - IJCAI</p>
+<p>with Neural Networks</p>
+<p><strong>作者：</strong>Meishan Zhang, Guohong Fu∗, Nan Yu</p>
+<p><strong>机构：</strong>黑龙江大学</p>
+<p><strong>主要工作（解决了什么）：</strong>微文本中的非正式词汇问题</p>
+<p><strong>主要方法（使用了什么）：</strong>提出了一种通过分词和非正式词检测同时进行的方法来增强中文微文本分割的联合模型。</p>
+<p><strong>数据集：</strong>CTB6.0 and the released Weibo corpus</p>
+<p><strong>取得的成果：</strong>该联合模型可以显著提高微博数据集的分割性能，提高幅度超过3%。</p>
+<p><strong>论文名：</strong>Word-Context Character Embeddings for Chinese Word Segmentation</p>
+<p><strong>作者：</strong>Hao Zhou∗ Zhenting Yu∗ Yue Zhang  Shujian Huang  Xinyu Dai Jiajun Chen</p>
+<p><strong>机构：</strong>南京大学</p>
+<p><strong>主要工作（解决了什么）：</strong>本文提出了一种基于分词标签信息的文本上下文字符嵌入方法。该方法将标签分布信息打包到嵌入中，可以看作是知识参数化的一种方式。</p>
+<p><strong>数据集：</strong>CTB6 96.2    PKU 96.0   MSR    97.8</p>
+<p><strong>取得的成果：</strong> 提出了半监督神经网络的词-上下文字符嵌入，使分割模型对域内数据更加准确，对域外数据更加稳健。</p>
+<p><strong>论文名：</strong>A Feature-Enriched Neural Model for Joint Chinese Word Segmentation and Part-of-Speech Tagging</p>
+<p><strong>作者：</strong>Xinchi Chen, Xipeng Qiu∗ , Xuanjing Huang</p>
+<p><strong>机构：</strong>复旦大学上海智能信息处理重点实验室</p>
+<p><strong>主要工作（解决了什么）：</strong>本文提出了一种用于汉语分词和词性标注联合作业的特征丰富的神经模型。具体来说，为了模拟传统离散特征模型的特征模板，我们使用不同的滤波器对复杂的混合特征进行卷积和池化建模，然后利用递归层的长距离依赖信息。</p>
+<p><strong>数据集：CTB、PKU、NCC</strong></p>
+<p><strong>取得的成果：</strong> joint S&amp;T task 词性标注精度提高</p>
+<h3><span id="25-2018年">2.5 2018年</span></h3><p><strong>论文名：</strong>State-of-the-art Chinese Word Segmentation with Bi-LSTMs</p>
+<p><strong>作者：</strong>Ji Ma、 Kuzman Ganchev、 David Weiss</p>
+<p><strong>机构：</strong>Google AI Language</p>
+<p><strong>主要工作（解决了什么）：改进模型—</strong>pretrained embeddings、dropout、超参数调整</p>
+<p><strong>数据集：</strong>AS  CITYU CTB6 CTB7 MSR PKU UD</p>
+<p> 98.03 98.22 97.06 97.07 98.48 97.95 97.00</p>
+<p><strong>取得的成果：</strong>为汉语分词的进一步发展提供了两条重要的证据。首先，比较不同的模型体系结构需要仔细地调整和应用最佳实践，以便获得严格的比较。其次，如果不进一步努力收集数据，对神经体系结构的迭代可能不足以解决剩余的类分割错误。</p>
+<p><strong>论文名：</strong>Adaptive Multi-Task Transfer Learning for Chinese Word Segmentation in Medical Text</p>
+<p><strong>作者：</strong>Junjie Xing、 Kenny Q. Zhu、 Shaodian Zhang</p>
+<p><strong>机构：上交</strong></p>
+<p><strong>主要工作（解决了什么）：</strong>提出了一个自适应多任务转移学习框架和三个不同设置的模型实例。</p>
+<p><strong>数据集：</strong>PKU  MSR   WEIBO</p>
+<p><strong>取得的成果：</strong>提出了一种新的医学领域中文分词框架。提高了医学领域分词。三个医学数据集的标注工作。</p>
+<p><strong>论文名：</strong>Neural Networks Incorporating Unlabeled and Partially-labeled Data for Cross-domain Chinese Word Segmentation</p>
+<p><strong>作者：</strong>Lujun Zhao, Qi Zhang, Peng Wang, Xiaoyu Liu</p>
+<p><strong>机构：</strong>复旦大学智能信息处理重点实验室</p>
+<p><strong>主要工作（解决了什么）：</strong></p>
+<p><strong>主要方法（使用了什么）：</strong>提出了一种新的神经网络模型，利用未标记和部分标记的数据来完成跨领域的CWS任务。为了利用无标记数据，通过门机制将两种字符级语言模型与分割模型相结合。通过修改损失函数，利用部分标记数据对模型进行训练。</p>
+<p><strong>数据集：</strong>the labeled People’s Daily (PD) dataset. SIGHANBakeoff 2010 Chinese Wikipedia</p>
+<p><strong>取得的成果：</strong>解决缺乏注释数据的资源贫乏领域的CWS问题</p>
+<p><strong>论文名：</strong>Neural Networks Incorporating Dictionaries for Chinese Word Segmentation</p>
+<p><strong>作者：</strong>Qi Zhang, Xiaoyu Liu, Jinlan Fu</p>
+<p><strong>机构：</strong>复旦大学智能信息处理重点实验室</p>
+<p><strong>主要工作（解决了什么）：</strong>试图解决汉语分词任务中词典与神经网络相结合的问题。研究了基于神经网络的汉语分词任务字典集成问题。针对CWS任务，我们提出了两种将从字典中提取的信息集成到基于神经网络的方法中的方法。</p>
+<p><strong>数据集：</strong>PKU MSR AS CITYU CTB6   2010bakeoff  </p>
+<p>96.5 97.8 95.9 96.9 96.4</p>
+<p><strong>取得的成果：</strong>合并字典可以显著提高神经分词能力。比目前最先进的神经网络模型和领域适应模型取得了更好的效果。</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2018/12/28/nlp-jin-jie/jin-wu-nian-2014-2018-zhong-wen-fen-ci-lun-wen-ji-qu-shi-zheng-li/">http://htfhxx.github.io/2018/12/28/nlp-jin-jie/jin-wu-nian-2014-2018-zhong-wen-fen-ci-lun-wen-ji-qu-shi-zheng-li/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%BF%91%E4%BA%94%E5%B9%B4-2014-2018-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E8%AE%BA%E6%96%87%E5%8F%8A%E8%B6%8B%E5%8A%BF%E6%95%B4%E7%90%86/">
+                                    <span class="chip bg-color">近五年(2014-2018)中文分词论文及趋势整理</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2018-12-28T14-22-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/12/28/nlp-jin-jie/ke-kong-wen-ben-sheng-cheng-survey/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="可控文本生成">
+                        
+                        <span class="card-title">可控文本生成</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            可控文本生成survey1. 问题描述文本生成是一个较宽泛的概念，广义上只要输出是自然语言文本的各类问题都属于这个范畴，包括从文本、数据、图像等生成文本。
+目前我们侧重于text -&gt; text。data -&gt; text 虽然也
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-12-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                    NLP进阶
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%8F%AF%E6%8E%A7%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90/">
+                        <span class="chip bg-color">可控文本生成</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Cmake由浅入深">
+                        
+                        <span class="card-title">Cmake由浅入深</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            [TOC]
+代码见：https://github.com/htfhxx/cmake_htfhxx
+1. Windows 和linux下执行单文件在windows环境下，大家都熟悉怎么编写并执行一份代码：
+
+先打开编译器例如codeblock
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-12-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AF%AD%E8%A8%80%E5%B7%A5%E5%85%B7%E6%8A%80%E6%9C%AF%E7%AD%89%E6%96%87%E6%A1%A3/" class="post-category">
+                                    语言工具技术等文档
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Cmake%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1/">
+                        <span class="chip bg-color">Cmake由浅入深</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">133.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

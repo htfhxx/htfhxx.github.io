@@ -1,0 +1,1400 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="深度文本匹配前沿进展survey2021, 长腿咚咚咚的个人博客">
+    <meta name="description" content="1 深度文本匹配1.1 任务概述文本匹配是一项非常基础且重要的自然语言处理任务。
+文本匹配大多是判断句对是否具有语义相似的关系，例如paraphrase检测，语义文本相似度、问答系统中的问题对匹配、信息检索（query和doc）。
+另外，一">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>深度文本匹配前沿进展survey2021 | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        深度文本匹配前沿进展survey2021
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E6%96%87%E6%9C%AC%E5%8C%B9%E9%85%8Dsurvey/">
+                                <span class="chip bg-color">深度文本匹配survey</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                NLP进阶
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-06-09
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    18 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2><span id="1-深度文本匹配">1 深度文本匹配</span></h2><h3><span id="11-任务概述">1.1 任务概述</span></h3><p>文本匹配是一项非常基础且重要的自然语言处理任务。</p>
+<p>文本匹配大多是判断句对是否具有语义相似的关系，例如paraphrase检测，语义文本相似度、问答系统中的问题对匹配、信息检索（query和doc）。</p>
+<p>另外，一些其他句子关系建模的任务与文本匹配比较相关，最主要的关联是任务形式相近或者可以用相似的方法解决，比如文本蕴含、问题答案对匹配等句子对分类任务。</p>
+<p>传统的文本匹配技术例如有TF-IDF、 BM25、Jaccord、SimHash等算法，如BM25算法通过候选句子的字段对qurey字段的覆盖程度来计算两者间的匹配得分，得分越高的候选项与query的匹配度更好。主要解决词汇层面的匹配问题，或者说词汇层面的相似度问题。</p>
+<p>深度文本匹配在过去若干年内，经历了若干阶段的变化，具体的演变这里就不瞎说了，本篇着重讨论匹配任务的前沿进展。</p>
+<h3><span id="1-2-匹配数据集">1. 2 匹配数据集</span></h3><p>其实对句子关系建模的数据集都可以和文本匹配沾边：判断句子匹配标签的、计算语义相似度的、判断句子是否有蕴含关系的、QA数据等等</p>
+<ul>
+<li><p>中文数据集</p>
+<ul>
+<li>文本匹配强相关<ul>
+<li>LCQMC - 通用句对匹配 26w pair（倾向意图匹配而不是paraphrase） <a href="http://icrc.hitsz.edu.cn/info/1037/1146.htm" target="_blank" rel="noopener">http://icrc.hitsz.edu.cn/info/1037/1146.htm</a></li>
+<li>AFQMC - 蚂蚁金服金融 4w pair: <a href="https://github.com/CLUEbenchmark/CLUE" target="_blank" rel="noopener">https://github.com/CLUEbenchmark/CLUE</a></li>
+<li>BQ Corpus  - 银行领域  12w pair - <a href="http://icrc.hitsz.edu.cn/Article/show/175.html" target="_blank" rel="noopener">http://icrc.hitsz.edu.cn/Article/show/175.html</a></li>
+</ul>
+</li>
+<li>文本蕴含<ul>
+<li>OCNLI: <a href="https://github.com/CLUEbenchmark/CLUE" target="_blank" rel="noopener">https://github.com/CLUEbenchmark/CLUE</a></li>
+<li>CMNLI: <a href="https://github.com/CLUEbenchmark/CLUE" target="_blank" rel="noopener">https://github.com/CLUEbenchmark/CLUE</a></li>
+<li>XNLI： <a href="https://github.com/facebookresearch/XNLI" target="_blank" rel="noopener">https://github.com/facebookresearch/XNLI</a> (多语言)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>英文数据集</p>
+<ul>
+<li>文本匹配强相关<ul>
+<li>Quora （QQP）（GLUE）</li>
+<li>The Microsoft Research Paraphrase dataset (MRPC) （GLUE）</li>
+<li>STS-B （语义文本相似度）（GLUE）</li>
+<li>SemEval STS 系列（无监督的测试数据，STS任务常用）</li>
+</ul>
+</li>
+<li>文本蕴含<ul>
+<li>SciTail ： <a href="https://allenai.org/data/scitail" target="_blank" rel="noopener">https://allenai.org/data/scitail</a></li>
+<li>SNLI：<a href="https://nlp.stanford.edu/projects/snli/" target="_blank" rel="noopener">https://nlp.stanford.edu/projects/snli/</a></li>
+<li>XNLI： <a href="https://github.com/facebookresearch/XNLI" target="_blank" rel="noopener">https://github.com/facebookresearch/XNLI</a> (多语言)</li>
+<li>MNLI（GLUE）</li>
+<li>QNLI（GLUE）</li>
+<li>RTE（GLUE）</li>
+</ul>
+</li>
+<li><p>Answer Selection </p>
+<ul>
+<li>TrecQ 5.6w问答对</li>
+<li>The SemEval CQA dataset </li>
+<li>WikiQA   1w问答对</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2><span id="2-学术前沿论文分类">2 学术前沿论文分类！</span></h2><ol>
+<li>专注新颖的角度<br>提出有趣的观点，提出novel的方法论（讲更好听的故事）</li>
+<li>权衡性能与效率<br>对交互式模型的性能、表示层模型的效率 做一个平衡</li>
+<li>专注模型结构与性能<br>从模型设计方面提高匹配任务的性能（搭更好看或者说更复杂的积木）<ol>
+<li>交互型深度匹配模型 - 有监督<ol>
+<li>传统交互型深度匹配模型（少） </li>
+<li>致力于语言模型的预训练（多） :  预训练得到预训练语言模型，将其作为交互式的模型进行finetune</li>
+</ol>
+</li>
+<li>双塔型深度匹配模型 - 无监督&amp;有监督<ol>
+<li>传统表示型模型（少） </li>
+<li>致力于句子表示模型（多） : 预训练得到预训练句子表示模型，将其作为单个句子的表示模型，得到句子表示用来相似度计算</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>特定应用场景或特性<br>基于特定的场景或任务的特性，对匹配任务进行优化</li>
+</ol>
+<p><strong>传统的深度匹配模型分类：</strong></p>
+<ol>
+<li><strong>representation-based method 表示型方法/双塔式方法</strong></li>
+</ol>
+<ul>
+<li>将待匹配的两个对象通过深度学习模型进行表示</li>
+<li>计算这两个表示之间的相似度，便可输出两个对象的匹配度</li>
+</ul>
+<p>侧重表示层的构建，匹配度函数一般固定参数的相似度度量函数 or  可学习的匹配度打分模型 。</p>
+<ol>
+<li><strong>interaction-based method 交互型方法</strong> </li>
+</ol>
+<ul>
+<li>首先基于表示层采用与词位置对应的词向量 </li>
+<li>然后对两个句子按词对应交互，由此构建两段文本之间的 matching pattern，这里面包括了更细致更局部的文本交互信息</li>
+<li>基于该匹配矩阵，可以进一步使用DNN等来提取更高层次的匹配特征，最后计算得到最终匹配得分。</li>
+</ul>
+<p>该方式更强调待匹配的两个句子得到更充分的交互，以及交互后的匹配。</p>
+<p>对比：</p>
+<ul>
+<li>表示型的方式侧重于表示层的构建，由于可以离线计算，效率更高；</li>
+<li>交互型方式建模更加细致、充分，一般来说效果更好，但计算成本增加，更加适合一些效果精度要求高但对计算性能要求不高的场景。</li>
+</ul>
+<h2><span id="3-专注新颖的角度">3 专注新颖的角度</span></h2><p><strong>[1] Bridging the Gap Between Relevance Matching and Semantic Matching for Short Text Similarity Modeling     ACL 2019 </strong> </p>
+<ul>
+<li><p>动机：相关性匹配和语义匹配的gap，两者信息融合提升效果</p>
+<ul>
+<li>IR中的相关性匹配注重关键词的匹配，看重两者的相关性</li>
+<li>语义匹配通过词汇信息和语句的组成结构，强调整体“含义”的相似关系</li>
+<li>以往的工作证明，NLP中文本相似性建模对于IR任务可能会产生较差的结果，反之亦然。</li>
+</ul>
+</li>
+<li>模型结构：<ul>
+<li>混合的encoder模块，包括deep、wide和contextual<ul>
+<li>Deep Encoder：堆叠多层的卷积层，表示向量经过多层的卷积来得到高层的表示</li>
+<li>Wide Encoder：并行的将表示向量通过拥有不同卷积核的卷积层，分别得到每一层对应的表示向量</li>
+<li>Contextual Encoder：使用双向的LSTM来获取长程依赖特征</li>
+</ul>
+</li>
+<li>相关性模块，两者的表示进行矩阵相乘（内积），得到一个相似性得分矩阵，引入idf权重，做池化</li>
+<li>语义匹配：使用了Co-Attention来计算查询向量和文本向量之间的注意力，将其编码后过LSTM作为语义匹配得分</li>
+</ul>
+</li>
+<li>贡献点：<ul>
+<li>讨论了相关性匹配和语义匹配的区别（模型之间是否适配，相关性和语义匹配的标签关系）</li>
+<li>提出一个新的交互式的模型（一个RM一个SM，和一个结合的）</li>
+<li>3个NLP任务和2个IR数据集上进行实验；关联性和语义匹配信号在许多问题上互补</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210617145028723.png" alt="image-20210617145028723"></p>
+<ul>
+<li><strong>[2] Neural Graph Matching Networks for Chinese Short Text Matching ACL 2020</strong> </li>
+</ul>
+<p>中文短文本匹配问题</p>
+<p>动机：基于词的匹配模型，可能会因为中文分词的错误、模糊或不一致，损害最终的匹配性能。</p>
+<p>方法：提出了一种用于中文短文本匹配的神经图匹配方法(GMN)。保留所有可能的分词结果，形成一个lattice图神经图匹配网络，处理多粒度输入信息的匹配框架。</p>
+<p>模型结构：上下文节点嵌入模块(通过BERT得到节点表示)、图匹配模块和关系分类器。</p>
+<p>新颖点：在匹配任务上，引入GNN来解决分词带来的误差，提升匹配任务的性能。</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210617154009877.png" alt="image-20210617154009877" style="zoom:50%;"></p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20201026154234577.png" alt="image-20201026154234577" style="zoom: 67%;"></p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210628130028739.png" alt="image-20210628130028739"></p>
+<ul>
+<li><strong>[3] tBERT: Topic Models and BERT Joining Forcesf or Semantic Similarity Detection ACL 2020</strong> </li>
+</ul>
+<p>解决的任务：语义相似性检测</p>
+<p>核心思想：融合了主题模型和BERT，基于BERT的上下文与主题信息结合</p>
+<p>模型：用基础的BERT对两个句子编码，得到句子对的表示。根据主题模型得到两个句子的文档主题。<br>通过主题模型给句子中每一个单词分配一个主题然后取平均得到单词主题矩阵W。最后一起送到FC</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210618004924080.png" alt="image-20210618004924080"></p>
+<h2><span id="4-权衡性能与效率">4 权衡性能与效率</span></h2><ul>
+<li><strong>[4] Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks.  2019 EMNLP</strong></li>
+</ul>
+<p>动机：BERT和RoBERTa用于匹配任务需要将比较的两个句子都传入模型中计算，导致了巨大的计算开销（大规模相似度检索中，求得一个问题的检索答案需要：N(N-1)/2）；聚类任务和语义搜索中，BERT映射成的向量效果一般。</p>
+<p>核心思想：训练时通过有监督训练上层的分类函数，推断时通过SBERT模型获取到的句子embedding，可以直接通过cos相似度计算两个句子的相似度，大大减少了计算量</p>
+<p>贡献：提出sentence-BERT，性能不低，效率++。</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210617171854526.png" alt="image-20210617171854526"></p>
+<p><strong>[5] Poly-encoders: architectures and pre-trainingstrategies for fast and accurate multi-sentence scoring ICLR 2020 </strong></p>
+<p>动机：Cross-encoders方法相比于Bi-encoders效果好但是慢；</p>
+<p>贡献：提出Poly-encoders，详细比较三种方法的性能和速度，做了一个折中。</p>
+<p>模型核心思想：用多个attention模块获取 query 中一词多义或切词带来的不同语义信息，使得双塔表示进行充分的交互</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210617172034578.png" alt="image-20210617172034578"></p>
+<p><strong>[6] DC-BERT: Decoupling Question and Document for Efficient Contextual Encoding. SIGIR2020</strong></p>
+<ul>
+<li>动机：开放域 QA，reRank的基本操作是将问题和检索到的每个文档进行拼接作为 BERT 的输入，输出相关性 score。每一个问题都需要与 retrieve 模块检索出的每一个文档进行拼接，这需要对大量检索文档进行重编码，非常耗时。</li>
+<li>贡献：为了解决效率问题，DC-BERT 提出具有双重 BERT 模型的解耦上下文编码框架：在线的 BERT 只对问题进行一次编码，而离线的 BERT 对所有文档进行预编码并缓存它们的编码。DC-BERT 在文档检索上实现了 10 倍的加速，同时与最先进的开放域 QA 方法相比，保留了大部分(约98%)的 QA 问答性能。</li>
+</ul>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210617215307134.png" alt="image-20210617215307134"></p>
+<p><strong>[17] ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT  SIGIR 2020</strong> </p>
+<ul>
+<li>动机：bi-encoder的效率问题</li>
+<li>贡献：ColBERT 提出了一种新颖的后期交互范式，用于估计查询 query 和文档 doc 之间的相关性。query 和doc 分别通过各自的 encoder 编码，得到两组 token level 的 embedding 集合；然后，评估 query 和 doc 中的每个 item 的关联，得到快速排序的目的。</li>
+<li>模型结构：ColBERT 的模型结构整体还是类似于 Siamese 结构，分为 Query 端和 Doc 端，最后在进行交互计算文本分相似度。模型主体上分为 Query Encoder  、Document Encoder   、以及之后的 Late Interaction 部分。</li>
+</ul>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210617220427552.png" alt="image-20210617220427552"></p>
+<p><strong>[7] Simple and Effective Text Matching with Richer Alignment Features. ACL 2019</strong></p>
+<p>动机：少参数量，更快的推理速度，但是效果也并没有很低的模型</p>
+<p>贡献点：他的主要设计理念就是一切从简，embedding只有word embedding, 主干网络采用了CNN，作者尽可能的减少了参数和运算量。一个encoder。三个任务中的四个数据集达到与SOTA相当的水平；最少的参数数量和最快的推理速度；消融实验和替代方案对比</p>
+<p>模型：embedding(1)与上一模块的输出(2)一起扔进Encoder，(1)与(2)与Encoder(3)的输出扔进Attention，(1)与(2)与(3)与Attention(4)的结果一起fusion，然后池化后扔进分类器。</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20201027103336691.png" alt="image-20201027103336691" style="zoom: 67%;"></p>
+<h2><span id="5-专注模型结构与性能">5 专注模型结构与性能</span></h2><h3><span id="51-交互型深度匹配模型">5.1 交互型深度匹配模型</span></h3><h4><span id="511-传统交互型深度匹配模型">5.1.1 传统交互型深度匹配模型</span></h4><p><strong>[1] Bridging the Gap Between Relevance Matching and Semantic Matching for Short Text Similarity Modeling     ACL 2019 </strong> </p>
+<p>动机：相关性匹配和语义匹配的gap，两者信息融合提升效果</p>
+<ul>
+<li>IR中的相关性匹配注重关键词的匹配，看重两者的相关性</li>
+<li>语义匹配通过词汇信息和语句的组成结构，强调整体“含义”的相似关系</li>
+<li>以往的工作证明，NLP中文本相似性建模对于IR任务可能会产生较差的结果，反之亦然。</li>
+</ul>
+<p>模型结构：</p>
+<ul>
+<li>混合的encoder模块，包括deep、wide和contextual<ul>
+<li>Deep Encoder：堆叠多层的卷积层，表示向量经过多层的卷积来得到高层的表示</li>
+<li>Wide Encoder：并行的将表示向量通过拥有不同卷积核的卷积层，分别得到每一层对应的表示向量</li>
+<li>Contextual Encoder：使用双向的LSTM来获取长程依赖特征</li>
+</ul>
+</li>
+<li>相关性模块，两者的表示进行矩阵相乘（内积），得到一个相似性得分矩阵，引入idf权重，做池化</li>
+<li>语义匹配：使用了Co-Attention来计算查询向量和文本向量之间的注意力，将其编码后过LSTM作为语义匹配得分</li>
+</ul>
+<p>贡献点：</p>
+<ul>
+<li>讨论了相关性匹配和语义匹配的区别（模型之间是否适配，相关性和语义匹配的标签关系）</li>
+<li>提出一个新的交互式的模型（一个RM一个SM，和一个结合的）</li>
+<li>3个NLP任务和2个IR数据集上进行实验；关联性和语义匹配信号在许多问题上互补</li>
+</ul>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210617145028723.png" alt="image-20210617145028723"></p>
+<h4><span id="512-基于pretrainfinetune的句子表示建模">5.1.2 基于pretrain+finetune的句子表示建模</span></h4><ul>
+<li><strong>[8] Enhancing Pre-trained Chinese Character Representation with Word-aligned Attention ACL 2020</strong></li>
+</ul>
+<p>动机：中文预训练模型中以字符为基本单位而忽略了词的语义，以往工作将词信息融入到文本表示显示有效果</p>
+<p>关键问题：如何将分词信息集成到预训练模型中；分词工具带来的cascading(级联)噪声。</p>
+<p>贡献：提出一种词对齐注意机制，显式利用词的信息。进行了包括6个数据集的5个任务。</p>
+<p>模型：实质上就是在实验看有什么办法去各种拐着弯儿向 character-level 的表示模型融入词信息，并减轻外部分词器引入的分词噪声。1. 通过字符序列和分词序列的attention，得到按词划分的（word-based）字级别（character-level）的 attention 权重组合。然后pooling后和原向量乘到一块。2. 集成了多种分词工具的结果，以减少分词噪声</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210617222813476.png" alt="image-20210617222813476"></p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210617222959971.png" alt="image-20210617222959971"></p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20201027163729424.png" alt="image-20201027163729424" style="zoom:50%;"></p>
+<p><strong>[9] Cross-Thought for Sentence Encoder Pre-training. EMNLP-2020</strong> </p>
+<p><a href="https://mp.weixin.qq.com/s/S03iGgtsXj2cy37F8yjCfg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/S03iGgtsXj2cy37F8yjCfg</a></p>
+<p>动机：针对CLS的定向建模。目前主流的语言模型预训练任务，都采用序列的第一个特殊符号（如：[CLS]）作为句子的表示，但是预训练任务的目标都没有损失直接作用在这个特殊符号上，这样就导致在这个特殊符号上学出来的句子表示很难包含充分的信息。</p>
+<p>主流的预训练都作用在非常长的序列上（比如512），使得模型在恢复被mask的token时，可以直接获取到周边句子的信息。这对于学习有效的上下文token表示很有用，但对于学习句子表示则效率较低，因为信息不会主动聚集到[CLS]符号上。</p>
+<p>贡献：本文提出了Cross-Thought，它将输入文本切分成许多短句，使得恢复某个短句中被mask掉token的信息较难出现在同一个短句中，而不得不依赖于其上下文其它短句的信息。</p>
+<p>模型：<br>预训练：长句子切分为M个短句子，每个短句子前添加N个特殊的token，编码后特殊token处的向量有M*N个，N列的特殊token向量做attention得到加权表示，M*N与M个句子的编码结果分别扔进cross-transformer来预测mask token。<br>finetune：M*N个特殊token表示的attention分数得到ranking loss来排序，或者是M*N个特殊token表示扔到分类器</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210616215336802.png" alt="image-20210616215336802"></p>
+<h3><span id="52-双塔型深度匹配模型">5.2 双塔型深度匹配模型</span></h3><h4><span id="521-传统双塔型匹配模型">5.2.1 传统双塔型匹配模型</span></h4><p><strong>[10] Siamese Recurrent Architectures for Learning Sentence Similarity 2016 AAAI</strong></p>
+<p>用共享权重的LSTM编码，取最后一步的输出作为表示，使用了Manhattan距离计算损失</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210616232033673.png" alt="image-20210616232033673"></p>
+<h4><span id="522-基于pretrainfinetune的句子表示建模">5.2.2 基于pretrain+finetune的句子表示建模</span></h4><p>偏向句子表示，无监督的匹配</p>
+<ul>
+<li><strong>[11] BERT-flow: On the Sentence Embeddings from Pre-trained Language Models  EMNLP-2020</strong></li>
+</ul>
+<p>动机：没有经过微调，直接由BERT得到的句子表示在语义文本相似性方面明显薄弱，甚至会弱于GloVe得到的表示。</p>
+<p>模型：探究发现，词频影响向量分布：1. 高频词更接近原点；2. 低频词更稀疏。总之：BERT总是将句子映射为一个非光滑的各向异性语义空间中的向量。于是将BERT embedding映射到一个标准高斯隐空间（因为一些此分布听起来高大上的特性：平滑的、各向同性的）</p>
+<p>贡献：一种BERT的句子表示增强方法。</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210616230902963.png" alt="image-20210616230902963"></p>
+<ul>
+<li><p><strong>[12] BERT-whitening: Whitening Sentence Representations for Better Semantics and Faster Retrieval   arxiv-2021</strong></p>
+<p>BERT-whitening可看成是<a href="https://arxiv.org/abs/2011.05864" target="_blank" rel="noopener">BERT-flow</a>的最简单实现，这样简单的实现足以媲美一般的BERT-flow模型</p>
+<ul>
+<li>BERT-whitening的思路很简单，就是在得到每个句子的句向量后，对这些矩阵进行一个白化（也就是PCA），使得每个维度的均值为0、协方差矩阵为单位阵，然后保留k个主成分</li>
+</ul>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210616232236120.png" alt="image-20210616232236120"></p>
+</li>
+<li><p><strong>[13] SimCSE: Simple Contrastive Learning of Sentence Embeddings   arxiv-2021</strong></p>
+<ul>
+<li>动机：更好的句子表示，将对比学习的思想引入了SBERT</li>
+<li>方法：对比学习的本质就是构建正负样本，SimCSE最大的贡献就是提出一种构造正样本的方法。本质上来说就是&lt;样本A的一种表示, 样本A的另一种表示&gt;作为正例、&lt;样本A的一种表示, 样本B的一种表示&gt;作为负例来训练对比学习模型。怎么得到自己的两种表示：两次经过带Dropout的Encoder，两次随机Dropout，得到两次表示</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210616215756099.png" alt="image-20210616215756099"></p>
+<p><strong>[14] ConSERT: A Contrastive Framework for Self-Supervised Sentence Representation Transfer  ACL-2021</strong></p>
+<ul>
+<li><p>动机：给定一个类似BERT的预训练语言模型M，以及从目标领域数据分布中收集的无标签文本语料库D，我们希望通过构建自监督任务在D上对M进行Fine-tune，使得Fine-tune后的模型能够在目标任务（用于文本语义匹配的句子表示）上表现最好。</p>
+</li>
+<li><p>提出了一种基于对比学习的句子表示迁移框架ConSERT。一个Batch内的N条样本，通过数据增强，得到2N条，同一个句子得到的两个样本为正样本对，batch内其他的句子作为负样本对。</p>
+</li>
+<li><p>探究了若干数据增强方法。显性的：回译（翻译两遍）、CBERT（mask后补全）、意译（paraphrase模型）；隐性的：对抗攻击（有监督场景）、shuffle（Position Ids进行Shuffle）、裁剪（embedding或token置为0）、dropout（同SimCSE）</p>
+</li>
+</ul>
+<ul>
+<li><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210616232733013.png" alt="image-20210616232733013" style="zoom:50%;"></li>
+</ul>
+<p><strong>Meta-Embeddings: Sentence Meta-Embeddings for Unsupervised Semantic Textual Similarity. ACL-2020</strong></p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210616215850772.png" alt="image-20210616215850772"></p>
+<h2><span id="6-特定场景或特性">6 特定场景或特性</span></h2><p><strong>[15] Match²: A Matching over Matching Model for Similar Question Identification SIGIR 2020</strong></p>
+<p>动机：CQA问题，提出了一种相似问题的二次匹配模型，将待匹配问句对应的回答作为连接二者的桥梁，辅助判定待匹配问句是否与 用户问句相似</p>
+<p>模型：第一模块是 Matching Pattern Layer，该模块分别计算两个问题与答案直接的相似性表示。第二模块是 Pattern Similarity Layer，该模块计算以上两种匹配模式之间的相似性  作为两个问题的相似性表示。第三模块是 Compression Layer，将 Pattern Similarity和QQ相似度一起做分类</p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210618002305256.png" alt="image-20210618002305256"></p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210618002724185.png" alt="image-20210618002724185"></p>
+<p>匹配模型的少样本迁移 EMNLP-2020</p>
+<p>[16] 《MultiCQA: Zero-Shot Transfer of Self-Supervised Text Matching Models on a Massive Scale》</p>
+<p>非对称域文本匹配 EMNLP-2020</p>
+<p>[18] Wasserstein Distance Regularized Sequence Representation for Text Matching in Asymmetrical Domains</p>
+<ul>
+<li>动机：随着训练的进行，从不同域投影的特征向量往往难以区分。</li>
+</ul>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210618003324915.png" alt="image-20210618003324915"></p>
+<p><img src="/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/image-20210616220954575.png" alt="image-20210616220954575"></p>
+<h2><span id="reference">Reference</span></h2><p><a href="https://mp.weixin.qq.com/s?__biz=MzI0NTg1MTI1NQ==&amp;amp;mid=2247484166&amp;amp;idx=1&amp;amp;sn=99e78d78013092e6b712d5a4e5efd487&amp;amp;chksm=e949761ede3eff080f381dfb5b618282d76a2349c1b3d664d05a1d39878e5d1f744219e6cd7e&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=1022VqCPD7HGFwpBSOtBqvWe&amp;amp;sharer_sharetime=1603375088507&amp;amp;sharer_shareid=59332ea7c33ee752808701f0287171ae#rd" target="_blank" rel="noopener">基于深度学习的FAQ问答系统</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/357864974" target="_blank" rel="noopener">21个经典深度学习句间关系模型｜代码&amp;技巧</a></p>
+<p><a href="https://blog.csdn.net/iin729/article/details/111942096" target="_blank" rel="noopener">https://blog.csdn.net/iin729/article/details/111942096</a></p>
+<p><a href="https://mp.weixin.qq.com/s/S03iGgtsXj2cy37F8yjCfg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/S03iGgtsXj2cy37F8yjCfg</a></p>
+<p><a href="https://blog.csdn.net/Forlogen/article/details/103610766" target="_blank" rel="noopener">https://blog.csdn.net/Forlogen/article/details/103610766</a></p>
+<p><a href="https://blog.csdn.net/qq_43390809/article/details/114077216" target="_blank" rel="noopener">https://blog.csdn.net/qq_43390809/article/details/114077216</a></p>
+<p><a href="https://blog.csdn.net/xixiaoyaoww/article/details/108525940" target="_blank" rel="noopener">https://blog.csdn.net/xixiaoyaoww/article/details/108525940</a></p>
+<p><a href="https://blog.csdn.net/qq_22472047/article/details/109175911" target="_blank" rel="noopener">https://blog.csdn.net/qq_22472047/article/details/109175911</a></p>
+<p> <a href="https://mp.weixin.qq.com/s/S03iGgtsXj2cy37F8yjCfg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/S03iGgtsXj2cy37F8yjCfg</a></p>
+<p><a href="https://kexue.fm/archives/8321" target="_blank" rel="noopener">https://kexue.fm/archives/8321</a> </p>
+<p><a href="https://km.sankuai.com/page/856931405" target="_blank" rel="noopener">ACL2021｜美团提出基于对比学习的文本表示模型，效果相比BERT-flow提升8%</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/">http://htfhxx.github.io/2021/06/09/nlp-jin-jie/shen-du-wen-ben-pi-pei-qian-yan-jin-zhan-survey2021/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E6%96%87%E6%9C%AC%E5%8C%B9%E9%85%8Dsurvey/">
+                                    <span class="chip bg-color">深度文本匹配survey</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2021-06-09T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/07/01/ji-qi-xue-xi/ji-cheng-xue-xi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="集成学习">
+                        
+                        <span class="card-title">集成学习</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            [TOC]
+1 集成学习集成学习，通过构建并结合多个机器学习器来完成学习任务
+常见的集成学习框架有2种：
+
+Bagging： 基学习器之间无强依赖关系，可并行生成
+Boosting：有强依赖关系，必须串行生成
+
+Bagging
+有放回的随机
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">集成学习</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/04/21/nlp-jin-jie/shi-ti-dui-qi-survey/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="实体对齐survey">
+                        
+                        <span class="card-title">实体对齐survey</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 实体对齐1.1 任务定义实体对齐(Entity alignment) ，也称为实体匹配（Entity Matching），就是找到两个知识图谱中相同的等价实体。0
+实体对齐任务进行定义：
+
+用 $G=(E,R,A,T_R,T_A)$表示
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                    NLP进阶
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AE%9E%E4%BD%93%E5%AF%B9%E9%BD%90survey/">
+                        <span class="chip bg-color">实体对齐survey</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">133.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

@@ -1,0 +1,1394 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="NLP中的联合建模与多任务学习, 长腿咚咚咚的个人博客">
+    <meta name="description" content="NLP中的联合建模与多任务学习[TOC]
+1 介绍1.1 多任务场景分类自然语言处理有很多种任务，中文分词、依存分析、命名实体识别、关系抽取、对话生成等等。这些任务大多都可以通过一种端到端的单模型的方法来解决。
+当然，有时候也会同时解决多个">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>NLP中的联合建模与多任务学习 | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        NLP中的联合建模与多任务学习
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/NLP%E4%B8%AD%E7%9A%84%E8%81%94%E5%90%88%E5%BB%BA%E6%A8%A1%E4%B8%8E%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0/">
+                                <span class="chip bg-color">NLP中的联合建模与多任务学习</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                NLP进阶
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-05-09
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    24 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1><span id="nlp中的联合建模与多任务学习">NLP中的联合建模与多任务学习</span></h1><p>[TOC]</p>
+<h2><span id="1-介绍">1 介绍</span></h2><h3><span id="11-多任务场景分类">1.1 多任务场景分类</span></h3><p>自然语言处理有很多种任务，中文分词、依存分析、命名实体识别、关系抽取、对话生成等等。这些任务大多都可以通过一种端到端的单模型的方法来解决。</p>
+<p>当然，有时候也会同时解决多个任务，例如一些相似或者相关的任务。</p>
+<p>一些非常相似的NLP任务，比如：</p>
+<ol>
+<li><p>词性标注、句子分块、命名实体识别</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588065124953.png" alt="1588065124953" style="zoom:50%;"></p>
+</li>
+<li><p>Constituents and named entities ——成分划分和命名实体<br>一个是确定句子中各个词的语法成分，一个是确定句子中的各个词是否属于某个命名实体的一部分。</p>
+</li>
+</ol>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588064935807.png" alt="1588064935807" style="zoom:50%;"></p>
+<p>例如一些任务是比较相关的，需要进行流水线工作的，比如：</p>
+<ol>
+<li><p>词性标注——分词+标注<br><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588065173127.png" alt="1588065173127" style="zoom:50%;"></p>
+</li>
+<li><p>实体关系抽取——命名实体识别 + 关系分类<br><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588065222089.png" alt="1588065222089" style="zoom: 33%;"></p>
+</li>
+<li><p>情感分析——命名实体识别 + 命名实体的情感分类</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588065257315.png" alt="1588065257315" style="zoom:33%;"></p>
+</li>
+</ol>
+<p>当想要解决NLP领域的某种任务时，会发现有一些或相似或相关的其他任务，通过多个任务的联合建模，可以帮助提高目标任务的效果。</p>
+<p>这些多任务的场景，根据已经了解的一部分工作，目前总结如下：</p>
+<ol>
+<li><p>比较相似的多个任务<br>例如，词性标注和中文分词。可以通过相似任务的促进，提高任务的效果。</p>
+</li>
+<li><p>具有Pipeline关系的多个任务<br>例如，实体识别和关系抽取。可以通过上游或者下游的任务互相促进。<br>Pipeline关系的几个子任务也可以看做是几个相似的任务</p>
+</li>
+<li><p>具有辅助关系的任务<br>例如自监督的辅助任务，可以帮助目标任务学习原任务不容易学到的特征等</p>
+</li>
+<li><p>具有对抗关系的或者相反的任务<br>例如，不同评估标准的中文分词任务。可以通过对抗训练帮助多任务学习</p>
+</li>
+<li><p>类似迁移学习的多任务<br>例如，辅助资源匮乏的任务，语言建模的预训练。</p>
+</li>
+</ol>
+<h3><span id="12-联合建模方法分类">1.2 联合建模方法分类</span></h3><p>当面临着解决多种任务的时候，最一般的解决想法：</p>
+<ul>
+<li>看做几个独立的子任务。<br>他们单独训练，单独预测。<br>缺点：这样就浪费了他们的相关性，消费n倍的成本去解决n个问题，信息在任务之间没有交换，任务是互相隔离的，任务之间没有关系更没有相互促进。</li>
+</ul>
+<p>因此就有了联合建模的说法，联合建模就允许信息在任务间交换，让任务互相促进提升效果。</p>
+<p>Joint models需要进行两个选择：1. 各个模型间是否共享参数、联合学习；2. 各个模型得出的结果是否互相影响。</p>
+<p> <img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588068165849.png" alt="1588068165849" style="zoom: 50%;"></p>
+<p>因此就出现了不同的组合：</p>
+<ol>
+<li>Joint Learning &amp; Joint Search</li>
+<li>Separate Learning &amp; Joint Search</li>
+<li>Joint Learning &amp; Separate Search</li>
+</ol>
+<p>至于Separate Learning &amp; Separate Search，很明显不属于Joint model的范畴。</p>
+<h3><span id> </span></h3><p>接下来就是现有的各类任务的一些工作介绍了。</p>
+<h2><span id="2-相似关系多任务学习">2 相似关系——多任务学习</span></h2><h3><span id="21-多任务学习方法分类">2.1 多任务学习方法分类</span></h3><p>多任务学习一般属于：Joint Learning &amp; Separate Search。</p>
+<p>一般通过参数共享的方式互相促进，参数共享有两种形式：</p>
+<ul>
+<li>Hard参数共享：目前应用最为广泛的共享机制，通过在所有任务之间共享底部的隐藏层，同时保留几个特定任务的输出层来实现。适合处理有较强相关性的任务，但遇到弱相关任务时常常表现很差。<br><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588244058304.png" alt="1588244058304" style="zoom:50%;"></li>
+<li>Soft参数共享：每个任务都有自己的参数，模型参数之间通过一定的限制（例如正则化）来鼓励参数相似化，每个任务的网络都可以访问其他任务对应网络中的信息，例如表示、梯度等。软共享机制非常灵活，不需要对任务相关性做任何假设，但是由于为每个任务分配一个网络，常常需要增加很多参数。</li>
+</ul>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/8a64e11d217d4867b6d4b6b0a43a86f4_th.jpg" alt="img" style="zoom:50%;"></p>
+<ul>
+<li><p>分层共享：在网络的低层做较简单的任务，在高层做较困难的任务。分层共享比硬共享要更灵活，同时所需的参数又比软共享少，但是为多个任务设计高效的分层结构依赖专家经验。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/640.webp" alt="img" style="zoom: 50%;"></p>
+</li>
+<li><p>其他共享方式，例如论文[30]中的稀疏共享，为每个任务生成子网络，多任务子网络联合训练。</p>
+</li>
+</ul>
+<h3><span id="22-相似任务的一些工作">2.2 相似任务的一些工作</span></h3><p>论文[8]不太容易找，附上链接：<a href="http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf" target="_blank" rel="noopener">http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf</a></p>
+<p>模型解决各种任务，包括Tagging, Chunking and NER。</p>
+<p>解决方案是多任务学习，其中lookup table参数共享、first linear layers参数共享。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588135252062.png" alt="1588135252062"></p>
+<p>论文[10]的背景是：在之前有关深度多任务学习的工作中，所有任务监督都在同一（最外）层上。<br>论文提出了一种具有深层双向RNN的多任务学习体系结构，可以在不同的层进行不同的任务监督。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588140468580.png" alt="1588140468580" style="zoom:50%;"></p>
+<p>论文[11] 是语义角色标注SRL和Parser的任务</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588141011657.png" alt="1588141011657" style="zoom: 33%;"></p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588141036358.png" alt="1588141036358" style="zoom:50%;"></p>
+<p>总之，就是embedding层共享了参数而已</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588141273348.png" alt="1588141273348" style="zoom:33%;"></p>
+<p>论文[19] 是机器翻译任务，他使用一个调度的多任务框架来帮助改善翻译质量：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588156350821.png" alt="1588156350821" style="zoom:50%;"></p>
+<p>论文[21] 采用标准的多任务学习的方法，解决音译的问题。（采用了多种音译的数据）</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588157680439.png" alt="1588157680439" style="zoom:67%;"></p>
+<h2><span id="3-pipeline关系的任务">3 Pipeline关系的任务</span></h2><p>当面临着解决pipeline任务的时候，最一般的解决想法：</p>
+<ul>
+<li>看做几个独立的子任务。他们单独训练，单独预测。用上游任务的结果作为下游任务的输入。<br>缺点：任务之间有误差的传递，任务越多，Error影响越大； 这样也浪费了他们的相关性，信息在任务之间没有交换，任务是互相隔离的，任务之间没有关系更没有相互促进。</li>
+</ul>
+<p>对pipeline上的这些子任务任务进行联合建模，就是为了力图减少Error propagation，提升效果。</p>
+<p>Pipeline关系有三方面的解决方案，其中Joint Learning &amp; Separate Search 与相似任务的解决方式基本类似。</p>
+<p>Joint Learning &amp; Joint Search 方面一般是训练单个模型然后联合解码；</p>
+<p>Separate Learning &amp; Joint Search方面一般是训练两个独立的模型然后联合解码</p>
+<h3><span id="21-joint-learning-amp-joint-search">2.1 Joint Learning &amp; Joint Search</span></h3><p>论文[2]中讨论了 Chinese part-of-speech tagging 任务中 One-at-a-time or all-at-once?  </p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588070679102.png" alt="1588070679102" style="zoom: 50%;"></p>
+<p>中文词性标注为每个词语分配一个POS标签。 但是，由于中文句子中未划分单词，因此中文POS标签需要以中文分词为前提。 </p>
+<p>可以严格在分词之后再进行词性标注（one-at-a-time），或者同时进行分词和POS标签这两种方法（all-at once）</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588070706470.png" alt="1588070706470" style="zoom:50%;"></p>
+<p>论文发现，虽然基于字符的all-at once方法是最好的方法，但是基于字符的one-at-a-time方法却是一个值得折衷的方法，在准确性方面仅稍差一些，但训练和测试时间却更短。 （略有提升，差别不大）</p>
+<p>论文[6]的任务是：词性标注。</p>
+<p>以往的pipeline是：分词+pos。论文提出一个Joint Segmentation and Tagging Model。</p>
+<p>模型的输入是：预定义了两个特征模板</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588081673363.png" alt="1588081673363"></p>
+<p>然后通过一个decoding算法来得到最后的联合结果：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588081713596.png" alt="1588081713596"></p>
+<p>论文 [7] 任务是：自动内容提取：Automatic Content Extraction。包括实体识别和关系抽取。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588084823613.png" alt="1588084823613"></p>
+<p>解决方案也是：单模型+Decoding算法</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588084916587.png" alt="1588084916587" style="zoom:50%;"></p>
+<p>论文[12]的任务是实体关系抽取</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588141447625.png" alt="1588141447625"></p>
+<p>先抽取实体，再进行关系分类。实体抽取模型和关系分类模型分别是一个字序列LSTM和一个依赖树结构的LSTM。</p>
+<p>其中word embedding 和实体抽取模型得到的label embedding都用于关系分类模型的输入中。关系分类模型和实体抽取模型的隐藏层共享训练参数。</p>
+<p>还做了消融实验：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588142769366.png" alt="1588142769366"></p>
+<p>论文[13] </p>
+<p>任务也是实体关系抽取</p>
+<p>维护一个表，使用Beamsearch的方式来得到一个全局最优的序列</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588149130931.png" alt="1588149130931" style="zoom:67%;"></p>
+<p>这个全局序列，就是通过$h_T$得到的。</p>
+<p>使用LSTM学习全局上下文表示。使用三种基本的LSTM结构：1)从左到右的单词LSTM；2)从右到左的单词LSTM；3)从左到右的实体边界标签LSTM</p>
+<p>然后两个上层的模块采用不同的输入，得到序列：实体检测的特征表示。首先，从三个基本的LSTM中提取六个特征向量。关系分类的特征表示，与实体检测类似，12个特征。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588148967560.png" alt="1588148967560" style="zoom:67%;"></p>
+<p>论文[20]是实体抽取+情感分类任务。</p>
+<p>两种解决方案：pipeline(joint ) or collapsed。</p>
+<p>论文的integrat的策略就不重点关注了。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588156636191.png" alt="1588156636191" style="zoom: 67%;"></p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588156732935.png" alt="1588156732935" style="zoom:80%;"></p>
+<p>论文[38]是方面情感分析的工作</p>
+<p>通常以流水线方式完成此任务，首先执行aspect term提取，然后对提取的方面项进行情感预测。</p>
+<p>论文提出的模型美其名曰“交互式”多任务学习，本质就是不共享参数的部分连来连去的。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588937239627.png" alt="1588937239627"></p>
+<h3><span id="22-separate-learning-amp-joint-search">2.2 Separate Learning &amp; Joint Search</span></h3><p>论文[4] 也是词性标注任务：分词 + 标注。</p>
+<p>联合训练不被使用时因为当时训练成本昂贵。</p>
+<p>论文使用了两个独立的CRF来训练，得到字符级别的分词的序列标注，和字符级别的词性序列标注。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588072393312.png" alt="1588072393312" style="zoom:50%;"></p>
+<p>然后构造了一个概率的框架，找到各自的最适合的最终结果。具体怎么概率的，就不care了，领悟Separate Learning &amp; Joint Search比较重要！~</p>
+<p>论文[5]任务——观点提取：观点实体提取+观点关系分类</p>
+<p>Opinion expressions: OOpinion targets: T；Opinion holders: H</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588079600410.png" alt="1588079600410" style="zoom: 67%;"></p>
+<p>解决方案：</p>
+<ol>
+<li><p>将意见实体识别任务表示为一个序列标记问题，利用CRF学习序列赋值的概率;</p>
+</li>
+<li><p>将关系抽取问题作为两个二元分类问题的组合，利用逻辑回归训练分类器</p>
+</li>
+<li><p>loss函数被定义为一个线性组合，用不同的预测参数 λ 来平衡这两个模型的损失</p>
+<script type="math/tex; mode=display">
+Score= λ∙Score_{entity}  +(1-λ)∙Score_{relation}</script></li>
+</ol>
+<h2><span id="4-辅助关系的多任务学习">4 辅助关系的多任务学习</span></h2><p>通过引入其他任务来帮助主要任务的效果提升。其他任务的数据来源大多是自身，即源数据的其他任务标签或者一些自监督的方法。</p>
+<p>论文[9] 的任务是：在序列标注任务中，只有部分相关标签。</p>
+<p>为了让模型充分利用数据，加入了语言模型的任务——学习预测序列中的下一个词，不依赖任何注释。这样能让模型学习更多语言特征，提高性能。</p>
+<p>预测前一个字和后一个字都放在一个非线性映射后的softmax中：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588139994792.png" alt="1588139994792"></p>
+<p>论文[14] 通过键盘敲击的延时来帮助 syntactic chunking、CCG supertagging 组合范畴语法超标注等任务；</p>
+<p>模型也是很简单的，共同享有的3层LSTM，再加上两个任务，这两个任务是随机选一个来train的。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588151763065.png" alt="1588151763065"></p>
+<p>论文[31] 是对话生成的任务</p>
+<p>对话模型与一个Auto-Encoder模型共享Decoder部分的参数。一方面是改善对话数据不够用的问题，一方面提高对话生成的效果。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588750766979.png" alt="1588750766979"></p>
+<p>论文[32] 也是对话生成的任务。</p>
+<p>提出了一个SPACEFUSION模型，共同优化多样性和相关性。该模型通过利用新颖的正则化项实质上融合了序列到序列模型和Auto-Encoder模型的潜在空间。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588750991632.png" alt="1588750991632" style="zoom:67%;"></p>
+<p>论文[33] 也是对话任务。</p>
+<p>主要任务是，对话生成，如下图右半部分。辅助任务是，通过context得到 Author profiles，下图左半部分。</p>
+<p>Author profile是建模得来的用户特征，age, gender, education, and location。这四个任务可以视为四个多分类任务，其中每个分类器将上下文作为输入以预测文本序列所属的类别。</p>
+<p>Encoder部分是共享参数的，这也是多任务所在，简单的硬参数共享。</p>
+<p>Decoder部分，预测得到的用户特征是直接作为额外输入加入进去的，另外经过用户特征转化过的context embedding 是作为decoder的初始状态的。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588754659240.png" alt="1588754659240"></p>
+<p>论文[34] 是神经机器翻译问题，神经机器翻译（NMT）在纯净的域内文本上实现了卓越的性能，但是当面对充满错别字，语法错误和其他杂音的文本时，性能会急剧下降。 </p>
+<p>任务主要是针对法语到英语的翻译。其中英语都是纯净数据，法语有clean的有noisy的。</p>
+<p>多任务学习模型包括三部分输入，noisy source sentence、clean source sentence、target translation。通过这种加入了脏数据的多任务学习，提高翻译的效果，相当于加了一些噪声吧。</p>
+<p>论文中涉及了一些关于这些平行语料的挑选、生成、筛选等，有兴趣可以去看看。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588934422820.png" alt="1588934422820" style="zoom:67%;"></p>
+<p>论文[36] 是语篇连贯评估任务。</p>
+<p>论文提出了一个多任务训练的层次神经网络，利用两个任务之间的归纳迁移，学习预测文档级连贯性得分(在网络的顶层)和词级语法角色(在底层)。</p>
+<p>单任务在于文档整体语篇连贯性的分数，看似是个pipeline然而重点不在这里。这里的多任务在于优化了一个底层的二级任务，word-level的标签：语法结构。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588938425536.png" alt="1588938425536"></p>
+<h2><span id="5-对抗多任务学习">5 对抗多任务学习</span></h2><p>对抗任务一般是应对 具有不同输入的多任务学习。</p>
+<p>通过对抗任务，使参数共享的部分包含更多公共信息，并减少特定任务的信息。</p>
+<p>论文[25]提出了一种用于POS的<strong>跨语言</strong>迁移学习模型。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588160497355.png" alt="1588160497355" style="zoom:50%;"></p>
+<p>蓝色模块共享所有语言的参数，红色模块具有不同语言的参数。 紫色圆圈表示目标标签，这些目标标签针对不同的语言使用不同的参数预测，其输入是公共BLSTM和私有BLSTM的输出总和。 用三个用红色框表示的目标训练模型。</p>
+<p>对抗训练在于梯度反转那里，让蓝色部分的参数尽量与语言无关。</p>
+<p>中文分词有许多不同的分词标准。 现有的大多数方法都专注于提高每个标准的性能。<br>论文[27]集成来自多个异构细分标准的共享知识，为CWS提出对抗性多标准学习。 8个标准。<strong>跨语料</strong></p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588167224626.png" alt="1588167224626" style="zoom:50%;"></p>
+<p>灰色方框是私有的LSTM layer，黄色方框是参数共享的LSTM layer。</p>
+<p>对抗训练使得黄色的LSTM与输入无关，对抗训练的目标函数是确定是哪个criteria任务。</p>
+<p>论文[28] </p>
+<p>用于情感分析的训练数据在多个领域中都很丰富，而在其他领域则很少。 </p>
+<p>将每个领域的描述符向量与句子一起输入进模型。描述符向量用于对抗训练。</p>
+<p>基础模型，所有domain共享一套参数：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588169006697.png" alt="1588169006697" style="zoom:50%;"></p>
+<p>多任务学习模型，共享一部分参数：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588169083409.png" alt="1588169083409" style="zoom:50%;"></p>
+<p>最终模型，右上角进行对抗训练，左上角进行特定领域的情感分析。<strong>跨领域</strong></p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588169112756.png" alt="1588169112756" style="zoom: 50%;"></p>
+<p>论文[37] 联合建模了Recognizing Question Entailment (RQE)and medical Question Answering (QA) 两个任务。<strong>跨任务</strong></p>
+<p>对抗训练是为了使共享表示包含更多公共信息并减少特定任务的信息的混合。</p>
+<p>原话是：an adversarial training strategy is introduced to separate the private features of each task from the shared representations. </p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588765746423.png" alt="1588765746423"></p>
+<p>论文[35] 是<strong>多方言</strong>的POS任务，论文的主体模型也是额外的很常见的对抗训练。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588770178094.png" alt="1588770178094" style="zoom: 67%;"></p>
+<p>论文[39] 是标题生成的领域适应任务。<strong>跨领域</strong></p>
+<p>源域标注数据多，目标域数据少。</p>
+<p>训练流程：1. 源域的标记数据经过encoder、decoder进行反向传播；2. 源域、目标域的数据经过encoder、domain classifier进行反向传播。（这个图画的真是反人类）</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588770813763.png" alt="1588770813763" style="zoom:67%;"></p>
+<h2><span id="6-迁移学习的多任务">6 迁移学习的多任务</span></h2><p>论文[15]是为了解决“predict RST discourse trees”任务，RST( Rhetorical Structure Theory)训练数据少，因此使用了相关任务or可选的views的数据。</p>
+<p>这个任务主要是说文档内句子之间都是有关系的，比如a中有条件关系，b中有MANNER-MEANS关系。</p>
+<p>a. [The gain on the sale couldn’t be estimated] [until the “tax treatment has been determined.”]<br>b. [On Friday, Datuk Daim added spice to an otherwise unremarkable address on Malaysia’s proposed budget for 1990] [by ordering the Kuala Lumpur Stock Exchange “to take appropriate action immediately” to cut its links with the Stock Exchange of Singapore.]</p>
+<p>利用的数据和任务，整体模型：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588153248395.png" alt="1588153248395"></p>
+<p>与之前类似，共享训练参数，上层更改task类型。</p>
+<p>论文[16]是中文分词模型，对模块进行多种任务的预训练，提升效果。</p>
+<p>模型是基于transition的方法，整体如下：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588154075604.png" alt="1588154075604" style="zoom:67%;"></p>
+<p>使用一些其他任务来进行一个pre-training，保存了一部分模型的参数：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588154133639.png" alt="1588154133639" style="zoom:50%;"></p>
+<p>论文[17] 提出了一种通用的无监督学习方法，以提高seq2seq的准确性。 论文使用两个语言模型的预训练权重初始化seq2seq的编码器和解码器的权重，然后使用标记的数据进行微调。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588154371671.png" alt="1588154371671" style="zoom:67%;"></p>
+<p>两个语言模型在各自语言语料上独自训练。</p>
+<p>论文[18]是著名的ELMO，通过预训练的方式来完成多种任务，近年也不少了，还有BERT等。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588154989344.png" alt="1588154989344"></p>
+<p><img src="NLP中的联合建模与多任务学习//1588155032471.png" alt="1588155032471"></p>
+<p>论文[22] 是依存分析任务，为了解决低资源问题，采用多任务学习的方式。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588158729565.png" alt="1588158729565"></p>
+<p>使用软参数共享的方法，两个模型都有自己的参数，并不共享，只需要在模型中修改loss加入关于两模型参数差别的正则化项，以使得参数相似化。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588158793425.png" alt="1588158793425" style="zoom:67%;"></p>
+<p>一定程度少减少数据缺失的问题：</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588158886740.png" alt="1588158886740" style="zoom:67%;"></p>
+<p>论文[23] 任务是训一个新加坡语的parser。</p>
+<p>通过英语的parser为基础，使用新加坡语料得到。</p>
+<p>论文中也完成了新加坡语POS的任务，通过的是一样的思路。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588159546362.png" alt="1588159546362" style="zoom: 67%;"></p>
+<p>论文[24] 任务是神经机器翻译，seq2seq框架在大型数据场景中已显示有效，但在资源匮乏的语言中却没有那么有效。 </p>
+<p>论文提出一种迁移学习方法，关键思想是首先训练一个高资源语言对（父模型），然后将一些学习到的参数传递给低资源语言对（子模型）以初始化和约束训练。</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588160106566.png" alt="1588160106566" style="zoom:33%;"></p>
+<p>论文[26]是用标准的多任务学习来实现迁移学习。</p>
+<p>使用具有大量标注的原任务（Penn Treebank上的POS标记）来改善目标任务的可用注释较少的性能（POS标记用于 微博）</p>
+<p><img src="/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/1588166543661.png" alt="1588166543661" style="zoom:67%;"></p>
+<h2><span id="reference">Reference</span></h2><p>[1] Zhang Y. Joint models for NLP[C]//Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing: Tutorial Abstracts. 2018.</p>
+<p>[2] Ng, Hwee Tou, and Jin Kiat Low.”Chinese part-of-speech tagging: One-at-a-time or all-at-once? word-basedor character-based?.” <em>EMNLP</em>.2004.</p>
+<p>[3] Finkel, Jenny Rose, and Christopher D. Manning. “Joint parsing and named entity recognition.” <em>Proceedings of Human Language Technologies: The 2009 Annual Conference of the North American Chapter of the Association for Computational Linguistics</em>. Association for Computational Linguistics, 2009.</p>
+<p>[4] Shi, Yanxin, and Mengqiu Wang. “A Dual-layer CRFs Based Joint Decoding Method for Cascaded Segmentation and Labeling Tasks.” <em>IJcAI</em>. 2007.</p>
+<p>[5] Yang B, Cardie C. Joint inference for fine-grained opinion extraction[C]//Proceedings of the 51st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). 2013: 1640-1649.</p>
+<p>[6] Zhang Y, Clark S. Joint word segmentation and POS tagging using a single perceptron[C]//Proceedings of ACL-08: HLT. 2008: 888-896.</p>
+<p>[7] Li Q, Ji H. Incremental joint extraction of entity mentions and relations[C]//Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). 2014: 402-412.</p>
+<p>[8] Collobert R, Weston J, Bottou L, et al. Natural language processing (almost) from scratch[J]. Journal of machine learning research, 2011, 12(Aug): 2493-2537.  不太容易找，附上链接：<a href="http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf" target="_blank" rel="noopener">http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf</a></p>
+<p>[9] Rei, Marek. “Semi-supervised Multitask Learning for Sequence Labeling.”, In proceedings of ACL (2017).</p>
+<p>[10] Søgaard A, Goldberg Y. Deep multi-task learning with low level tasks supervised at lower layers[C]//Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers). 2016: 231-235.</p>
+<p>[11] Shi P, Teng Z, Zhang Y. Exploiting mutual benefits between syntax and semantic roles using neural network[C]//Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing. 2016: 968-974.</p>
+<p>[12] Miwa M, Bansal M. End-to-end relation extraction using lstms on sequences and tree structures[J]. arXiv preprint arXiv:1601.00770, 2016.</p>
+<p>[13] Zhang M, Zhang Y, Fu G. End-to-end neural relation extraction with global optimization[C]//Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing. 2017: 1730-1740.</p>
+<p>[14] Plank B. Keystroke dynamics as signal for shallow syntactic parsing[J]. arXiv preprint arXiv:1610.03321, 2016.</p>
+<p>[15] Braud C, Plank B, Søgaard A. Multi-view and multi-task training of RST discourse parsers[C]. 2016.</p>
+<p>[16] Yang J, Zhang Y, Dong F. Neural word segmentation with rich pretraining[J]. arXiv preprint arXiv:1704.08960, 2017.</p>
+<p>[17] Ramachandran P, Liu P J, Le Q V. Unsupervised pretraining for sequence to sequence learning[J]. arXiv preprint arXiv:1611.02683, 2016.</p>
+<p>[18] Peters M E, Neumann M, Iyyer M, et al. Deep contextualized word representations[J]. arXiv preprint arXiv:1802.05365, 2018.</p>
+<p>[19] Kiperwasser E, Ballesteros M. Scheduled multi-task learning: From syntax to translation[J]. Transactions of the Association for Computational Linguistics, 2018, 6: 225-240.</p>
+<p>[20] Zhang M, Zhang Y, Vo D T. Neural networks for open domain targeted sentiment[C]//Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing. 2015: 612-621.</p>
+<p>[21] Kunchukuttan A, Khapra M, Singh G, et al. Leveraging orthographic similarity for multilingual neural transliteration[J]. Transactions of the Association for Computational Linguistics, 2018, 6: 303-316.</p>
+<p>[22] Duong L, Cohn T, Bird S, et al. Low resource dependency parsing: Cross-lingual parameter sharing in a neural network parser[C]//Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 2: Short Papers). 2015: 845-850.</p>
+<p>[23] Wang H, Zhang Y, Chan G Y L, et al. Universal dependencies parsing for colloquial singaporean english[J]. arXiv preprint arXiv:1705.06463, 2017.</p>
+<p>[24] Zoph B, Yuret D, May J, et al. Transfer learning for low-resource neural machine translation[J]. arXiv preprint arXiv:1604.02201, 2016.</p>
+<p>[25] Kim J K, Kim Y B, Sarikaya R, et al. Cross-lingual transfer learning for pos tagging without cross-lingual resources[C]//Proceedings of the 2017 conference on empirical methods in natural language processing. 2017: 2832-2838.</p>
+<p>[26] Yang Z, Salakhutdinov R, Cohen W W. Transfer learning for sequence tagging with hierarchical recurrent networks[J]. arXiv preprint arXiv:1703.06345, 2017.</p>
+<p>[27] Chen X, Shi Z, Qiu X, et al. Adversarial multi-criteria learning for chinese word segmentation[J]. arXiv preprint arXiv:1704.07556, 2017.</p>
+<p>[28] Liu Q, Zhang Y, Liu J. Learning domain representation for multi-domain sentiment classification[C]//Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers). 2018: 541-550.</p>
+<p>[29] Ganin Y, Lempitsky V. Unsupervised domain adaptation by backpropagation[J]. arXiv preprint arXiv:1409.7495, 2014.</p>
+<p>[30] Sun T, Shao Y, Li X, et al. Learning Sparse Sharing Architectures for Multiple Tasks[J]. arXiv preprint arXiv:1911.05034, 2019.</p>
+<p>[31] Luan Y, Brockett C, Dolan B, et al. Multi-task learning for speaker-role adaptation in neural conversation models[J]. arXiv preprint arXiv:1710.07388, 2017.</p>
+<p>[32] Gao X, Lee S, Zhang Y, et al. Jointly optimizing diversity and relevance in neural response generation[J]. arXiv preprint arXiv:1902.11205, 2019.</p>
+<p>[33] Yang M, Huang W, Tu W, et al. Multitask Learning and Reinforcement Learning for Personalized Dialog Generation: An Empirical Study[J]. IEEE Transactions on Neural Networks and Learning Systems, 2020.</p>
+<p>[34] Zhou H, Li X, Yao W, et al. DUT-NLP at MEDIQA 2019: An Adversarial Multi-Task Network to Jointly Model Recognizing Question Entailment and Question Answering[C]//Proceedings of the 18th BioNLP Workshop and Shared Task. 2019: 437-445.</p>
+<p>[35] Zalmout N, Habash N. Adversarial Multitask Learning for Joint Multi-Feature and Multi-Dialect Morphological Modeling[J]. arXiv preprint arXiv:1910.12702, 2019.</p>
+<p>[36] Chen F, Chen Y Y. Adversarial Domain Adaptation Using Artificial Titles for Abstractive Title Generation[C]//Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics. 2019: 2197-2203.</p>
+<p>[37] Zhou S, Zeng X, Zhou Y, et al. Improving Robustness of Neural Machine Translation with Multi-task Learning[C]//Proceedings of the Fourth Conference on Machine Translation (Volume 2: Shared Task Papers, Day 1). 2019: 565-571.</p>
+<p>[38] He R, Lee W S, Ng H T, et al. An interactive multi-task learning network for end-to-end aspect-based sentiment analysis[J]. arXiv preprint arXiv:1906.06906, 2019.</p>
+<p>[39] Farag Y, Yannakoudakis H. Multi-Task Learning for Coherence Modeling[J]. arXiv preprint arXiv:1907.02427, 2019.</p>
+<h1><span id="end">End</span></h1>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/">http://htfhxx.github.io/2020/05/09/nlp-jin-jie/nlp-zhong-de-lian-he-jian-mo-yu-duo-ren-wu-xue-xi/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/NLP%E4%B8%AD%E7%9A%84%E8%81%94%E5%90%88%E5%BB%BA%E6%A8%A1%E4%B8%8E%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0/">
+                                    <span class="chip bg-color">NLP中的联合建模与多任务学习</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2020-05-09T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/05/23/nlp-jin-jie/yu-xun-lian-mo-xing-ju-ti-gong-zuo-survey/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="预训练模型具体工作survey">
+                        
+                        <span class="card-title">预训练模型具体工作survey</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 预训练模型综述1.1 历史进展
+第一代自然语言预训练模型：词向量模型I 典型代表：CBOW, Skip-gram, Glove, FasttextI 词向量表示是固定，不会随着上下文的改变而变化  
+第二代自然语言预训练模型：预训练语言
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-23
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                    NLP进阶
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E5%85%B7%E4%BD%93%E5%B7%A5%E4%BD%9Csurvey/">
+                        <span class="chip bg-color">预训练模型具体工作survey</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/04/27/nlp-jin-jie/pre-trained-models-for-natural-language-processing/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="《Pre-trained Models for Natural Language Processing》">
+                        
+                        <span class="card-title">《Pre-trained Models for Natural Language Processing》</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            [TOC]
+语言表示学习及其研究进展。
+如何使预训练模型的知识适应下游任务
+预训练模型未来研究的一些潜在方向
+1 论文概览此篇论文主要有如下贡献：
+
+对NLP相关的预训练模型，进行了全面的介绍。包括背景知识，模型结构，预训练的任务，一些扩展
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                    NLP进阶
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E3%80%8APre-trained-Models-for-Natural-Language-Processing%E3%80%8B/">
+                        <span class="chip bg-color">《Pre-trained Models for Natural Language Processing》</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">133.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

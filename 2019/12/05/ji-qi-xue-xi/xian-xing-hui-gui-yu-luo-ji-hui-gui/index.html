@@ -330,8 +330,8 @@ y = w_0x_0 + \cdots  + w_px_p + b = ">
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/machine-learning/" class="post-category">
-                                machine-learning
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
                             </a>
                         
                     </div>
@@ -386,7 +386,7 @@ J(\theta) = \frac{1}{2m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})^2, \qquad  \
 </li>
 </ul>
 <h2><span id="13-过拟合如何解决">1.3 过拟合如何解决</span></h2><ul>
-<li><p>使用岭回归（加入L2正则项）</p>
+<li><p>使用岭回归-Ridge（加入L2正则项）</p>
 <script type="math/tex; mode=display">
 \hat{h}_{\theta}(x) = h_{\theta}(x) + \lambda \sum_i w_i^2</script></li>
 <li><p>使用Lasso回归（加入L1正则项）</p>
@@ -415,7 +415,7 @@ h_\theta(x) = sigmoid(\theta^T X)  = \frac{1}{1 + e^{-\theta^T X}}</script><ul>
 </li>
 <li><p>线性回归其参数计算方式为<strong>最小二乘法</strong>， 逻辑回归其参数更新方式为<strong>极大似然估计</strong>。</p>
 </li>
-<li><p>逻辑回归满足伯努利分布：</p>
+<li><p>逻辑回归满足伯努利分布（0-1分布）：</p>
 <script type="math/tex; mode=display">
 P(Y=1|x; \theta) = h_{\theta}(x) \\
 P(Y=0|x; \theta)  = 1 - h_{\theta}(x) \\
@@ -728,23 +728,22 @@ https://github.com/htfhxx/NLPer-Interview
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/12/07/zi-ran-yu-yan-chu-li-ji-chu/attention/">
+                <a href="/2019/12/07/shen-du-xue-xi-yu-nlp-ji-chu/dl-you-hua-fang-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Attention">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="DL优化方法">
                         
-                        <span class="card-title">Attention</span>
+                        <span class="card-title">DL优化方法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             [TOC]
-1 Basic Attention1.1 Attention 定义
-对于Attention机制的整个计算过程，可以总结为以下三个过程：
-
-socre 函数： 根据 Query 与 Key 计算两者之间的相似性或相关性， 即 so
+1 防止欠拟合、过拟合的方法
+欠拟合：模型没有充分学习到数据中的特征信息，无法很好的拟合数据，在训练集和测试集上效果都不好。
+过拟合：模型过于复杂，将噪声数据的特征也学习到模型中了，泛化能力下降，导致模型的训练误差远小于测试误差
                         
                     </div>
                     <div class="publish-info">
@@ -755,8 +754,8 @@ socre 函数： 根据 Query 与 Key 计算两者之间的相似性或相关性�
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/nlp%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    nlp基础
+                            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8ENLP%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    深度学习与NLP基础
                                 </a>
                             
                             
@@ -766,8 +765,8 @@ socre 函数： 根据 Query 与 Key 计算两者之间的相似性或相关性�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Attention/">
-                        <span class="chip bg-color">Attention</span>
+                    <a href="/tags/DL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">
+                        <span class="chip bg-color">DL优化方法</span>
                     </a>
                     
                 </div>
@@ -1013,7 +1012,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.7k</span>&nbsp;字
+                class="white-color">133.9k</span>&nbsp;字
             
             
             

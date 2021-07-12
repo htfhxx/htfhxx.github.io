@@ -330,8 +330,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/machine-learning/" class="post-category">
-                                machine-learning
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
                             </a>
                         
                     </div>
@@ -352,7 +352,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
+                    3.5k
                 </div>
                 
 
@@ -418,10 +418,10 @@ p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)=a_{i j}, \quad 1 \leq i, j \leq N</scr
 <p>(2)  根据状态值和输出观测概率B选择观测变量取值$X_t$ ;</p>
 <p>(3)  根据状态值和状态转移矩阵A转移模型状态，即确定$Y_{t+1}$;</p>
 <h2><span id="3-三个问题">3 三个问题</span></h2><p>一旦一个系统可以作为HMM被描述，就可以用来解决三个基本问题。</p>
-<p><strong>1.</strong>  <strong>评估（Evaluation）</strong></p>
+<p><strong>1.</strong>  <strong>评估（Evaluation）：概率计算问题</strong></p>
 <p>给定HMM，即$\lambda=[π, A,B]$，求某个观察序列的概率$p(x| \lambda)$。</p>
 <p>例如：给定一个天气的隐马尔可夫模型，包括第一天的天气概率分布，天气转移概率矩阵，特定天气下树叶的湿度概率分布。<strong>求第一天湿度为1，第二天湿度为2，第三天湿度为3的概率。</strong></p>
-<p><strong>2.</strong>  <strong>解码 or 推断（ Decoding）</strong></p>
+<p><strong>2.</strong>  <strong>解码 or 推断（ Decoding）：预测问题</strong></p>
 <p>给定HMM，即$\lambda=[π, A,B]$，以及某个观察序列，求得天气的序列y。</p>
 <p>例如：给定一个天气的隐马尔可夫模型，包括第一天的天气概率分布，天气转移概率矩阵，特定天气下树叶的湿度概率分布。并且已知第一天湿度为1，第二天湿度为2，第三天湿度为3。<strong>求得这三天的天气情况</strong>。</p>
 <p> 即：发现“最优”状态序列能够“最好地解释”观察序列</p>
@@ -512,7 +512,12 @@ p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)=a_{i j}, \quad 1 \leq i, j \leq N</scr
 <li>参数学习（利用EM迭代算法获取初始状态概率、状态转移概率和输出概率）</li>
 <li>使用Viterbi算法解码</li>
 </ol>
-<h2><span id="5-reference">5 Reference</span></h2><p>宗成庆：《自然语言处理》讲义</p>
+<h2><span id="5-最大熵马尔可夫模型">5 最大熵马尔可夫模型</span></h2><p>普通的马尔可夫模型，考虑了隐状态的转移概率和当前隐状态到当前观测状态的输出概率。实际上，隐状态隐状态不仅仅与单个观测状态相关，还和观测状态的长度、上下文等信息相关。</p>
+<p>最大熵马尔可夫模型考虑了所有的观测状态。</p>
+<p>并且在局部进行了归一化，即枚举全部隐藏状态求和后计算概率。</p>
+<p>但是，其存在标注偏置问题。</p>
+<p>CRF在最大熵马尔可夫模型的基础上，加入了全局归一化。</p>
+<h2><span id="reference">Reference</span></h2><p>宗成庆：《自然语言处理》讲义</p>
 <p>《统计学习方法》</p>
 <p>其他网络资料（侵删）</p>
 
@@ -805,8 +810,8 @@ p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)=a_{i j}, \quad 1 \leq i, j \leq N</scr
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/machine-learning/" class="post-category">
-                                    machine-learning
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
                                 </a>
                             
                             
@@ -831,7 +836,7 @@ p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)=a_{i j}, \quad 1 \leq i, j \leq N</scr
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/11/28/zi-ran-yu-yan-chu-li-ji-chu/transformer-de-jian-ji-xiang-jie-shi/">
+                <a href="/2019/11/28/shen-du-xue-xi-yu-nlp-ji-chu/transformer-de-jian-ji-xiang-jie-shi/">
                     <div class="card-image">
                         
                         
@@ -857,8 +862,8 @@ p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)=a_{i j}, \quad 1 \leq i, j \leq N</scr
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/nlp%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    nlp基础
+                            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8ENLP%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    深度学习与NLP基础
                                 </a>
                             
                             
@@ -1063,7 +1068,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.7k</span>&nbsp;字
+                class="white-color">133.9k</span>&nbsp;字
             
             
             

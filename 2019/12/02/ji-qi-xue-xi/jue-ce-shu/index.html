@@ -5,12 +5,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="决策树, 长腿咚咚咚的个人博客">
-    <meta name="description" content="决策树[TOC]
-1 简介决策树是一个分而治之的递归过程。 
+    <meta name="description" content="1. 决策树[TOC]
+1.1 简介决策树是一个分而治之的递归过程。 
 
-开始，构建根节点，将所有训练数据都放在根节点。
-然后，选择一个最优特征，按照这一特征将训练数据集分割成子集，使得各个子集有一个在当前条件下最好的分类。
-如果子集未分类完毕，则在">
+构建根节点，初始化特征集合和数据集合；
+选择最优特征，并划分子集，更新数据集合和特征集合；
+继续划分直到所有训练数据基本划分正确。
+
+决策树学习的关键问题：特征选择、">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -332,8 +334,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/machine-learning/" class="post-category">
-                                machine-learning
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                机器学习
                             </a>
                         
                     </div>
@@ -354,14 +356,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    4 分
                 </div>
                 
 				
@@ -377,33 +379,32 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1><span id="决策树">决策树</span></h1><p>[TOC]</p>
-<h2><span id="1-简介">1 简介</span></h2><p>决策树是一个分而治之的递归过程。 </p>
-<ul>
-<li>开始，构建根节点，将所有训练数据都放在根节点。</li>
-<li>然后，<strong>选择一个最优特征</strong>，按照这一特征将训练数据集分割成子集，使得各个子集有一个在当前条件下最好的分类。</li>
-<li>如果子集未分类完毕，则在子集中选择一个最优特征，继续进行划分，直到所有训练数据子集都被正确分类或没有合适的特征为止。</li>
-</ul>
+                <h1><span id="1-决策树">1. 决策树</span></h1><p>[TOC]</p>
+<h2><span id="11-简介">1.1 简介</span></h2><p>决策树是一个分而治之的递归过程。 </p>
 <ol>
-<li>构建根节点；2. 选择最优特征并划分子集；3. 继续划分直到所有训练数据基本划分正确。</li>
+<li>构建根节点，初始化特征集合和数据集合；</li>
+<li>选择最优特征，并划分子集，更新数据集合和特征集合；</li>
+<li>继续划分直到所有训练数据基本划分正确。</li>
 </ol>
-<p>决策树学习通常包括3个步骤：<strong>特征选择、决策树的生成和决策树的修剪。</strong></p>
-<h2><span id="2-特征选择">2 特征选择</span></h2><p><strong>选择最优划分属性</strong>是决策树的关键。</p>
+<p>决策树学习的关键问题：<strong>特征选择、决策树的生成和决策树的修剪。</strong></p>
+<h2><span id="12-特征选择">1.2 特征选择</span></h2><p><strong>选择最优划分属性</strong>是决策树的关键。</p>
 <p>几种常见的划分属性的策略：ID3、C4.5、CART。</p>
-<h3><span id="21-id3-c45">2.1 ID3、C4.5</span></h3><ul>
-<li>熵：随机变量的不确定性（熵越大不确定性越大），用于度量样本的集合纯度。</li>
+<h3><span id="121-id3-c45">1.2.1 ID3、C4.5</span></h3><ul>
+<li>数据集的<strong>信息熵</strong>：不确定性、用于度量样本的集合纯度，其中p是类别 $i$ 占总样本的比例:</li>
 </ul>
 <script type="math/tex; mode=display">
-H(X)=-\sum_{i=1}^{n} p_{i} \log p_{i}</script><ul>
-<li>条件熵：在随机变量X的条件下，随机变量Y的不确定性</li>
+H(D)=-\sum_{i=1}^{n} p_{i} \log p_{i}, \\ p_i = D_i / D</script><ul>
+<li>针对某个特征 A，对于数据集 D 的<strong>条件熵</strong> $H(D|A)$:</li>
 </ul>
 <script type="math/tex; mode=display">
-H(Y | X)=\sum_{i=1}^{n} p_{i} H\left(Y | X=x_{i}\right)</script><ul>
-<li>信息增益：<strong>数据集D的经验熵$D(D)$</strong>与<strong>特征A下的数据集D的经验条件熵</strong>之差</li>
+\begin{aligned}
+H(D \mid A) &=\sum_{i=1}^{n} \frac{\left|D_{i}\right|}{|D|} H\left(D_{i}\right) 
+\end{aligned}</script><ul>
+<li>信息增益：<strong>数据集D的信息熵$D(D)$</strong>与<strong>特征A下的数据集D的条件熵</strong>之差：</li>
 </ul>
 <script type="math/tex; mode=display">
 g(D, A)=H(D)-H(D | A)</script><ul>
-<li><p>信息增益的算法</p>
+<li><p>信息增益的算法<br><img src="/2019/12/02/ji-qi-xue-xi/jue-ce-shu/image-20210710164845451.png" alt="image-20210710164845451"></p>
 <ul>
 <li><p>输入：数据集D和特征A<br>输出：特征A对数据集D的信息增益$g(D, A)$</p>
 <ol>
@@ -425,74 +426,79 @@ H(D | A)=\sum_{i=1}^{n} \frac{\left|D_{i}\right|}{|D|} H\left(D_{i}\right)=-\sum
 </ul>
 <script type="math/tex; mode=display">
 g_{R}(D, A)=\frac{g(D, A)}{H(D)}</script><ul>
-<li>信息增益与信息增益比的协调<br>信息增益对<strong>取值数目较多的属性</strong>有偏好(分支多，划分后的信息增益大)<br>增益比对取值数目较少的属性有所偏好，于是：<pre><code>    c4.5**先从侯选属性中找出信息增益高于平均水平的，再从中选择增益率最高的**
-</code></pre></li>
-</ul>
-<h3><span id="22-cartclassification-and-regression-tree">2.2 CART（Classification And Regression Tree)</span></h3><ul>
-<li><p>基尼指数：表示集合 D 的不确定性</p>
-<script type="math/tex; mode=display">
-\operatorname{Gini}(p)=\sum_{k=1}^{K} p_{k}\left(1-p_{k}\right)=1-\sum_{k=1}^{K} p_{k}^{2}</script></li>
-<li><p>给定样本的基尼指数</p>
-<script type="math/tex; mode=display">
-\operatorname{Gini}(D)=1-\sum_{k=1}^{K}\left(\frac{\left|C_{k}\right|}{|D|}\right)^{2}</script></li>
-<li><p>如果样本集合 $D$ 根据特征 $A$ 是否取一可能值 $a$ 被分割成 $D_1$ 和 $D_2$ 两部分， 那么在特征 A 的条件下， 集合 D 的基尼系数定义为：</p>
-<script type="math/tex; mode=display">
-\operatorname{Gini}(D, A)=\frac{\left|D_{1}\right|}{|D|} \operatorname{Gini}\left(D_{1}\right)+\frac{\left|D_{2}\right|}{|D|} \operatorname{Gini}\left(D_{2}\right)</script></li>
-</ul>
-<h2><span id="3-决策树的生成">3 决策树的生成</span></h2><h3><span id="31-id3-c45决策树的生成">3.1 ID3、C4.5决策树的生成</span></h3><ul>
-<li>输入：训练数据集D，特征集A，信息增益（比）的阈值；<br>输出：决策树T。<ol>
-<li>计算特征集中各个特征对数据集D的信息增益（比），选择信息增益较大的特征$A_g$</li>
-<li>如果特征$A_g$的信息增益（比）小于阈值，则置为单节点的树</li>
-<li>否则：对特征$A_g$的各个取值划分子集作为其子树</li>
-<li>递归这一过程（数据集为空或者特征集为空的情况返回树）</li>
-</ol>
-</li>
-</ul>
-<p>​                                                                         </p>
-<h3><span id="32-cart决策树的生成">3.2 CART决策树的生成</span></h3><ul>
-<li><p>输入：训练数据集D，特征集A，终止条件；<br>输出：决策树T</p>
-<ol>
-<li>从根节点开始，对节点计算现有特征的基尼系数。对于每一个特征，以及特征的每一种取值，根据 “是” 与 “否” 计算划分过后的基尼系数</li>
-<li>选择基尼指数最小的<strong>特征及其对应的取值</strong>作为<strong>最优特征和最优切分点</strong>。然后根据最优特征和最优切分点，将本节点的数据集二分，生成两个子节点。</li>
-<li>对两个字节点递归地调用上述步骤。</li>
-</ol>
-<p><strong>终止条件</strong>一般是：节点中的样本个数小于阈值，样本中的基尼指数小于阈值，没有更多特征</p>
-</li>
-</ul>
-<p>尽可能多的划分，然后进行后剪枝</p>
-<h2><span id="4-决策树的剪枝处理">4 决策树的剪枝处理</span></h2><p>防止过拟合并减少训练时间和测试时间</p>
-<p>剪枝通过：极小化决策树整体的损失函数</p>
+<li><p>优缺点：</p>
 <ul>
-<li><p>决策树整理的损失函数：包括信息增益与模型规模</p>
-<script type="math/tex; mode=display">
-C_{\alpha}(T)=C(T)+\alpha|T|</script></li>
-<li><p>剪枝过程</p>
-<ol>
-<li>计算每个节点的经验熵（基尼指数）</li>
-<li>从叶子节点自底向上递归，回缩到对应的父节点上，计算损失函数的变化</li>
-<li>损失变小则剪枝</li>
-</ol>
-</li>
+<li>信息增益对<strong>取值数目较多的属性</strong>有偏好(分支多，划分后的信息增益大)</li>
+<li>增益比对取值数目较少的属性有所偏好</li>
+<li>于是：c4.5先从侯选属性中找出信息增益高于平均水平的，再从中选择增益率最高的</li>
 </ul>
-<h2><span id="5-三种决策树的区别">5 三种决策树的区别</span></h2><p>特征选择方式不同：信息增益、信息增益率、基尼指数</p>
-<p>其中，信息增益偏向属性取值多的分支进行划分，信息增益率偏向属性取值少的分支进行划分，CAR树既可以回归也可以分类</p>
-<h2><span id="6-面试常问">6 面试常问</span></h2><p>递归的终止条件是什么呢？</p>
-<ol>
-<li>直到每个叶子节点都<strong>只有一种类型</strong>时停止，（这种方式很容易过拟合） </li>
-<li>当叶子节点的<strong>样本个数</strong>小于一定的阈值</li>
-<li><p>节点的<strong>信息增益</strong>（或基尼系数）小于预定阈值    <strong>推荐</strong></p>
 </li>
-<li><p>没有更多特征</p>
-</li>
-</ol>
-<p>为什么信息增益偏向属性取值多的分支？</p>
+<li><p>为什么信息增益偏向属性取值多的分支？</p>
 <ul>
 <li>当特征取值较多时， 根据此特征划分得到的子集纯度提升的更多（对比取值较少的特征）</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>其他问题：<ul>
+<li>生成树的过程中：如果特征$A_g$的信息增益（比）小于阈值，则置为单节点的树</li>
+<li>终止条件：数据集为空或者特征集为空的情况返回树</li>
+</ul>
+</li>
+</ul>
+<h3><span id="122-cartclassification-and-regression-tree">1.2.2 CART（Classification And Regression Tree)</span></h3><p>将信息熵换为基尼指数</p>
+<ul>
+<li><p>基尼指数：表示样本集合的不纯度，数值越小纯度越高</p>
+<script type="math/tex; mode=display">
+\operatorname{Gini}(p)=\sum_{k=1}^{K} p_{k}\left(1-p_{k}\right)=1-\sum_{k=1}^{K} p_{k}^{2}</script></li>
+<li><p>给定样本D的基尼指数</p>
+<script type="math/tex; mode=display">
+\operatorname{Gini}(D)=1-\sum_{k=1}^{K}\left(\frac{\left|C_{k}\right|}{|D|}\right)^{2}</script></li>
+<li><p>如果根据特征 $A$ 被分割成 $D_1$ 和 $D_2$ 两部分， 那么在特征 A 的条件下， 集合 D 的基尼系数定义为：</p>
+<script type="math/tex; mode=display">
+\operatorname{Gini}(D, A)=\frac{\left|D_{1}\right|}{|D|} \operatorname{Gini}\left(D_{1}\right)+\frac{\left|D_{2}\right|}{|D|} \operatorname{Gini}\left(D_{2}\right)</script></li>
+<li><p>选择最小的$\operatorname{Gini}(D, A_i)$来确定特征的选择</p>
+</li>
+<li><p>优缺点：减少了大量的对数运算</p>
+</li>
+</ul>
+<h2><span id="13-决策树的剪枝处理">1.3 决策树的剪枝处理</span></h2><p>剪枝的动机：防止决策树过拟合，泛化能力差</p>
+<p>剪枝的分类：预剪枝和后剪枝</p>
+<p>预剪枝：在节点划分前确定是否停止剪枝：</p>
+<ol>
+<li>节点内数据样本数量低</li>
+<li>划分后精度变低</li>
+</ol>
+<p>后剪枝：尽可能多的划分，然后在已经生成的决策树上进行剪枝</p>
+<ol>
+<li>从叶子节点自底向上递归，回缩到对应的父节点上，计算精度的变化，如果剪枝后精度上升，就可以将子树替代为节点</li>
+</ol>
+<h2><span id="14-面试常问">1.4 面试常问</span></h2><ul>
+<li><p>递归的终止条件是什么呢？</p>
+<ul>
+<li>树的最大深度</li>
+<li>直到每个叶子节点都<strong>只有一种类型</strong>时停止，（这种方式很容易过拟合） </li>
+<li>当叶子节点的<strong>样本个数</strong>小于一定的阈值</li>
+<li>节点的<strong>信息增益</strong>（或基尼系数）小于预定阈值    <strong>推荐</strong></li>
+<li>没有更多特征</li>
+</ul>
+</li>
+<li><p>回归树？</p>
+<ul>
+<li>使用<strong>标准差</strong>来衡量子集中元素的纯度。</li>
+</ul>
+</li>
+<li><p>为什么信息增益偏向属性取值多的分支？</p>
+<ul>
+<li>当特征取值较多时， 根据此特征划分得到的子集纯度提升的更多（对比取值较少的特征）</li>
+</ul>
+</li>
 </ul>
 <h2><span id="reference">Reference：</span></h2><pre><code>《统计学习方法》
 《机器学习》——西瓜书
 https://github.com/NLP-LOVE/ML-NLP
 https://github.com/htfhxx/NLPer-Interview
+https://www.bilibili.com/video/BV1Ca4y1t7DS?p=2&amp;spm_id_from=pageDriver
 </code></pre>
             </div>
             <hr/>
@@ -835,8 +841,8 @@ public:
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/machine-learning/" class="post-category">
-                                    machine-learning
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
                                 </a>
                             
                             
@@ -1041,7 +1047,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.7k</span>&nbsp;字
+                class="white-color">133.9k</span>&nbsp;字
             
             
             

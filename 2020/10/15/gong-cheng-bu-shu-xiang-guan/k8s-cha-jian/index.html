@@ -1,0 +1,1323 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="K8S插件, 长腿咚咚咚的个人博客">
+    <meta name="description" content="1 监控插件监控可帮助您确保Kubernetes应用程序平稳运行并排除可能出现的任何问题。
+Prometheus是一种流行的开源监视工具，许多公司都使用它来监视其IT基础结构。
+还有许多其他监视工具可用：Grafana、cAdvisor、F">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>K8S插件 | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        K8S插件
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/K8S%E6%8F%92%E4%BB%B6/">
+                                <span class="chip bg-color">K8S插件</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%B7%A5%E7%A8%8B%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/" class="post-category">
+                                工程部署相关
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-10-15
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    7 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2><span id="1-监控插件">1 监控插件</span></h2><p>监控可帮助您确保Kubernetes应用程序平稳运行并排除可能出现的任何问题。</p>
+<p><strong>Prometheus</strong>是一种流行的开源监视工具，许多公司都使用它来监视其IT基础结构。</p>
+<p>还有许多其他监视工具可用：Grafana、cAdvisor、Fluentd、Jaeger、Telepresence、Zabbix</p>
+<h3><span id="11-prometheus结构">1.1 Prometheus结构</span></h3><p><img src="/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/architecture.png" alt="普罗米修斯建筑"></p>
+<p>最左边这块就是采集的，一些短周期的任务，或者一些持久性的任务。</p>
+<p>中间上面这块是服务发现，有很多被监控端时，需要自动发现新加入的节点。k8s内置了服务发现的机制，也就是它会连接k8s的API，去发现你部署的哪些应用，哪些pod，通通暴露出去，方便监控。</p>
+<p>右上角是Prometheus的告警，它告警实现是有一个组件的，Alertmanager,这个组件是接收prometheus发来的告警就是触发了一些预值，会通知Alertmanager,而Alertmanager来处理告警相关的处理，然后发送给接收人，可以是email,也可以是企业微信或者钉钉等。</p>
+<p>中间下面这块是Prometheus本身，内部是有一个TSDB的数据库。内部的采集和展示 Prometheus它都可以完成，但是展示这块UI比较low，所以借助于开源的Grafana来展示。</p>
+<p>所有的被监控端暴露完指标之后，Prometheus会主动的抓取这些指标，存储到自己TSDB数据库里面，提供给Web UI或者Grafana，或者API clients通过PromQL来调用这些数据，PromQL相当于Mysql的SQL，主要是查询这些数据的。</p>
+<p><img src="/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/image-20201218145702252.png" alt="image-20201218145702252"></p>
+<h3><span id> </span></h3><p>组件关系： </p>
+<p>Prometheus会抓取被监控端指标，存储到自己TSDB数据库里面，提供给Grafana。</p>
+<p>Node Exporter 负责抓取集群机器本身信息，可被Prometheus获取。</p>
+<h3><span id="12-k8s-监控指标">1.2 K8S 监控指标</span></h3><ul>
+<li><p>Kubernetes本身监控</p>
+<ul>
+<li>Node数量 </li>
+<li>Node资源利用率 </li>
+<li>Pods数量</li>
+<li>资源对象状态 ：比如pod，service,deployment,job这些资源状态，统计</li>
+</ul>
+</li>
+<li><p>Pod监控</p>
+<ul>
+<li><p>Pod数量</p>
+</li>
+<li><p>容器资源利用率 ：每个容器消耗了多少资源，用了多少CPU，用了多少内存</p>
+</li>
+<li><p>应用程序：偏应用程序本身的指标了，一般运维很难拿到，所以需要开发去暴露出来</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果想监控node的资源，就可以放一个node_exporter,这是监控node资源的，node_exporter是Linux上的采集器，你放上去你就能采集到当前节点的CPU、内存、网络IO，等待都可以采集的。</p>
+<p>如果想监控容器，k8s内部提供cAdvisor采集器，pod呀，容器都可以采集到这些指标，都是内置的，不需要单独部署，只知道怎么去访问这个Cadvisor就可以了。</p>
+<p>如果想监控k8s资源对象，会部署一个kube-state-metrics这个服务，它会定时的API中获取到这些指标，帮你存取到Prometheus里，要是告警的话，通过Alertmanager发送给一些接收方，通过Grafana可视化展示。</p>
+<h2><span id="2-prometheus-grafana部署">2 Prometheus+ Grafana部署</span></h2><h3><span id="21-prometheus-server部署">2.1 Prometheus Server部署</span></h3><pre><code>cd /root/workspace/visual_file/
+download...  https://prometheus.io/download/
+tar -zxvf prometheus-2.23.0.linux-amd64.tar.gz
+mv prometheus-2.23.0.linux-amd64 prometheus
+
+
+/root/workspace/visual_file/prometheus/prometheus --config.file=/root/workspace/visual_file/prometheus/prometheus.yml &amp;
+</code></pre><p>使用systemd来启停prometheus</p>
+<pre><code>vim /etc/systemd/system/prometheus.service
+
+[Unit]
+Description=Prometheus Monitoring System
+Documentation=Prometheus Monitoring System
+[Service]
+ExecStart=/root/workspace/visual_file/prometheus/prometheus --config.file=/root/workspace/visual_file/prometheus/prometheus.yml --web.listen-address=:9090
+[Install]
+WantedBy=multi-user.target
+</code></pre><p>启动 &amp; 停止</p>
+<pre><code>systemctl daemon-reload
+systemctl start prometheus
+systemctl status prometheus
+systemctl enable prometheus
+http://10.60.1.97:9090
+</code></pre><h3><span id="22-grafana部署">2.2 Grafana部署</span></h3><h4><span id="221-安装-amp-配置">2.2.1 安装 &amp; 配置</span></h4><p>RPM包方式下载安装和启动（可不看）</p>
+<pre><code>download...   https://grafana.com/grafana/download?platform=linux
+rpm -ivh --nodeps grafana-7.3.5-1.x86_64.rpm
+
+启动
+/bin/systemctl daemon-reload
+/bin/systemctl enable grafana-server.service
+/bin/systemctl start grafana-server.service
+http://10.60.1.97:3000
+</code></pre><p>二进制包下载安装和启动（推荐）</p>
+<pre><code># download...  https://grafana.com/grafana/download
+wget https://dl.grafana.com/oss/release/grafana-7.3.6.linux-amd64.tar.gz
+
+tar -zxvf grafana-7.3.6.linux-amd64.tar.gz
+mv grafana-7.3.6  grafana
+</code></pre><pre><code>可修改配置文件
+vi /root/workspace/visual_file/grafana/conf/defaults.ini
+</code></pre><p>把grafana-server添加到systemd中</p>
+<pre><code>vi /etc/systemd/system/grafana-server.service
+
+[Unit]
+Description=Grafana
+After=network.target
+[Service]
+ExecStart=/root/workspace/visual_file/grafana/bin/grafana-server -homepath  /root/workspace/visual_file/grafana/
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
+</code></pre><p>启动 &amp; 停止</p>
+<pre><code>systemctl start  grafana-server
+systemctl status  grafana-server
+systemctl enable  grafana-server
+http://10.60.1.97:3000
+</code></pre><h4><span id="222-界面配置">2.2.2 界面配置</span></h4><p>启动后的界面：</p>
+<p><img src="/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/QQ%E5%9B%BE%E7%89%8720201216203138.png" alt="QQ图片20201216203138" style="zoom: 80%;"></p>
+<p>添加数据源，选择 <strong>prometheus</strong></p>
+<p>Dashboards页面 import “Prometheus 2.0 Stats”</p>
+<p><a href="http://10.60.1.97:9090" target="_blank" rel="noopener">http://10.60.1.97:9090</a></p>
+<p><img src="/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/KADG7NZ0LZ8P%606VB8QNEI%606.png" alt="KADG7NZ0LZ8P`6VB8QNEI`6"></p>
+<p>查看数据</p>
+<p><img src="/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/KADG7NZ0LZ8P%606VB8QNEI%606-1608122881403.png" alt="KADG7NZ0LZ8P`6VB8QNEI`6"></p>
+<p><img src="/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/image-20201218160927860.png" alt="image-20201218160927860"></p>
+<h3><span id="223-配置kubernetes数据源">2.2.3 配置kubernetes数据源</span></h3><p>启动插件：<code>Plugins</code> → <code>kubernetes</code> → <code>Enable</code></p>
+<h2><span id="3-node-exporter采集主机运行数据">3 Node Exporter—采集主机运行数据</span></h2><h3><span id="31-安装部署">3.1 安装部署</span></h3><p>与传统的监控zabbix来对比的话，prometheus-server就像是mysql，负责存储数据。只不过这是时序数据库而不是关系型的数据库。数据的收集还需要其他的客户端，在prometheus中叫做exporter。针对不同的服务，有各种各样的exporter，就好比zabbix的zabbix-agent一样。</p>
+<p>这里为了能够采集到主机的运行指标如CPU, 内存，磁盘等信息。我们可以使用 Node Exporter</p>
+<p>下载：<a href="https://github.com/prometheus/node_exporter/releases" target="_blank" rel="noopener">https://github.com/prometheus/node_exporter/releases</a></p>
+<pre><code>cd /root/workspace/visual_file/
+被监控的机器安装node-exporter
+tar -xf node_exporter-1.0.1.linux-amd64.tar.gz
+新建一个目录专门安装各种exporter
+mkdir prometheus_exporter
+mv node_exporter-1.0.1.linux-amd64 prometheus_exporter/
+cd prometheus_exporter/
+mv node_exporter-1.0.1.linux-amd64/ node_exporter
+</code></pre><p>直接打开node_exporter的可执行文件即可启动 node export，默认会启动9100端口。建议使用systemctl来启动</p>
+<pre><code>直接启动
+/root/workspace/visual_file/node_exporter/node_exporter &amp;
+
+配置systemctl启动
+vim /etc/systemd/system/node_exporter.service 
+
+[Unit]
+Description=node_exporter
+After=network.target
+[Service]
+Restart=on-failure
+ExecStart=/root/workspace/visual_file/prometheus_exporter/node_exporter/node_exporter
+[Install]
+WantedBy=multi-user.target
+
+加入开机启动
+systemctl enable node_exporter
+systemctl start node_exporter
+</code></pre><p>命令</p>
+<pre><code>systemctl start node_exporter
+systemctl status node_exporter
+systemctl stop node_exporter
+</code></pre><h3><span id="32-配置prometheus">3.2 配置Prometheus</span></h3><p>配置Prometheus，收集node exporter的数据</p>
+<p>node exporter启动后也就是暴露了9100端口，并没有把数据传到prometheus，还需要在prometheus中配置，让prometheus去pull这个接口的数据。</p>
+<pre><code>vi /root/workspace/visual_file/prometheus/prometheus.yml
+
+scrape_configs:
+  - job_name: &#39;prometheus&#39;
+    static_configs:
+    - targets: [&#39;localhost:9090&#39;]
+   #采集node exporter监控数据
+  - job_name: &#39;master&#39;
+    static_configs:
+    - targets: [&#39;localhost:9100&#39;]
+  - job_name: &#39;node1&#39;
+    static_configs:
+    - targets: [&#39;10.60.1.99:9100&#39;]
+</code></pre><p>配置好之后，prometheus 9090 就能看到了</p>
+<p><img src="/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/image-20201218144459377.png" alt="image-20201218144459377"></p>
+<p>导入模板</p>
+<p>从官网查找模板 <a href="https://grafana.com/" target="_blank" rel="noopener">https://grafana.com/</a></p>
+<p>下载json，</p>
+<p><img src="/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/image-20201218141606045.png" alt="image-20201218141606045" style="zoom:50%;"></p>
+<p><img src="/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/image-20201218152732797.png" alt="image-20201218152732797"></p>
+<h2><span id="命令综合">命令综合</span></h2><p>prometheus 启动</p>
+<pre><code>systemctl start prometheus
+systemctl start  grafana-server
+systemctl start node_exporter
+
+
+http://10.60.1.97:9090
+http://10.60.1.97:3000
+lsof -i:9090
+lsof -i:9100
+lsof -i:3000
+</code></pre><p> 状态查看</p>
+<pre><code>systemctl status prometheus
+systemctl status  grafana-server
+systemctl status node_exporter
+</code></pre><p>停止</p>
+<pre><code>systemctl stop prometheus
+systemctl stop  grafana-server
+systemctl stop node_exporter
+systemctl daemon-reload
+</code></pre><h2><span id="bugs">Bugs</span></h2><p>level=error ts=2020-12-16T12:38:35.749Z caller=main.go:808 err=”error starting web server: listen tcp 0.0.0.0:9090: bind: address already in use”</p>
+<pre><code>lsof -i:9090
+kill pid
+</code></pre><p>level=error ts=2020-12-18T02:42:47.814Z caller=node_exporter.go:194 err=”listen tcp :9100: bind: address already in use”</p>
+<pre><code>netstat -pan | grep 9100
+kill pid
+</code></pre><p>systemd 启动失败 Failed at step EXEC spawning /root/workspace/visual_file/prometheus: Permission denied</p>
+<pre><code>配置用户名的字段去掉
+</code></pre><p>Warning: grafana-server.service changed on disk. Run ‘systemctl daemon-reload’ to reload units.</p>
+<pre><code>修改了配置文件需要重新reload
+systemctl daemon-reload
+</code></pre><h2><span id="reference">Reference</span></h2><p><a href="https://www.cnblogs.com/shawhe/p/11833368.html" target="_blank" rel="noopener">https://www.cnblogs.com/shawhe/p/11833368.html</a></p>
+<p><a href="https://blog.csdn.net/ywd1992/article/details/85989259" target="_blank" rel="noopener">https://blog.csdn.net/ywd1992/article/details/85989259</a></p>
+<p><a href="https://blog.51cto.com/14143894/2438026" target="_blank" rel="noopener">https://blog.51cto.com/14143894/2438026</a></p>
+<p><a href="https://blog.csdn.net/vic_qxz/article/details/109347645" target="_blank" rel="noopener">https://blog.csdn.net/vic_qxz/article/details/109347645</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/">http://htfhxx.github.io/2020/10/15/gong-cheng-bu-shu-xiang-guan/k8s-cha-jian/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/K8S%E6%8F%92%E4%BB%B6/">
+                                    <span class="chip bg-color">K8S插件</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2020-10-15T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/10/16/gong-cheng-bu-shu-xiang-guan/k8s/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="K8S">
+                        
+                        <span class="card-title">K8S</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 K8S1.1 前置内容
+Linux操作
+Docker
+
+推荐上手顺序
+
+概念与架构扫盲
+从零搭建简单的K8S集群
+
+基于客户端工具kubeadm
+基于二进制包方式
+
+
+核心概念
+
+Pod、Controller、service、ingre
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%B7%A5%E7%A8%8B%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/" class="post-category">
+                                    工程部署相关
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/K8S/">
+                        <span class="chip bg-color">K8S</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/10/10/gong-cheng-bu-shu-xiang-guan/springboot/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="springboot">
+                        
+                        <span class="card-title">springboot</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 技术栈总结1.1 之前的技术栈JavaSE（servlet tomcat)
+mysql + jdbc
+html + css +jquery + 框架
+javaweb: 原始的MVC三层架构的网站
+SSM: Spring + Spring
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%B7%A5%E7%A8%8B%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/" class="post-category">
+                                    工程部署相关
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/springboot/">
+                        <span class="chip bg-color">springboot</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">133.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

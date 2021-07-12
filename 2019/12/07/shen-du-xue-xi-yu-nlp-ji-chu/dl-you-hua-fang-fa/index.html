@@ -1,0 +1,1310 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="DL优化方法, 长腿咚咚咚的个人博客">
+    <meta name="description" content="[TOC]
+1 防止欠拟合、过拟合的方法
+欠拟合：模型没有充分学习到数据中的特征信息，无法很好的拟合数据，在训练集和测试集上效果都不好。
+过拟合：模型过于复杂，将噪声数据的特征也学习到模型中了，泛化能力下降，导致模型的训练误差远小于测试误差">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>DL优化方法 | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        DL优化方法
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/DL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">
+                                <span class="chip bg-color">DL优化方法</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8ENLP%E5%9F%BA%E7%A1%80/" class="post-category">
+                                深度学习与NLP基础
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-12-07
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>[TOC]</p>
+<h2><span id="1-防止欠拟合-过拟合的方法">1 防止欠拟合、过拟合的方法</span></h2><ul>
+<li><strong>欠拟合：</strong>模型没有充分学习到数据中的特征信息，无法很好的拟合数据，在训练集和测试集上效果都不好。</li>
+<li><strong>过拟合：</strong>模型过于复杂，将噪声数据的特征也学习到模型中了，泛化能力下降，导致模型的训练误差远小于测试误差。</li>
+</ul>
+<p><img src="/2019/12/07/shen-du-xue-xi-yu-nlp-ji-chu/dl-you-hua-fang-fa/2019-8-18_21-7-0.png" alt="2019-8-18_21-7-0"></p>
+<h3><span id="11-降低欠拟合的风险">1.1 降低欠拟合的风险</span></h3><ol>
+<li>添加新特征<br>避免特征不足or特征与样本标签的相关性不强时无法拟合</li>
+<li>增加模型复杂度<br>提高模型的学习能力</li>
+<li>减少正则化系数</li>
+</ol>
+<h3><span id="12-降低过拟合风险">1.2 降低过拟合风险</span></h3><ol>
+<li><p>从数据入手，获得更多的训练数据</p>
+</li>
+<li><p>降低模型复杂度</p>
+</li>
+<li><p>正则化<br>在模型损失函数中添加惩罚项，使学出的模型参数值较小，避免权值过大带来的过拟合风险。</p>
+</li>
+<li><p>集成学习方法（Dropout、交叉检验等）<br>降低单一模型的过拟合风险</p>
+</li>
+<li><p>训练的调优：Early stoping</p>
+<p>当验证集的误差连续 <code>n</code>次递增时停止训练。</p>
+</li>
+</ol>
+<h2><span id="2-深度学习技巧">2. 深度学习技巧</span></h2><h3><span id="21-dropout">2.1 Dropout</span></h3><ul>
+<li>Dropout的思想是：在每次训练过程中随机地忽略一些神经元。</li>
+<li><p>为什么Dropout能解决过拟合<br>整个dropout过程就相当于： 对很多个不同的神经网络取平均，相当于Bagging的一种近似</p>
+</li>
+<li><p>dropout是怎么实现的</p>
+<ul>
+<li>在训练时，每个神经单元以概率pp被保留(Dropout丢弃率为1−p)；</li>
+<li>在预测阶段（测试阶段），每个神经单元都是存在的，权重参数w要乘以p，输出是：pw</li>
+<li>为了保持同样的输出期望值并使下一层也得到同样的结果</li>
+</ul>
+<pre><code>import numpy as np
+p = 0.5  # 神经元激活概率
+def train_step(X):
+    &quot;&quot;&quot; X contains the data &quot;&quot;&quot;
+    # 三层神经网络前向传播为例
+    H1 = np.maximum(0, np.dot(W1, X) + b1)
+    U1 = np.random.rand(*H1.shape) &lt; p   # first dropout mask
+    H1 *= U1 # drop!
+    H2 = np.maximum(0, np.dot(W2, H1) + b2)
+    U2 = np.random.rand(*H2.shape) &lt; p # second dropout mask
+    H2 *= U2 # drop!
+    out = np.dot(W3, H2) + b3
+def predict(X):
+    # ensembled forward pass
+    H1 = np.maximum(0, np.dot(W1, X) + b1) * p    # NOTE: scale the activations
+    H2 = np.maximum(0, np.dot(W2, H1) + b2) * p   # NOTE: scale the activations
+    out = np.dot(W3, H2) + b3
+</code></pre></li>
+</ul>
+<h3><span id="22-正则化">2.2 正则化</span></h3><h4><span id="l1正则化">L1正则化</span></h4><p>L1正则化项：向量的1范数</p>
+<script type="math/tex; mode=display">
+正则化项： \Omega(\theta) = ||w||_1 =  \sum_i |w_i| \\
+目标函数： \tilde{J}(w;X,y) = \alpha ||w||_1  + J(w;X,y)  \\
+梯度： \nabla_w \tilde{J}(w;X,y) = \alpha sign(w) + \nabla_w J(w;X,y) \\</script><p>L1 正则化使得权重值可能被减少到0。 因此，L1对于压缩模型很有用。</p>
+<h4><span id="l2正则化">L2正则化</span></h4><p>L2正则化项：向量的2范数（元素平方和相加再开放</p>
+<script type="math/tex; mode=display">
+正则化项： \Omega(\theta) = \frac{1}{2} ||w||_2^2  = \frac{1}{2}w^Tw \\
+目标函数： \tilde{J}(w;X,y) = \frac{\alpha}{2}w^Tw  + J(w;X,y)  \\
+梯度： \nabla_w \tilde{J}(w;X,y) = \alpha w + \nabla_w J(w;X,y) \\
+梯度更新 ： w \leftarrow (1- \epsilon \alpha) w - \epsilon \nabla_w J(w;X,y)</script><p>L2正则化又称权重衰减。因为其导致权重<strong>趋向于0</strong>（但不全是0）。</p>
+<h4><span id="关于正则化的一些问题">关于正则化的一些问题</span></h4><ul>
+<li><p>为什么只对权重做惩罚，不包含偏置:<br>精确拟合偏置所需的数据通常比拟合权重少得多，因此偏置拟合程度较好。<br>正则化偏置参数可能会导致明显的欠拟合。</p>
+</li>
+<li><p><strong>L1正则化与L2正则化的异同</strong><br>相同点：限制参数的规模，使模型偏好于权值较小的目标函数，防止过拟合。<br>不同点：</p>
+<ol>
+<li>L1 正则化可以产生<strong>稀疏权值矩阵</strong>，可以用于特征选择；L2 趋向于生成参数值很小的矩阵</li>
+<li>L1 适用于特征之间有关联的情况； L2 适用于特征之间没有关联的情况</li>
+</ol>
+</li>
+<li><p>为什么L1正则化可以产生稀疏解，而L2不会？</p>
+<p>产生稀疏解，其实就是目标函数求导后 w=0时得到目标函数的极小值</p>
+<p>形式化一下分别加了L1和L2正则化的目标函数：</p>
+<script type="math/tex; mode=display">
+\begin{gathered}
+J_{L 1}(w)=L(w)+\lambda|w| \\
+J_{L 2}(w)=L(w)+\lambda w^{2}
+\end{gathered}</script><p>假设在w=0处，其L(w)的导数为d0，那么L2正则化的导数在w=0处和以前一样，没啥变化，不会导致稀疏解</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{gathered}
+\left.\frac{\partial J_{L 2}(w)}{\partial w}\right|_{w=0}=d_{0}+2 \times \lambda \times w=d_{0} 
+\end{gathered}</script><p>​        但是L1正则化的导数不一样，在w=0的两边取极限，发现两边的导数可能异号，导数先小于0后大于0，所以w=0处出现极小值，导致稀疏解：</p>
+<script type="math/tex; mode=display">
+\begin{gathered}
+\left.\frac{\partial J_{L 1}(w)}{\partial w}\right|_{w=0^{-}}=d_{0}-\lambda \\
+\left.\frac{\partial J_{L 1}(w)}{\partial w}\right|_{w=0^{+}}=d_{0}+\lambda
+\end{gathered}</script><ul>
+<li>为什么L1和L2正则化可以防止过拟合<br>L1 &amp; L2 正则化会使模型偏好于更小的权值，更小的权值意味着更低的模型复杂度，有助于提高模型的泛化能力。</li>
+</ul>
+<h2><span id="3-梯度下降方法">3 梯度下降方法</span></h2><h3><span id="21-基础梯度下降法">2.1 基础梯度下降法</span></h3><ul>
+<li><p>标准梯度下降</p>
+<script type="math/tex; mode=display">
+\theta = \theta + \eta \cdot  \nabla_\theta J(\theta)</script></li>
+<li><p>mini-batch 梯度下降</p>
+<script type="math/tex; mode=display">
+\theta = \theta + \eta \cdot  \nabla_\theta J(\theta; x^{(i:i+n)}; y^{(i:i+n)})</script></li>
+<li><p>随机梯度下降</p>
+<script type="math/tex; mode=display">
+\theta = \theta + \eta \cdot  \nabla_\theta J(\theta; x^{(i)}; y^{(i)}) \,\,\, \eta 为学习率</script></li>
+<li><p>优缺点：</p>
+<ol>
+<li>标准梯度下降需要计算所有样本梯度，更新速度慢；梯度方向一致且更新次数少，容易陷入局部最小值</li>
+<li>随机梯度下降是mini-batch的特殊，不能达到最优解，不容易陷入局部最小</li>
+</ol>
+</li>
+</ul>
+<h3><span id="22-动量梯度下降法">2.2 动量梯度下降法</span></h3><ul>
+<li><p>梯度的指数加权平均值$v_t$:</p>
+<script type="math/tex; mode=display">
+v_t = \gamma v_{t-1} + \eta \nabla_\theta J(\theta)  \\ \theta = \theta - v_t \\
+\gamma: \text{加权系数，常取值为0.9}</script></li>
+<li><p>使用指数加权平均值来更新梯度：本质是通过增加动量来减少随机，增加梯度的稳定性。</p>
+</li>
+<li><p>其中的指数加权平均值本质上考虑了前几次的梯度，不至于在”下坡“过程中因为遇到暂时的”上坡“而改变方向</p>
+</li>
+</ul>
+<h3><span id="23-自适应学习率优化算法">2.3  自适应学习率优化算法</span></h3><ul>
+<li>Adagrad</li>
+<li>Adadelta</li>
+<li>RMSprop</li>
+<li>Adam</li>
+</ul>
+<p>ps：看到这里脑壳痛，先放放</p>
+<h2><span id="4-归一化方法">4 归一化方法</span></h2><h3><span id="41-ics问题">4.1 ICS问题</span></h3><p>独立同分布（independent and identically distributed），独立同分布的数据可以简化常规机器学习模型的训练、提高模型的能力。</p>
+<p>内部协变量偏移（Internel Covariate Shift, ICS）问题</p>
+<p>深度神经网络的训练过程中，每一层的参数更新会导致上层的输入数据分布发生变化，上层参数需要不断适应新的输入数据分布，会降低学习速度。</p>
+<h3><span id="42-batch-normalization">4.2 Batch Normalization</span></h3><p>动机：针对单个神经元，利用网络训练时一个 mini-batch 的数据来计算该神经元 $x_i$ 的均值和方差，进行归一化。</p>
+<p>假设一个 batch 为 m 个输入 $B = \{x_{1}, \cdots, x_m\}$ , Batch Normalization在这 m 个数据之间做归一化， 并学习参数 $\gamma , \beta$：</p>
+<script type="math/tex; mode=display">
+\mu_B \leftarrow \frac{1}{m} \sum_{i=1}^{m} x_i    \\
+\sigma_B^2 \leftarrow \frac{1}{m} \sum_{i=1}^{m} (x_i - \mu_B)^2  \\
+\hat{x}_i  \leftarrow \frac{x_i - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}} \\
+y_i \leftarrow \gamma \hat{x}_i + \beta \equiv BN_{\gamma, \beta}{(x_i)}</script><p>对Batch Normalization的优点进行总结，大概有以下几个方面：</p>
+<ul>
+<li>让模型更稳定，可以采用更高的学习率，提高模型训练的速度，并且可以有效避免梯度的消失和爆炸</li>
+<li>起到正则化的作用，类似dropout的功能</li>
+<li>不用太在意参数的初始化</li>
+</ul>
+<p>Batch Normalization 在推断时如何设置方差和期望：</p>
+<ul>
+<li>不用验证样本的均值和方差，而是利用训练集统计的均值和方差，统计方式一般包括移动平均和全局平均。</li>
+</ul>
+<p>有哪些问题</p>
+<ul>
+<li>依赖 batch_size</li>
+<li>无法处理序列化数据</li>
+<li>推断时无法使用</li>
+</ul>
+<h3><span id="43-layer-normalization">4.3 Layer Normalization</span></h3><p>不同于 BN， 其在层内进行 Normalization。即直接对隐层单元的输出做 Normalization。</p>
+<script type="math/tex; mode=display">
+u^l = \frac{1}{H} \sum_{i=1}^H a_i^l \\
+\sigma^l = \sqrt{\frac{1}{H}\sum_{i=1}^H(a_i^l - u^l)^2} \\
+\hat{a}_i^l  \leftarrow \frac{a_i^l - \mu^l}{\sqrt{\sigma_l^2 + \epsilon}} \\
+y_i^l \leftarrow \gamma \, \hat{a}_i^l + \beta \equiv LN_{\gamma, \beta}{(a_i^l)}</script><p><strong>与Batch Normalization 区别</strong></p>
+<p>Batch 顾名思义是对一个batch进行操作。假设我们有 10行 3列 的数据，即我们的batchsize = 10，每一行数据有三个特征，假设这三个特征是【身高、体重、年龄】。那么BN是针对每一列（特征）进行缩放，例如算出【身高】的均值与方差，再对身高这一列的10个数据进行缩放。体重和年龄同理。这是一种“列缩放”。</p>
+<p>而layer方向相反，它针对的是每一行进行缩放。即只看一笔数据，算出这笔所有特征的均值与方差再缩放。这是一种“行缩放”。</p>
+<p><strong>BN是取不同样本的同一个通道的特征做归一化；LN取的是同一个样本的不同通道做归一化</strong></p>
+<pre><code>一个batch的数据：[[1,2],[3,4],[5,6]]
+Batch Normalization:
+    index 1: 1+3+5 = 9
+    index 2： 2+4+6 = 12
+    [[1/9,2/12],[3/9,4/12],[5/9,6/12]]
+Layer Normalization:
+    [[1/3,2/3],[3/7,4/7],[5/11,6/11]]
+</code></pre><h2><span id="reference">reference：</span></h2><pre><code>《统计学习方法》
+https://github.com/NLP-LOVE/ML-NLP
+https://github.com/km1994/NLP-Interview-Notes/
+https://zhuanlan.zhihu.com/p/54530247
+https://zhuanlan.zhihu.com/p/74516930
+https://blog.csdn.net/b876144622/article/details/81276818
+https://www.zhihu.com/question/37096933
+https://www.cnblogs.com/zingp/p/11631913.html
+https://www.cnblogs.com/mengxiangtiankongfenwailan/p/9989065.html
+</code></pre>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2019/12/07/shen-du-xue-xi-yu-nlp-ji-chu/dl-you-hua-fang-fa/">http://htfhxx.github.io/2019/12/07/shen-du-xue-xi-yu-nlp-ji-chu/dl-you-hua-fang-fa/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/DL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">
+                                    <span class="chip bg-color">DL优化方法</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2019-12-07T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/12/07/shen-du-xue-xi-yu-nlp-ji-chu/cnn-rnn/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="CNN and RNNs">
+                        
+                        <span class="card-title">CNN and RNNs</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            [TOC]
+1 CNN卷积神经网络：是一种专门用来处理具有类似网格结构数据的神经网络。
+1.1 卷积神经网络结构
+
+
+
+CNN层次结构
+作用
+
+
+
+
+输入层
+卷积网络的原始输入，可以是原始或预处理后的像素矩阵
+
+
+卷积层
+参数共享、局部连接
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-07
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8ENLP%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    深度学习与NLP基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CNN-and-RNNs/">
+                        <span class="chip bg-color">CNN and RNNs</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/12/05/ji-qi-xue-xi/xian-xing-hui-gui-yu-luo-ji-hui-gui/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="线性回归与逻辑回归">
+                        
+                        <span class="card-title">线性回归与逻辑回归</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            [TOC]
+1 线性回归1.1 简介简单来说，线性回归算法就是找到一条直线（一元线性回归）或一个超平面（多元线性回归）能够根据输入的特征向量来更好的预测输出y的值。
+
+y = w_0x_0 + \cdots  + w_px_p + b = 
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E4%B8%8E%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
+                        <span class="chip bg-color">线性回归与逻辑回归</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">133.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

@@ -1,0 +1,1245 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="文本生成特异性, 长腿咚咚咚的个人博客">
+    <meta name="description" content="[TOC]
+1 问题背景文本生成的安全响应问题，例如在对话领域，容易生成无意义的安全回答，例如”我不知道“。
+倾向于返回高频但毫无意义响应的原因，一部分在于以往的方法针对一对一关系进行建模，忽略了可能的一对多的关系。
+目前的方法汇总：
+
+找">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>文本生成特异性 | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        文本生成特异性
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90%E7%89%B9%E5%BC%82%E6%80%A7/">
+                                <span class="chip bg-color">文本生成特异性</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                NLP进阶
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-05-23
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    17 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>[TOC]</p>
+<h2><span id="1-问题背景">1 问题背景</span></h2><p>文本生成的安全响应问题，例如在对话领域，容易生成无意义的安全回答，例如”我不知道“。</p>
+<p>倾向于返回高频但毫无意义响应的原因，一部分在于以往的方法针对一对一关系进行建模，忽略了可能的一对多的关系。</p>
+<p>目前的方法汇总：</p>
+<ol>
+<li><p>找到一个更好的目标函数</p>
+</li>
+<li><p>改进排序规则（训练成本低）  90   70   91  92   93</p>
+</li>
+<li><p>引入潜在变量  94  82  95  96 97      很难解释，变量很难建模</p>
+</li>
+<li>引入主题 101   103</li>
+</ol>
+<h2><span id="2-评估">2 评估</span></h2><p>相关性：PPL、BLEU1、BLEU2</p>
+<p>多样性：distinct-1、 distinct-2</p>
+<p>其他：人工评估</p>
+<p>论文[4]中使用了：distinct-1 &amp; distinct-2、BLEU</p>
+<h1><span id="论文1中使用了distinct-1-amp-distinct-2-count-numbers-of-distinct-unigrams-and-bigrams-in-the-generated-responses-bleu-average-amp-extrema映射到向量空间中求余弦相似度参考论文2-人工评估">论文[1]中使用了：distinct-1 &amp; distinct-2 （count numbers of distinct unigrams and bigrams in the generated responses）、BLEU、Average &amp; Extrema（映射到向量空间中求余弦相似度，参考论文[2]）、人工评估。</span></h1><h2><span id="3-相关工作">3 相关工作</span></h2><h3><span id="31-目标函数改进">3.1 目标函数改进</span></h3><p>论文[4] 是较为早期的这方面的工作，它从目标函数入手。</p>
+<p>一般的模型是以最大似然函数为目标函数，分数最高的回复通常是最常见的句子，更有意义的回复也会出现在N-best列表（beam search的结果）中，但是分数会相对低一些。此论文在模型中使用最大互信息作为目标函数。</p>
+<p>最大似然函数，就是给定Source得到Target的概率最大；而加入了互信息，就相当于加入了source和target之间的相关性。</p>
+<p>论文一共提出俩基于MMI的损失函数。</p>
+<p>一个是：</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200526190648554.png" alt="image-20200526190648554"></p>
+<p>来源于以下互信息公式的改动：</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200526190700851.png" alt="image-20200526190700851"></p>
+<p>另一个是：</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200526190731459.png" alt="image-20200526190731459"></p>
+<p>其他的方法或多或少的都涉及目标函数的改进。</p>
+<h3><span id="32-解码过程改进排序规则">3.2 解码过程改进排序规则</span></h3><h3><span id="33-引入潜在变量">3.3 引入潜在变量</span></h3><p>论文[1]是对话特异性的工作，避免生成无意义回答，例如”我不知道“。论文提出了一种新颖的受控反应产生机制，核心是输入了一个控制变量。</p>
+<p>整体任务的输入除了utterence之外，还有一个范围是0-1的控制变量，这个控制变量通过高斯核层与单词的用法表示进行交互，指导模型生成不同特异性级别的响应。至于单词的用法表示，作者假设每个单词，除了与其含义相关的语义表示之外，在不同的响应目的下，还具有与使用偏好相关的另一个表示，将此表示形式称为单词的用法表示形式。</p>
+<p>最后的概率由两部分组成，一部分是常规seq2seq的decoder得到的，一部分是包含了控制变量、单词用法表示、高斯核层的一个概率。（花里胡哨听得美妙）</p>
+<p>原始数据中并没有这个控制变量，论文通过远程监督的方式去获取，并且描述了两种获取特异性控制变量的远距离标签的方法。两种方法分别是根据回复整体或者回复内词语的频率来打标签。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200525182333650.png" alt="image-20200525182333650"></p>
+<p>论文[6] 提到以往的生成模型倾向于返回高频但毫无意义的响应，论文提出不同的source和不同的responce本身存在一对一的关系， 例如，考虑输入“您吃过饭了吗？”  （在汉语中，该词广泛用于问候），喜欢修辞问题的受访者可以回答“你呢？”。 相反，喜欢陈述性句子的被访者可以肯定地回答“是的，我有”。</p>
+<p>论文提出了一种机制感知的响应机（MARM）的概率框架，假设存在一些潜在的响应机制，每种机制都可以为单个输入生成不同的响应。 在这种假设下，将不同的响应机制建模为潜在的嵌入，并开发了一种编码器-分离器-解码器（encoder-diverter-decoder ）框架，以端到端的方式训练其模块，其中diverter用于生成机制感知的上下文。</p>
+<p>依赖于机制的响应生成这有助于将不合语法的输出与有意义但不频繁的响应区分开。对于输入x，有三种可能的输出，一种是概率大的常见响应，一种是概率小的错误语法响应，一种是有意义但不常见且概率也小的输出。diverter是为了将后两者区分开。然后相当于通过 latent responding factors 去建模多响应的机制。</p>
+<p>说这么复杂，本质上就是对于一个输入x，挑选最可能的topL个机制，解码时每个机制得到K个回答，这L乘K个回答进行一个rerank。但是也有弊端，这种 latent  factors 很难去解释和确定factor的数量。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200526205910691.png" alt="image-20200526205910691" style="zoom: 67%;"></p>
+<p>论文[7] 提到seq2seq将不同的响应规律建模为一对一映射。</p>
+<p>有前途的方法主要结合多种潜在机制来建立一对多关系，但是在训练过程中，如果没有准确选择与目标响应相对应的潜伏机制，这些方法就会对潜伏机制进行粗略的优化。此论文提出了一种多映射机制来更好地捕获一对多关系，其中多个映射模块被用作潜在机制来对从输入帖子到其不同响应的语义映射进行建模。 为了精确优化潜在机制，设计了后映射选择模块，根据目标响应选择对应的映射模块进行进一步的优化。 还介绍了辅助匹配损失，以帮助优化后映射选择。 </p>
+<p>论文的贡献点在于提出了一种多重映射机制来捕获具有多个映射模块的一对多关系作为潜在机制，更具灵活性和可解释性。还提出了一种新颖的后部映射选择模块，以根据训练过程中的目标反应选择相应的映射模块，从而确保更准确地优化潜在机制。 还引入了辅助匹配损失，以促进后映射选择的优化。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200527140704469.png" alt="image-20200527140704469"></p>
+<p>过程中，分别对post和responce编码，然后对post进行一个线性映射，映射到K个不同的responce表达中。然后从K个模块中选择响应的映射模块，引入了分类分布 π 来表示以目标响应为条件的响应，本质上就是一个m与y的内积+softmax。另外这个映射模块在测试过程中是随机挑选的。</p>
+<p>实验过程中，发现映射挑选过程倾向于挑选相同的模块，模型陷入单个映射模块的局部最优。为了解决这个问题，加入了一个辅助目标，以改进responce部分的编码，即post和responce的相关性概率（内积）</p>
+<p>论文 [9] 提出了一种对话生成模型，该模型直接捕获对对应输入的responce，从而减少了确定性对话模型的“无聊输出”问题。 </p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200527180529646.png" alt="image-20200527180529646" style="zoom:67%;"></p>
+<p>论文[11] -2019 针对于对话生成多样性和相关性的联合优化。</p>
+<p>论文中提出一种新颖的几何(?)的方法，利用了两种不同的模型，一个seq2seq产生预测的响应，一个ae产生潜在的响应，并且为了共享相同的潜在空间，使用了同一个解码器，并进行联合训练。论文强调了加入了正则化项的必要性，只共享解码器不一定会对齐两者的潜在空间，两个正则化项分别是：插值项Linterp，融合项Lfuse。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200608130132530.png" alt="image-20200608130132530"></p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200608130145180.png" alt="image-20200608130145180"></p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200608130032872.png" alt="image-20200608130032872"></p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200601163800516.png" alt="image-20200601163800516"></p>
+<p>论文[13] 建立短文本对话生成输入和输出的一对多映射。</p>
+<p>模型的输入是x对应的集合y，对于每一个x，都设定有一个对应的隐变量z，并通过两个限制条件（合理地）将z设定为词典中的词。</p>
+<p>两个模型交替训练，左边得到一些词，右边得到z的反馈。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200601195532257.png" alt="image-20200601195532257" style="zoom:67%;"></p>
+<h3><span id="34-引入主题或其他信息">3.4 引入主题或其他信息</span></h3><p>论文[3] 也是基于seq2seq的聊天机器人，为了生成有益的有趣的responce，论文将主题信息融入了seq2seq框架中，减少“我也是”，“我看到”或“我不知道”之类的琐碎响应。</p>
+<p>输入的信息中通过其他语料预训练过的LDA提取出主题词，将输入信息和主题词分别编码后，通过attention机制，在解码过程中上下文向量和主题向量共同影响responce的生成，并修改loss，除原decoder之外还加入了主题相关的概率项。</p>
+<p>综上，论文主要在于将主题词作为先验，并且改进了seq2seq。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200525231737567.png" alt="image-20200525231737567" style="zoom:67%;"></p>
+<p>论文[8] 在对话生成的过程中，加入了一些Meta-Words，通过这些信息的辅助，显式建模一对多关系。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200527161032014.png" alt="image-20200527161032014" style="zoom:67%;"></p>
+<p>具体而言，论文提出了一个goal tracking memory network: GTMN，在seq2seq的基础上，加入了状态存储模块和状态控制器。在编码过程中使用双向GRU，加入状态控制，使用meta-words初始化这个目标追踪网络，在解码过程中meta-words由状态控制器来更新，通过目前状态与目标的差异来控制解码。</p>
+<p>损失方面，除了负对数可能性之外，还提出了最小化状态更新损失，该状态更新损失可以直接监督基于基本事实的存储网络的学习。 </p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200527162231630.png" alt="image-20200527162231630"></p>
+<p>论文[14] 使用逐点互信息来选取单词作为关键字，再将这个关键字来解码得到responce。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200601201056052.png" alt="image-20200601201056052" style="zoom:67%;"></p>
+<p>论文[15] 集中于在学习过程中选择适当的知识，进而帮助对话的多样性。</p>
+<p>训练过程的输入为，utterence、N个knowledge、response，输出为responce。测试过程中不输入responce。</p>
+<p>将输入x、y、k进行编码后，计算给定x得到各个知识的先验概率，以及给定x、y得到各个k的后验概率，求两者的KL散度作为损失项之一。</p>
+<p>然后将knowledge manager选定的某个k和x都输入decoder，得到y，这是一个loss。根据y和知识得到一个bow loss。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200601222330314.png" alt="image-20200601222330314" style="zoom:67%;"></p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200601222628334.png" alt="image-20200601222628334" style="zoom:67%;"></p>
+<p>论文[16] 是一篇workshop。提出了较为简单的结构，用到了positive pointwise mutual information， 首先从source中识别关键词，并鼓励用关键词生成响应。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200602160320001.png" alt="image-20200602160320001"></p>
+<p>论文[10] 的任务定义是，输入：sentence和style id，输出sentence</p>
+<p>将sentence和id进行concat，然后投入decoder，每一步得到一个期望字符词向量，然后将得到的期望字符词向量分布于风格表示分布的互信息加入loss。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200601152621511.png" alt="image-20200601152621511" style="zoom:67%;"></p>
+<h3><span id="35-其他">3.5 其他</span></h3><p>论文[5] 提出一种方法，这种方法涉及数据提炼和模型训练之间的交替进行。删除上一轮训练的模型最常见的responce的数据，然后在剩余数据中重新训练模型。不同程度的数据提炼训练的模型表现出不同的特异性水平。</p>
+<p>论文还训练了一个强化学习系统，来调整生成模型。下面是数据蒸馏的伪代码：</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200526201502467.png" alt="image-20200526201502467" style="zoom:67%;"></p>
+<p>实验效果看起来很有意思，随着数据蒸馏，在验证集上的损失和困惑度越来越大的同时，代表多样性的指标distinct-1和distinct-2增大不少。（不过也可以归结为迭代次数带来的，这方面并没有对比实验）</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200526202512565.png" alt="image-20200526202512565"></p>
+<p>论文[12] ，为对话生成提出了一个新的范式，即原型-编辑，它首先从预定义的索引中检索原型响应，然后根据原型上下文和当前上下文之间的差异来编辑原型响应。 我们的动机是，检索到的原型在语法上和信息量方面都提供了一个很好的生成起点，并且后期编辑过程进一步提高了原型的相关性和连贯性。 在实践中，我们设计了一个基于上下文的编辑模型，该模型建立在以编辑矢量为补充的编码器-解码器框架上。 我们首先通过考虑原型上下文和当前上下文之间的词汇差异来生成编辑矢量。 之后，将编辑矢量和原型响应表示馈送到解码器以生成新的响应。 </p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200601164849456.png" alt="image-20200601164849456" style="zoom:67%;"></p>
+<h2><span id="4-模型层面">4 模型层面</span></h2><h3><span id="论文6-mechanism-aware-neural-machine-for-dialogue-response-generation-2017">论文[6] Mechanism-Aware Neural Machine for Dialogue Response Generation    2017</span></h3><p>论文[6] 提到以往的生成模型倾向于返回高频但毫无意义的响应，论文提出不同的source和不同的responce本身存在一对一的关系， 例如，考虑输入“您吃过饭了吗？”  （在汉语中，该词广泛用于问候），喜欢修辞问题的受访者可以回答“你呢？”。 相反，喜欢陈述性句子的被访者可以肯定地回答“是的，我有”。</p>
+<p>论文提出了一种机制感知的响应机（MARM）的概率框架，假设存在一些潜在的语言机制，每种机制都可以为单个输入生成不同的响应。 在这种假设下，将不同的响应机制建模为潜在的嵌入，并开发了一种编码器-分离器-解码器（encoder-diverter-decoder ）框架，以端到端的方式训练其模块，其中diverter用于生成机制感知的上下文。</p>
+<p>对encoder-decoder模型的中间产物context vector c进行分类，得到概率最大的机制 <img src="https://www.zhihu.com/equation?tex=m_%7Bi%7D" alt="[公式]"> ,然后将 <img src="https://www.zhihu.com/equation?tex=m_%7Bi%7D" alt="[公式]"> 与context vector 进行拼接作为decoder的输入，解码出生成的回复。</p>
+<p><img src="https://www.zhihu.com/equation?tex=p%28y%7Cx%29%3D%5Csum_%7Bi%3D1%7D%5E%7BM%7D%7Bp%28y%2Cm_i%7Cx%29%7D%3D%5Csum_%7Bi%3D1%7D%5E%7BM%7D%7Bp%28m_i%7Cx%29p%28y%7Cm_i%2Cx%29%7D" alt="[公式]"></p>
+<p>（这段忘了从哪来的了）依赖于机制的响应生成这有助于将不合语法的输出与有意义但不频繁的响应区分开。对于输入x，有三种可能的输出，一种是概率大的常见响应，一种是概率小的错误语法响应，一种是有意义但不常见且概率也小的输出。diverter是为了将后两者区分开。然后相当于通过 latent responding factors 去建模多响应的机制。</p>
+<p>在最后结果生成的过程中，就是对于一个输入x，挑选最可能的topL个机制，解码时每个机制得到K个回答，这L乘K个回答进行一个rerank，rerank的方式是：</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200612174004215.png" alt="image-20200612174004215"></p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200526205910691.png" alt="image-20200526205910691" style="zoom: 67%;"></p>
+<h3><span id="论文17-elastic-responding-machine-for-dialog-generation-with-dynamically-mechanism-selecting-2018-aaai">论文[17] Elastic responding machine for dialog generation with dynamically mechanism selecting.  2018 AAAI</span></h3><p>论文[6]工作的延伸。</p>
+<p>之前的<strong>encoder-diverter-decoder模型</strong>，对encoder-decoder模型的中间产物context vector c进行分类，得到概率最大的机制 <img src="https://www.zhihu.com/equation?tex=m_%7Bi%7D" alt="[公式]"> ,然后将 <img src="https://www.zhihu.com/equation?tex=m_%7Bi%7D" alt="[公式]"> 与context vector 进行拼接作为decoder的输入，解码出生成的回复。</p>
+<p>本文作者在前文的基础上，又加入了Filter模块，作者的目的是从所有mechanism集合中选出一个子集 <img src="https://www.zhihu.com/equation?tex=S_x" alt="[公式]"> ，包含足够多的mechanism，能够生成多种style的response。这个子集 <img src="https://www.zhihu.com/equation?tex=S_x" alt="[公式]"> 需要满足两个条件：1）包含足够多的mechanism；2）子集的mechanism没有太高的重复性，没有冗余。选中了子集 <img src="https://www.zhihu.com/equation?tex=S_x" alt="[公式]"> 后，生成response <img src="https://www.zhihu.com/equation?tex=y" alt="[公式]"> 的概率为</p>
+<p><img src="https://www.zhihu.com/equation?tex=p%28y%7Cx%29%3D%5Cfrac+%7B%5Csum_%7Bm+%5Cin+S_x%7D%5E%7B%7D%7Bp%28m%7Cx%29p%28y%7Cm%2Cx%29%7D%7D%7B%5Csum_%7Bm+%5Cin+S_x%7D%5E%7B%7D%7Bp%28m%7Cx%29%7D%7D" alt="[公式]"></p>
+<p>使用强化学习选择子集，选出包含 <img src="https://www.zhihu.com/equation?tex=K" alt="[公式]">个mechanism之后，依次将 <img src="https://www.zhihu.com/equation?tex=c" alt="[公式]"> 和 <img src="https://www.zhihu.com/equation?tex=m_i%28m_i+%5Cin+S_x%29" alt="[公式]"> 连接在一起输入到decoder中生成各自mechanism对应的response。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200612173719071.png" alt="image-20200612173719071" style="zoom: 50%;"></p>
+<h3><span id="论文7-generating-multiple-diverse-responses-with-multi-mapping-and-posterior-mapping-selection-2019">论文[7] Generating Multiple Diverse Responses with Multi-Mapping and Posterior Mapping Selection 2019</span></h3><p>论文[7] -2019 提到seq2seq将不同的响应规律建模为一对一映射。</p>
+<p>有前途的方法主要结合多种潜在机制来建立一对多关系，但是在训练过程中，<strong>如果没有准确选择与目标响应相对应的潜伏机制，这些方法就会对潜伏机制进行粗略的优化</strong>。</p>
+<p>为了获得更准确的建模，我们假设仅应选择与目标响应相对应的潜在机制进行优化。 例如，给定一个询问响应，我们应该仅优化对询问响应规律进行建模的潜在机制，而不是其他无关的规律。 尽管在某些方法中，对每个潜在机制的优化是由输入帖子中的权重决定的，但考虑到输入帖子和目标响应之间的语义差距，该权重并不代表相应的潜在机制的选择。</p>
+<p><strong>此论文提出了一种多映射机制来更好地捕获一对多关系，其中多个映射模块被用作潜在机制来对从输入的post到其不同响应的语义映射进行建模。 为了精确优化潜在机制，设计了后映射选择模块，根据目标响应选择对应的映射模块进行进一步的优化。 还介绍了辅助匹配损失，以帮助优化后映射选择。</strong> </p>
+<p>因此论文的贡献点在于提出了一种多重映射机制来捕获具有多个映射模块的一对多关系作为潜在机制，更具灵活性和可解释性。还提出了一种新颖的后部映射选择模块，以根据训练过程中的目标反应选择相应的映射模块，从而确保更准确地优化潜在机制。 还引入了辅助匹配损失，以促进后映射选择的优化。</p>
+<p><img src="/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/image-20200527140704469.png" alt="image-20200527140704469" style="zoom: 67%;"></p>
+<p>过程中，分别对post和responce编码，然后对post进行一个线性映射，映射到K个不同的responce表达中。然后从K个模块中选择响应的映射模块，引入了分类分布 π 来表示以目标响应为条件的响应，本质上就是一个m与y的内积+softmax。另外这个映射模块在测试过程中是随机挑选的。</p>
+<p>实验过程中，发现映射挑选过程倾向于挑选相同的模块，模型陷入单个映射模块的局部最优。为了解决这个问题，加入了一个辅助目标，以改进responce部分的编码，即post和responce的相关性概率（内积）</p>
+<h3><span id> </span></h3><h2><span id="reference">Reference</span></h2><p><strong>[1] Learning to Control the Specificity in Neural Response Generation.   2018</strong></p>
+<p>[2] Iulian Vlad Serban, Alessandro Sordoni, Ryan Lowe, Laurent Charlin, Joelle Pineau, Aaron C Courville, and Yoshua Bengio. 2017. A hierarchical latent variable encoder-decoder model for generating dialogues.   In AAAI.  2017</p>
+<p>[3] Topic Aware Neural Response Generation.   2018</p>
+<p>[4] A Diversity-Promoting Objective Function for Neural Conversation Models.  2016</p>
+<p>[5] Data Distillation for Controlling Specificity in Dialogue Generation   2017</p>
+<p>[6] Mechanism-Aware Neural Machine for Dialogue Response Generation    2017</p>
+<p>[7] Generating Multiple Diverse Responses with Multi-Mapping and Posterior Mapping Selection    2019</p>
+<p>[8] Neural Response Generation with Meta-Words  2019</p>
+<p>[9] Latent Variable Dialogue Models and their Diversity    2017</p>
+<p>[10] Stylistic Chinese Poetry Generation via Unsupervised Style Disentanglement 2018</p>
+<p>[11] Jointly Optimizing Diversity and Relevance in Neural Response Generation    2019</p>
+<p>[12] Response Generation by Context-Aware Prototype Editing   AAAI 2019    数据集不支持模型不具有太多参考性</p>
+<p>[13] Generating Multiple Diverse Responses for Short-Text Conversation   AAAI  2019</p>
+<p>[14] Sequence to Backward and Forward Sequences: A Content-Introducing Approach to Generative Short-Text Conversation  2016</p>
+<p>[15] Learning to Select Knowledge for Response Generation in Dialog Systems  2019  </p>
+<p>[16] Relevant and Informative Response Generation using Pointwise Mutual Information  2019workshop</p>
+<p>[17] Elastic responding machine for dialog generation with dynamically mechanism selecting.  2018 AAAI</p>
+<p>[18] Get the point of my utterance! learning towards effective responses with multi-head attention mechanism.   2018IJCAI</p>
+<h2><span id="end">End</span></h2><h1><span id="大大">大大</span></h1><script type="math/tex; mode=display">
+a_i</script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/">http://htfhxx.github.io/2020/05/23/nlp-jin-jie/wen-ben-sheng-cheng-te-yi-xing/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90%E7%89%B9%E5%BC%82%E6%80%A7/">
+                                    <span class="chip bg-color">文本生成特异性</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2020-05-23T23-02-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/05/30/yu-yan-gong-ju-ji-zhu-deng-wen-dang/elasticsearch/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="ElasticSearch">
+                        
+                        <span class="card-title">ElasticSearch</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            2020.07.18再次完善
+本文倾向于讨论涉及ES检索应用过程的原理和特性，对底层和架构不过多关注。
+1. ElasticSearchElasticsearch 是一个实时的分布式存储、搜索、分析的引擎。
+相比于数据库为什么要用Elast
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-30
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AF%AD%E8%A8%80%E5%B7%A5%E5%85%B7%E6%8A%80%E6%9C%AF%E7%AD%89%E6%96%87%E6%A1%A3/" class="post-category">
+                                    语言工具技术等文档
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ElasticSearch/">
+                        <span class="chip bg-color">ElasticSearch</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/05/23/nlp-jin-jie/yu-xun-lian-mo-xing-ju-ti-gong-zuo-survey/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="预训练模型具体工作survey">
+                        
+                        <span class="card-title">预训练模型具体工作survey</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 预训练模型综述1.1 历史进展
+第一代自然语言预训练模型：词向量模型I 典型代表：CBOW, Skip-gram, Glove, FasttextI 词向量表示是固定，不会随着上下文的改变而变化  
+第二代自然语言预训练模型：预训练语言
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                    NLP进阶
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E5%85%B7%E4%BD%93%E5%B7%A5%E4%BD%9Csurvey/">
+                        <span class="chip bg-color">预训练模型具体工作survey</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">133.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

@@ -1,0 +1,1327 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="微服务, 长腿咚咚咚的个人博客">
+    <meta name="description" content="1 需求a)调研微服务框架，形成调研报告。重点包括：
+
+框架核心思想
+适用场景
+主要实现方案及特点
+已有使用微服务的案例情况
+
+b)搭建微服务框架环境，形成基于框架开发指导手册。
+c)微服务框架环境支撑能力评估，形成支持数量、应用运行性能、">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>微服务 | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        微服务
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
+                                <span class="chip bg-color">微服务</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%B7%A5%E7%A8%8B%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/" class="post-category">
+                                工程部署相关
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-10-09
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    11 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2><span id="1-需求">1 需求</span></h2><p>a)调研微服务框架，形成调研报告。重点包括：</p>
+<ul>
+<li>框架核心思想</li>
+<li>适用场景</li>
+<li>主要实现方案及特点</li>
+<li>已有使用微服务的案例情况</li>
+</ul>
+<p>b)搭建微服务框架环境，形成基于框架开发指导手册。</p>
+<p>c)微服务框架环境支撑能力评估，形成支持数量、应用运行性能、扩展能力等评估报告。</p>
+<h2><span id="2-传统微服务架构">2 传统微服务架构</span></h2><h3><span id="21-单体应用架构">2.1 单体应用架构</span></h3><p>分层架构（逻辑上的分层，而非物理上的分层）</p>
+<ul>
+<li><p>所有的代码最终还是运行在同一个进程中。而这就是所谓的单块架构</p>
+<ul>
+<li>表示层、业务逻辑层和数据访问层，层与层之间互相连接、互相协作，构成整体<ul>
+<li>表示层： 用户使用应用程序时，看到的、听见的、输入的或者交互的部分。</li>
+<li>业务逻辑层： 根据用户输入的信息，进行逻辑计算或者业务处理的部分。</li>
+<li>数据访问层： 关注有效地操作原始数据的部分，如将数据存储到存储介质（如数据库、文件系统）及从存储介质中读取数据等。</li>
+</ul>
+</li>
+<li>优点：易于开发；易于测试；易于部署；易于水平伸缩（发布到新服务器节点） </li>
+<li>缺点：维护成本大（bug连串，不容易协作）；交付周期长；新人上手慢；技术选型引入成本高；可拓展性差</li>
+</ul>
+</li>
+</ul>
+<p>通俗的来讲，all in one 是将一个应用中的所有应用服务都封装在一个应用中。<br>例如，数据库访问，web访问等等各个功能放在同一个war包里。</p>
+<h3><span id="22-集群结构">2.2 集群结构</span></h3><p>单机处理到达瓶颈的时候，就把单机复制几份，这样就构成了一个“集群”。</p>
+<p>集群中每台服务器就叫做这个集群的一个“节点”，所有节点构成了一个集群。</p>
+<p>每个节点都提供相同的服务，那么这样系统的处理能力就相当于提升了好几倍。</p>
+<p>用户的请求究竟由哪个节点来处理？负载均衡服务器来分配</p>
+<h3><span id="23-微服务架构">2.3 微服务架构</span></h3><p>微服务就是将一个完整的系统，按照业务功能，拆分成一个个独立的子系统，在微服务结构中，每个子系统就被称为“服务”。这些子系统能够独立运行在web容器中，它们之间通过RPC方式通信。</p>
+<ul>
+<li><p>是一种开发软件的架构模式，相比整体式架构，其提倡将单一的应用程序划分成一组小的服务</p>
+</li>
+<li><ul>
+<li>将应用程序构建为独立的组件，并将每个应用程序进程作为一项服务运行</li>
+</ul>
+</li>
+<li><p>微服务的特性</p>
+<ul>
+<li><p>单一职责：高内聚、低耦合，每个服务是单一职责原则的单元，不同的服务进行组合构建系统。</p>
+</li>
+<li><p>轻量级通信：轻量级是指与语言和平台无关的交互（格式一般是XML，JSON这种，协议基于HTTP）</p>
+</li>
+<li><p>独立：可独立开发测试和部署<br><img src="/2020/10/09/gong-cheng-bu-shu-xiang-guan/wei-fu-wu/clipboard-1602221847948.png" alt="img" style="zoom:50%;"><img src="/2020/10/09/gong-cheng-bu-shu-xiang-guan/wei-fu-wu/clipboard-1602221853533.png" alt="img" style="zoom:50%;"></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>进程隔离：单块架构整个系统运行在同一进程中，部署时需操作整个应用，无法独立部署；微服务中由多个服务组成，每个服务可以独立运行在不同进程中。<br><img src="/2020/10/09/gong-cheng-bu-shu-xiang-guan/wei-fu-wu/clipboard-1602221835327.png" alt="img" style="zoom:50%;"><img src="/2020/10/09/gong-cheng-bu-shu-xiang-guan/wei-fu-wu/clipboard.png" alt="img" style="zoom:70%;"></li>
+</ul>
+<h3><span id="23-开源框架">2.3 开源框架</span></h3><p>当前的微服务框架有很多，但是最多的主要是两种：</p>
+<p> <strong><a href="https://link.zhihu.com/?target=https%3A//www.oschina.net/p/spring-cloud">Spring Cloud</a></strong></p>
+<p>Spring Cloud 为开发者提供了分布式系统配置管理、服务发现、断路器、智能路由、微代理、控制总线、一次性 Token、全局锁、决策竞选、分布式会话与集群状态等的开发工具。使用 Spring Cloud 开发者可以快速实现上述这些模式。</p>
+<pre><code>在基于Spring Cloud进行微服务开发时，在项目中就会通过引入“spring-cloud-starter-parent”父依赖来实现其他框架及组件的快速引入。
+Spring Cloud集成并封装netfix中的ribbon，eureka，hystrix，feign和zull等十分出色的项目，为我们提供了服务注册与发现，客户端的负载均衡和路由分发等功能。
+Spring Cloud除了一些核心的项目外，还有很多实现特定功能的组件框架，如Sleuth、Turbine等。
+
+基础功能：
+服务治理： Spring Cloud Eureka
+客户端负载均衡： Spring Cloud Ribbon
+服务容错保护： Spring Cloud Hystrix
+声明式服务调用： Spring Cloud FeignAPI
+网关服务：Spring Cloud Zuul
+分布式配置中心： Spring Cloud Config
+高级功能：
+消息总线： Spring Cloud Bus
+消息驱动的微服务： Spring Cloud Stream
+分布式服务跟踪： Spring Cloud Sleuth
+</code></pre><p> <strong><a href="https://link.zhihu.com/?target=https%3A//www.oschina.net/p/dubbo">Dubbo</a></strong></p>
+<p>Dubbo 是阿里开源的一款高性能 RPC 框架，特性包括基于透明接口的 RPC、智能负载均衡、自动服务注册和发现、可扩展性高、运行时流量路由与可视化的服务治理。</p>
+<pre><code>Dubbo是一套微服务系统的协调者，在它这套体系中，一共有三种角色，分别是：服务提供者（下面简称提供者）、服务消费者（下面简称消费者）、注册中心。
+你在使用的时候需要将Dubbo的jar包引入到你的项目中，也就是每个服务都要引入Dubbo的jar包。然后当这些服务初始化的时候，Dubbo就会将当前系统需要发布的服务、以及当前系统的IP和端口号发送给注册中心，注册中心便会将其记录下来。这就是服务发布的过程。与此同时，也是在系统初始化的时候，Dubbo还会扫描一下当前系统所需要引用的服务，然后向注册中心请求这些服务所在的IP和端口号。接下来系统就可以正常运行了。当系统A需要调用系统B的服务的时候，A就会与B建立起一条RPC信道，然后再调用B系统上相应的服务。
+</code></pre><h3><span id="24-框架对比和选型">2.4 框架对比和选型</span></h3><ul>
+<li>从社区活跃度和功能完整度，再对照业务需求和团队状况进行选型。</li>
+</ul>
+<p>从整体架构上来看：二者模式接近，都需要服务提供方，注册中心，服务消费方。</p>
+<p>从核心要素来看：Spring Cloud 更胜一筹，在开发过程中只要整合 Spring Cloud 的子项目就可以顺利的完成各种组件的融合，而 Dubbo 却需要通过实现各种 Filter 来做定制，开发成本以及技术难度略高。</p>
+<p>通信协议和性能：Dubbo 支持各种通信协议，而且消费方和服务方使用长链接方式交互，通信速度上略胜 Spring Cloud，如果对于系统的响应时间有严格要求，长链接更合适。</p>
+<p>服务依赖：Dubbo 服务依赖略重，需要有完善的版本管理机制，但是程序入侵少。</p>
+<p>组件运行：业务部署方式相同，都需要前置一个网关来隔绝外部直接调用原子服务的风险。</p>
+<p>可能的选择：</p>
+<ol>
+<li>基于SpringBoot快速开发、基于<strong>Dubbo</strong>的微服务化、基于Docker的容器化部署、基于Jenkins的自动化构建、用docker-compose进行服务编排</li>
+<li>基于SpringBoot快速开发、基于<strong>Spring Cloud</strong>的微服务化、基于Docker的容器化部署、基于Jenkins的自动化构建、用docker-compose进行服务编排</li>
+</ol>
+<p>服务编排：</p>
+<pre><code>在微服务系统的架构中，所有的服务都是无状态的。
+容器编排就是针对这些无状态的服务进行的一系列操作，什么操作呢：弹性伸缩、自动扩容、健康检查、服务发现、负载均衡、自动恢复、滚动升级等等。
+通俗的说，你通过编写配置文件告诉容器编排系统，我要user这个微服务初始化启动3个节点。当tps大于2000的时候自动扩容，最大可以扩容到10个节点，这个服务最大可用内存、cpu是多少等等，容器编排系统完成你需求的过程就是编排
+</code></pre><h2><span id="3-k8s">3 K8S</span></h2><h3><span id="31-docker">3.1 Docker</span></h3><p>Docker 的意义</p>
+<ul>
+<li>统一了基础设施环境（硬件、操作系统版本、运行时环境）</li>
+<li>统一了程序打包（装箱）的方式：所有语言的程序都全部变 docker镜像</li>
+<li>统一了部署方式 docker容器：docker run</li>
+</ul>
+<p>单机使用docker的缺点：</p>
+<ul>
+<li>无法有效集群</li>
+<li>容器数量上升的同时，管理成本上升</li>
+<li>没有容灾机制</li>
+<li>没有编排模板，无法大规模快速调度</li>
+<li>没有统一的配置管理中心工具</li>
+<li>没有容器生命周期的管理工具</li>
+<li>没有图形化运维管理工具</li>
+</ul>
+<p>Docker支持任何语言的镜像</p>
+<p>Docker与宿主机进行隔离，使用平台的可移植性</p>
+<p>当Docker服务变得越来越多之后如何进行更好的管理？：实现对Docker管理——Kubernetes</p>
+<h3><span id="32-k8s">3.2 K8S</span></h3><p>基于Docker容器引擎的开源容器编排工具：K8S</p>
+<p>Kubernetes，就是基于Docker的集群管理平台，它的全称，是kubernetes。</p>
+<p>一个K8S系统，通常称为一个K8S集群（Cluster）</p>
+<p>这个集群主要包括两个部分：一个Master节点（主节点）、一群Node节点（计算节点）</p>
+<p>利用 K8S，能够达成以下目标：</p>
+<ul>
+<li>跨多台主机进行容器编排。</li>
+<li>更加充分地利用硬件，最大程度获取运行企业应用所需的资源。</li>
+<li>有效管控应用部署和更新，并实现自动化操作。</li>
+<li>挂载和增加存储，用于运行有状态的应用。</li>
+<li>快速、按需扩展容器化应用及其资源。</li>
+<li>对服务进行声明式管理，保证所部署的应用始终按照部署的方式运行。</li>
+<li>利用自动布局、自动重启、自动复制以及自动扩展功能，对应用实施状况检查和自我修复。</li>
+</ul>
+<h2><span id="4-如何选型">4 如何选型</span></h2><p><img src="/2020/10/09/gong-cheng-bu-shu-xiang-guan/wei-fu-wu/20190716135704386.jpg" alt="Dubbo、Spring Cloud和K8S横向对比"><img src="/2020/10/09/gong-cheng-bu-shu-xiang-guan/wei-fu-wu/20190716135737799.jpg" alt="Dubbo、Spring Cloud和K8S横向对比"></p>
+<p><img src="/2020/10/09/gong-cheng-bu-shu-xiang-guan/wei-fu-wu/20190716135755655.jpg" alt="Dubbo、Spring Cloud和K8S优劣比对"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>服务框架</strong></th>
+<th><strong>生态</strong></th>
+<th><strong>开发复杂度</strong></th>
+<th><strong>运维复杂度</strong></th>
+<th><strong>完成度</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dubbo</td>
+<td>一般</td>
+<td>简单</td>
+<td>简单</td>
+<td>开发中，不成熟</td>
+</tr>
+<tr>
+<td>Spring  Cloud</td>
+<td>丰富</td>
+<td>简单</td>
+<td>复杂</td>
+<td>正式版，成熟</td>
+</tr>
+<tr>
+<td>Kubernetes</td>
+<td>非常丰富</td>
+<td>简单</td>
+<td>非常复杂</td>
+<td>趋于成熟</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>没有深入使用来对比就有一点点片面，目前综合多方面的调查和现有的对比评测，总结如下：</p>
+<ul>
+<li>Dubbo 和 SpringCloud<ul>
+<li>Dubbo的关注点在于服务治理，并不能算是一个真正的微服务框架，不能完整覆盖微服务的各项功能需求。</li>
+<li>Spring Cloud通过集成各种组件的方式来实现微服务，因此理论上可以集成目前业内的绝大多数的微服务相关组件，从而实现微服务的全部功能。</li>
+<li>对Dubbo而言，如果一定要应用到微服务的使用场景中的话，上表中欠缺的大多数功能都可以通过集成第三方应用和组件的方式来实现，跟Spring Cloud相比主要的缺陷在于集成过程中的便利性和兼容性等问题。</li>
+</ul>
+</li>
+<li>SpringCloud 和 K8S<ul>
+<li>Spring Cloud是一个基于Java语言的微服务开发框架，更多的是面向有Spring开发经验的Java语言开发者</li>
+<li>Kubernetes是一个针对容器应用的自动化部署、伸缩和管理的开源系统，它兼容多种语言且提供了创建、运行、伸缩以及管理分布式系统的原语。它不是一个针对开发者的平台，它的本质是DevOps（Development and Operations）工具。</li>
+</ul>
+</li>
+<li>传统微服务架构 和 K8S<ul>
+<li>传统微服务架构需要开发者在自己的应用中集成微服务框架 SDK，从而具有服务治理相关功能</li>
+<li>Kubernetes 使用 kube-dns 以及 kube-proxy 配合 service 的概念支持了服务的注册与发现，才有了可以在 Kubernetes 上构建微服务的基础。实际生产中，需要对流量进行更精细的掌控，Service Mesh工具（例如istio） 可以被使用。</li>
+<li>Service Mesh工具 在对K8S 有更深入的了解之后再去熟悉吧</li>
+</ul>
+</li>
+</ul>
+<p>目前的结论</p>
+<ul>
+<li><p>选型：Spring Boot + Docker + K8S</p>
+<ul>
+<li>全面覆盖微服务关注点</li>
+<li>语言栈无关，非 to JAVA</li>
+<li>社区活跃，不过时的资源多</li>
+</ul>
+</li>
+<li><p>使用Spring Boot提供应用的打包，Docker和Kubernetes提供应用的部署和调度。</p>
+</li>
+</ul>
+<h2><span id="reference">Reference</span></h2><p><a href="https://www.zhihu.com/question/65502802" target="_blank" rel="noopener">https://www.zhihu.com/question/65502802</a></p>
+<p><a href="https://www.zhihu.com/question/65502802/answer/1371300276" target="_blank" rel="noopener">https://www.zhihu.com/question/65502802/answer/1371300276</a></p>
+<p><a href="https://www.zhihu.com/question/45413135" target="_blank" rel="noopener">https://www.zhihu.com/question/45413135</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/33296468" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33296468</a></p>
+<p><a href="https://blog.csdn.net/huanglitao0912/article/details/82314123" target="_blank" rel="noopener">https://blog.csdn.net/huanglitao0912/article/details/82314123</a></p>
+<p><a href="https://www.zhihu.com/question/283286745/answer/763040709" target="_blank" rel="noopener">https://www.zhihu.com/question/283286745/answer/763040709</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/53260098" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/53260098</a></p>
+<p><a href="https://blog.csdn.net/qq_30364013/article/details/78148016" target="_blank" rel="noopener">https://blog.csdn.net/qq_30364013/article/details/78148016</a></p>
+<p><a href="https://blog.csdn.net/weixin_43834662/article/details/96131720" target="_blank" rel="noopener">https://blog.csdn.net/weixin_43834662/article/details/96131720</a></p>
+<p><a href="https://www.cnblogs.com/doit8791/p/9979193.html" target="_blank" rel="noopener">https://www.cnblogs.com/doit8791/p/9979193.html</a></p>
+<p>多组件通用HTTP框架演进_最终版-孙海洲</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2020/10/09/gong-cheng-bu-shu-xiang-guan/wei-fu-wu/">http://htfhxx.github.io/2020/10/09/gong-cheng-bu-shu-xiang-guan/wei-fu-wu/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
+                                    <span class="chip bg-color">微服务</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2020-10-09T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/10/10/gong-cheng-bu-shu-xiang-guan/springboot/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="springboot">
+                        
+                        <span class="card-title">springboot</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 技术栈总结1.1 之前的技术栈JavaSE（servlet tomcat)
+mysql + jdbc
+html + css +jquery + 框架
+javaweb: 原始的MVC三层架构的网站
+SSM: Spring + Spring
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-10
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%B7%A5%E7%A8%8B%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%85%B3/" class="post-category">
+                                    工程部署相关
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/springboot/">
+                        <span class="chip bg-color">springboot</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/09/12/shen-du-xue-xi-yu-nlp-ji-chu/er-fen-lei-duo-fen-lei-duo-biao-qian-fen-lei-de-ping-gu-zhi-biao-ji-suan-yu-shi-xian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="二分类多分类多标签分类的评估指标计算与实现">
+                        
+                        <span class="card-title">二分类多分类多标签分类的评估指标计算与实现</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 二分类1.1 二分类例子reference_list =  [0, 0, 0, 0, 0, 1, 1, 1, 1, 1]
+prediciton_list = [0, 0, 1, 1, 1, 0, 0, 1, 1, 1]
+1.2 指标计算
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8ENLP%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    深度学习与NLP基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BA%8C%E5%88%86%E7%B1%BB%E5%A4%9A%E5%88%86%E7%B1%BB%E5%A4%9A%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB%E7%9A%84%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%E8%AE%A1%E7%AE%97%E4%B8%8E%E5%AE%9E%E7%8E%B0/">
+                        <span class="chip bg-color">二分类多分类多标签分类的评估指标计算与实现</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">133.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

@@ -6,11 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Cmake由浅入深, 长腿咚咚咚的个人博客">
     <meta name="description" content="[TOC]
+代码见：https://github.com/htfhxx/cmake_htfhxx
 1. Windows 和linux下执行单文件在windows环境下，大家都熟悉怎么编写并执行一份代码：
 
-先打开编译器例如codeblocks编写源代码，例如一个c++文件；
-点击编译按钮，编译代码，生成.o的目标文件。
-点击">
+先打开编译器例如codeblock">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -361,7 +360,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    6 分
                 </div>
                 
 				
@@ -378,7 +377,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>[TOC]</p>
-<h3><span id="1-windows-和linux下执行单文件">1. Windows 和linux下执行单文件</span></h3><p>在windows环境下，大家都熟悉怎么编写并执行一份代码：</p>
+<p>代码见：<a href="https://github.com/htfhxx/cmake_htfhxx" target="_blank" rel="noopener">https://github.com/htfhxx/cmake_htfhxx</a></p>
+<h2><span id="1-windows-和linux下执行单文件">1. Windows 和linux下执行单文件</span></h2><p>在windows环境下，大家都熟悉怎么编写并执行一份代码：</p>
 <ol>
 <li>先打开编译器例如codeblocks编写源代码，例如一个c++文件；</li>
 <li>点击编译按钮，编译代码，生成.o的目标文件。</li>
@@ -397,7 +397,7 @@
 </ol>
 <p>当然，更普遍的是使用-o来编译和执行的</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079089888.png" alt="1579079089888"></p>
-<h3><span id="2-windows-和linux下执行多文件or项目">2. Windows 和linux下执行多文件or项目</span></h3><p>Windows自不必多说，在编译器下编译运行main函数即可</p>
+<h2><span id="2-windows-和linux下执行多文件or项目">2. Windows 和linux下执行多文件or项目</span></h2><p>Windows自不必多说，在编译器下编译运行main函数即可</p>
 <p>至于linux，有如下三个文件speak.h speak.cpp hellospeak.cpp</p>
 <p>​    <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079098670.png" alt="1579079098670"></p>
 <p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079114625.png" alt="1579079114625"></p>
@@ -406,13 +406,13 @@
 <p> g++ hellospeak.cpp speak.cpp -o hellospeak</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079128351.png" alt="1579079128351"></p>
 <p>这个时候会发现，如果源文件太多，一个一个编译时就会特别麻烦。于是人们想到了制作一种类似批处理的程序，来批处理编译源文件，于是就有了make工具。它是一个自动化的编译工具，你可以使用一条命令实现完全编译。但是你需要编写一个规则文件，make依据它来批处理编译，这个文件就是makefile。</p>
-<h3><span id="3-解决多文件编译的困难makefile">3. 解决多文件编译的困难：makefile</span></h3><p>文件下包含一个头文件和两个cpp文件，以及一个写好的makefile：</p>
+<h2><span id="3-解决多文件编译的困难makefile">3. 解决多文件编译的困难：makefile</span></h2><p>文件下包含一个头文件和两个cpp文件，以及一个写好的makefile：</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079133459.png" alt="1579079133459"></p>
 <p>Makefile大致内容就是要编译两个文件得到hellospeak.o和speak.o，再生成可执行文件hellospeak，最后删掉.o文件。</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079136368.png" alt="1579079136368"></p>
 <p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079141053.png" alt="1579079141053"></p>
 <p>对于一个大工程，编写makefile实在是件复杂的事，于是就出现了cmake工具，它能够输出各种各样的makefile或者project文件,从而帮助程序员减轻负担。但是随之而来也就是编写cmakelist文件，它是cmake所依据的规则。</p>
-<h3><span id="4-cmake工具编译运行文件">4. Cmake工具:编译运行文件</span></h3><p>如果没有安装的话就通过sudo apt-get install cmake命令安装cmake工具：</p>
+<h2><span id="4-cmake工具编译运行文件">4. Cmake工具:编译运行文件</span></h2><p>如果没有安装的话就通过sudo apt-get install cmake命令安装cmake工具：</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079147001.png" alt="1579079147001"></p>
 <p>准备好cmakelist.txt文件和要执行的main.cpp，以及一个build文件，用于放入cmake编译的繁多的中间文件：</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079150587.png" alt="1579079150587"></p>
@@ -431,7 +431,7 @@
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079174053.png" alt="1579079174053"></p>
 <p>即，整个流程为（网图，侵删）：</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079177639.png" alt="1579079177639"></p>
-<h3><span id="5-使用cmake方便的编译执行单文件demo">5. 使用cmake方便的编译执行单文件Demo</span></h3><p>先分析上一例子中的cmakelists.txt：</p>
+<h2><span id="5-使用cmake方便的编译执行单文件demo">5. 使用cmake方便的编译执行单文件Demo</span></h2><p>先分析上一例子中的cmakelists.txt：</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079183726.png" alt="1579079183726"></p>
 <p>cmake_minimum_required(VERSION 2.8) </p>
 <p>//指的是支持的cmake版本，可省略，但是为了方便后人，尽量加上自己所用的版本。</p>
@@ -439,14 +439,14 @@
 <p>//指定项目名称，编译完成后生成的名字就是HelloWorld</p>
 <p>add_executable(HelloWorld main.cpp) </p>
 <p>//加入执行文件，此处是单文件，待会展开来讲</p>
-<h3><span id="6-使用cmake方便的编译执行多文件项目">6. 使用cmake方便的编译执行多文件项目</span></h3><p> 两个cpp文件一个.h文件和一个build，这次我们试着用cmake编译执行多文件。</p>
+<h2><span id="6-使用cmake方便的编译执行多文件项目">6. 使用cmake方便的编译执行多文件项目</span></h2><p> 两个cpp文件一个.h文件和一个build，这次我们试着用cmake编译执行多文件。</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079188704.png" alt="1579079188704"></p>
 <p>这个example的cmakelists.txt里包含了之前讲的版本和项目名，加了一个include_directories，这个参数是把.h文件所在目录包含进去，可以是一堆的.h文件。其中cmake_source_dir是系统变量，可以通过set关键字来设置，默认来说是cmakelists.txt所在的文件。</p>
 <p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079192181.png" alt="1579079192181"></p>
 <p>接着就是执行两个cpp文件，当然两个cpp文件也可以通过set来设置成变量Sources_code.</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079196573.png" alt="1579079196573"></p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079199576.png" alt="1579079199576"></p>
-<h3><span id="7-一个复杂的例子关于cmakelists子目录-and-生成库">7. 一个复杂的例子：关于CMakelists子目录 and 生成库</span></h3><p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079203657.png" alt="1579079203657"></p>
+<h2><span id="7-一个复杂的例子关于cmakelists子目录-and-生成库">7. 一个复杂的例子：关于CMakelists子目录 and 生成库</span></h2><p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079203657.png" alt="1579079203657"></p>
 <p>这个文件夹下包含build文件、一个要执行的cpp文件和CMakelists.txt。除此之外，还有一个MathFunctions文件夹。</p>
 <p>先来看子目录MathFunctions：</p>
 <p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079206479.png" alt="1579079206479"></p>
@@ -459,7 +459,7 @@
 <p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079221077.png" alt="1579079221077"></p>
 <p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079224414.png" alt="1579079224414"></p>
 <p>  <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079227552.png" alt="1579079227552"> </p>
-<h3><span id="8-总结cmakeliststxt的整理内容">8. 总结cmakelists.txt的整理内容</span></h3><p> cmakelists.txt内容不需区分大小写。</p>
+<h2><span id="8-总结cmakeliststxt的整理内容">8. 总结cmakelists.txt的整理内容</span></h2><p> cmakelists.txt内容不需区分大小写。</p>
 <p>一般的cmakelists.txt的编写，包括以下几部分：</p>
 <ol>
 <li><p>指定cmake版本，就像上面所说的：为了方便后人，尽量加上自己所用的版本cmake_minimum_required(VERSION 2.8) </p>
@@ -767,7 +767,7 @@ INCLUDE_DIRECTORIES(
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2018/12/28/nlp-research/jin-wu-nian-2014-2018-zhong-wen-fen-ci-lun-wen-ji-qu-shi-zheng-li/">
+                <a href="/2018/12/28/nlp-jin-jie/jin-wu-nian-2014-2018-zhong-wen-fen-ci-lun-wen-ji-qu-shi-zheng-li/">
                     <div class="card-image">
                         
                         
@@ -793,8 +793,8 @@ INCLUDE_DIRECTORIES(
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/nlp-Research/" class="post-category">
-                                    nlp_Research
+                            <a href="/categories/NLP%E8%BF%9B%E9%98%B6/" class="post-category">
+                                    NLP进阶
                                 </a>
                             
                             
@@ -1049,7 +1049,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">67.7k</span>&nbsp;字
+                class="white-color">133.9k</span>&nbsp;字
             
             
             

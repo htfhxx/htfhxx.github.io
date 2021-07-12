@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>长腿咚咚咚的个人博客</title>
+  
+  <subtitle>美滋滋的生活</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://htfhxx.github.io/"/>
+  <updated>2020-09-09T07:37:18.095Z</updated>
+  <id>http://htfhxx.github.io/</id>
+  
+  <author>
+    <name>长腿咚咚咚</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>个人生产力工具推荐</title>
+    <link href="http://htfhxx.github.io/2020/04/06/yu-yan-gong-ju-ji-zhu-deng-wen-dang/ge-ren-sheng-chan-li-gong-ju-tui-jian/"/>
+    <id>http://htfhxx.github.io/2020/04/06/yu-yan-gong-ju-ji-zhu-deng-wen-dang/ge-ren-sheng-chan-li-gong-ju-tui-jian/</id>
+    <published>2020-04-05T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:18.095Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;经常会搜集一些常用的工具，在工作学习的时候会带来一些便利，也经常安利给周围的朋友。趁着清明假期，整理一下常用的几个，不涉及具体的使用方法和破解方法，只介绍应用的场景和实用的功能，希望能给大家带来一些帮助吧。&lt;/p&gt;
+&lt;p&gt;目录如下，防止耽误大家时间：&lt;/p&gt;
+&lt;p&gt;[TOC
+        
+      
+    
+    </summary>
+    
+    
+      <category term="语言工具技术等文档" scheme="http://htfhxx.github.io/categories/%E8%AF%AD%E8%A8%80%E5%B7%A5%E5%85%B7%E6%8A%80%E6%9C%AF%E7%AD%89%E6%96%87%E6%A1%A3/"/>
+    
+    
+      <category term="个人生产力工具推荐" scheme="http://htfhxx.github.io/tags/%E4%B8%AA%E4%BA%BA%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>无监督学习</title>
+    <link href="http://htfhxx.github.io/2020/01/05/ji-qi-xue-xi/wu-jian-du-xue-xi/"/>
+    <id>http://htfhxx.github.io/2020/01/05/ji-qi-xue-xi/wu-jian-du-xue-xi/</id>
+    <published>2020-01-04T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.886Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-聚类&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="machine-learning" scheme="http://htfhxx.github.io/categories/machine-learning/"/>
+    
+    
+      <category term="无监督学习" scheme="http://htfhxx.github.io/tags/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>激活函数</title>
+    <link href="http://htfhxx.github.io/2019/12/24/shen-du-xue-xi/ji-huo-han-shu/"/>
+    <id>http://htfhxx.github.io/2019/12/24/shen-du-xue-xi/ji-huo-han-shu/</id>
+    <published>2019-12-23T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.945Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h3&gt;&lt;span id=&quot;1-为什么需要激活函数&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="deep-learning" scheme="http://htfhxx.github.io/categories/deep-learning/"/>
+    
+    
+      <category term="激活函数" scheme="http://htfhxx.github.io/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nlp中的预训练</title>
+    <link href="http://htfhxx.github.io/2019/12/14/zi-ran-yu-yan-chu-li-ji-chu/nlp-zhong-de-yu-xun-lian/"/>
+    <id>http://htfhxx.github.io/2019/12/14/zi-ran-yu-yan-chu-li-ji-chu/nlp-zhong-de-yu-xun-lian/</id>
+    <published>2019-12-13T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.975Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h3&gt;&lt;span id=&quot;1-图像领域的预训练&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="nlp基础" scheme="http://htfhxx.github.io/categories/nlp%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="nlp中的预训练" scheme="http://htfhxx.github.io/tags/nlp%E4%B8%AD%E7%9A%84%E9%A2%84%E8%AE%AD%E7%BB%83/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>《Reasoning about Entailment with Neural Attention》简析</title>
+    <link href="http://htfhxx.github.io/2019/12/13/nlp-research/reasoning-about-entailment-with-neural-attention-jian-xi/"/>
+    <id>http://htfhxx.github.io/2019/12/13/nlp-research/reasoning-about-entailment-with-neural-attention-jian-xi/</id>
+    <published>2019-12-13T15:02:00.000Z</published>
+    <updated>2020-09-09T07:37:17.875Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-介绍&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="nlp_Research" scheme="http://htfhxx.github.io/categories/nlp-Research/"/>
+    
+    
+      <category term="《Reasoning about Entailment with Neural Attention》简析" scheme="http://htfhxx.github.io/tags/%E3%80%8AReasoning-about-Entailment-with-Neural-Attention%E3%80%8B%E7%AE%80%E6%9E%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TF-IDF（转载）</title>
+    <link href="http://htfhxx.github.io/2019/12/08/zi-ran-yu-yan-chu-li-ji-chu/tf-idf-zhuan/"/>
+    <id>http://htfhxx.github.io/2019/12/08/zi-ran-yu-yan-chu-li-ji-chu/tf-idf-zhuan/</id>
+    <published>2019-12-07T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.965Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;hr&gt;
+&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;p&gt;TF-IDF是一种用于信息检索与数据挖掘的常用加权技术，常用于挖掘文章中的关键词，而且算法简单高效，常被工业用于最开始的文本数据清洗。&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-定义&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="nlp基础" scheme="http://htfhxx.github.io/categories/nlp%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="TF-IDF（转载）" scheme="http://htfhxx.github.io/tags/TF-IDF%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>seq2seq（转载）</title>
+    <link href="http://htfhxx.github.io/2019/12/08/zi-ran-yu-yan-chu-li-ji-chu/seq2seq-zhuan/"/>
+    <id>http://htfhxx.github.io/2019/12/08/zi-ran-yu-yan-chu-li-ji-chu/seq2seq-zhuan/</id>
+    <published>2019-12-07T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.975Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;目录&quot;&gt;目录&lt;/span&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-什么是seq2seq&quot;&gt;1. 什么是seq2seq&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-编码器&quot;&gt;2. 编码器&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="nlp基础" scheme="http://htfhxx.github.io/categories/nlp%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="seq2seq（转载）" scheme="http://htfhxx.github.io/tags/seq2seq%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Word2vec</title>
+    <link href="http://htfhxx.github.io/2019/12/08/zi-ran-yu-yan-chu-li-ji-chu/word2vec/"/>
+    <id>http://htfhxx.github.io/2019/12/08/zi-ran-yu-yan-chu-li-ji-chu/word2vec/</id>
+    <published>2019-12-07T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.975Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-one-hot-vector&quot;&gt;1 One-hot vector&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;将每个单词用N维的长向量表示，N是一个很大的数字。&lt;/p&gt;
+&lt;p&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+    
+      <category term="nlp基础" scheme="http://htfhxx.github.io/categories/nlp%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="Word2vec" scheme="http://htfhxx.github.io/tags/Word2vec/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>概率图模型-CRF</title>
+    <link href="http://htfhxx.github.io/2019/12/07/ji-qi-xue-xi/gai-lu-tu-mo-xing-crf/"/>
+    <id>http://htfhxx.github.io/2019/12/07/ji-qi-xue-xi/gai-lu-tu-mo-xing-crf/</id>
+    <published>2019-12-06T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.886Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-马尔可夫随机场mrf&quot;&gt;1 马尔可夫随机场MRF&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;马尔可夫随机场是典型的马尔可夫网，即一个无向图模型。&lt;/p&gt;
+&lt;p&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+    
+      <category term="machine-learning" scheme="http://htfhxx.github.io/categories/machine-learning/"/>
+    
+    
+      <category term="概率图模型-CRF" scheme="http://htfhxx.github.io/tags/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B-CRF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>概率图模型</title>
+    <link href="http://htfhxx.github.io/2019/12/07/ji-qi-xue-xi/gai-lu-tu-mo-xing/"/>
+    <id>http://htfhxx.github.io/2019/12/07/ji-qi-xue-xi/gai-lu-tu-mo-xing/</id>
+    <published>2019-12-06T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.905Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-概率图模型&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="machine-learning" scheme="http://htfhxx.github.io/categories/machine-learning/"/>
+    
+    
+      <category term="概率图模型" scheme="http://htfhxx.github.io/tags/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>集成学习</title>
+    <link href="http://htfhxx.github.io/2019/12/07/ji-qi-xue-xi/ji-cheng-xue-xi/"/>
+    <id>http://htfhxx.github.io/2019/12/07/ji-qi-xue-xi/ji-cheng-xue-xi/</id>
+    <published>2019-12-06T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.925Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-集成学习&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="machine-learning" scheme="http://htfhxx.github.io/categories/machine-learning/"/>
+    
+    
+      <category term="集成学习" scheme="http://htfhxx.github.io/tags/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CNN and RNNs</title>
+    <link href="http://htfhxx.github.io/2019/12/07/shen-du-xue-xi/cnn-rnn/"/>
+    <id>http://htfhxx.github.io/2019/12/07/shen-du-xue-xi/cnn-rnn/</id>
+    <published>2019-12-06T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.937Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-cnn&quot;&gt;1 CNN&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;卷积神经网络：是一种专门用来处理具有类似网格结构数据的神经网络。&lt;/p&gt;
+&lt;h3&gt;&lt;span id=&quot;11-卷积神经网络结构&quot;&gt;1.1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="deep-learning" scheme="http://htfhxx.github.io/categories/deep-learning/"/>
+    
+    
+      <category term="CNN and RNNs" scheme="http://htfhxx.github.io/tags/CNN-and-RNNs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DL优化方法</title>
+    <link href="http://htfhxx.github.io/2019/12/07/shen-du-xue-xi/dl-you-hua-fang-fa/"/>
+    <id>http://htfhxx.github.io/2019/12/07/shen-du-xue-xi/dl-you-hua-fang-fa/</id>
+    <published>2019-12-06T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.945Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-防止欠拟合-过拟合的方法&quot;&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="deep-learning" scheme="http://htfhxx.github.io/categories/deep-learning/"/>
+    
+    
+      <category term="DL优化方法" scheme="http://htfhxx.github.io/tags/DL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Attention</title>
+    <link href="http://htfhxx.github.io/2019/12/07/zi-ran-yu-yan-chu-li-ji-chu/attention/"/>
+    <id>http://htfhxx.github.io/2019/12/07/zi-ran-yu-yan-chu-li-ji-chu/attention/</id>
+    <published>2019-12-06T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.965Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-basic-attention&quot;&gt;1 Basic Attention&lt;/span&gt;&lt;/h2&gt;&lt;h3&gt;&lt;span id=&quot;11-attention-定义&quot;&gt;1.1 Attention
+        
+      
+    
+    </summary>
+    
+    
+      <category term="nlp基础" scheme="http://htfhxx.github.io/categories/nlp%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="Attention" scheme="http://htfhxx.github.io/tags/Attention/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>线性回归与逻辑回归</title>
+    <link href="http://htfhxx.github.io/2019/12/05/ji-qi-xue-xi/xian-xing-hui-gui-yu-luo-ji-hui-gui/"/>
+    <id>http://htfhxx.github.io/2019/12/05/ji-qi-xue-xi/xian-xing-hui-gui-yu-luo-ji-hui-gui/</id>
+    <published>2019-12-04T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.925Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;&lt;span id=&quot;1-线性回归&quot;&gt;1 线性回归&lt;/span&gt;&lt;/h1&gt;&lt;h2&gt;&lt;span id=&quot;11-简介&quot;&gt;1.1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="machine-learning" scheme="http://htfhxx.github.io/categories/machine-learning/"/>
+    
+    
+      <category term="线性回归与逻辑回归" scheme="http://htfhxx.github.io/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E4%B8%8E%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>算法题易用写法汇总</title>
+    <link href="http://htfhxx.github.io/2019/12/04/yu-yan-gong-ju-ji-zhu-deng-wen-dang/suan-fa-ti-yi-yong-xie-fa-hui-zong/"/>
+    <id>http://htfhxx.github.io/2019/12/04/yu-yan-gong-ju-ji-zhu-deng-wen-dang/suan-fa-ti-yi-yong-xie-fa-hui-zong/</id>
+    <published>2019-12-03T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:18.375Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2&gt;&lt;span id=&quot;二分查找&quot;&gt;二分查找&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;leetcode704：&lt;a href=&quot;https://leetcode.com/problems/sqrtx/submissions/&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="语言工具技术等文档" scheme="http://htfhxx.github.io/categories/%E8%AF%AD%E8%A8%80%E5%B7%A5%E5%85%B7%E6%8A%80%E6%9C%AF%E7%AD%89%E6%96%87%E6%A1%A3/"/>
+    
+    
+      <category term="算法题易用写法汇总" scheme="http://htfhxx.github.io/tags/%E7%AE%97%E6%B3%95%E9%A2%98%E6%98%93%E7%94%A8%E5%86%99%E6%B3%95%E6%B1%87%E6%80%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>决策树</title>
+    <link href="http://htfhxx.github.io/2019/12/02/ji-qi-xue-xi/jue-ce-shu/"/>
+    <id>http://htfhxx.github.io/2019/12/02/ji-qi-xue-xi/jue-ce-shu/</id>
+    <published>2019-12-01T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.886Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1&gt;&lt;span id=&quot;决策树&quot;&gt;决策树&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-简介&quot;&gt;1 简介&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;决策树是一个分而治之的递归过程。
+        
+      
+    
+    </summary>
+    
+    
+      <category term="machine-learning" scheme="http://htfhxx.github.io/categories/machine-learning/"/>
+    
+    
+      <category term="决策树" scheme="http://htfhxx.github.io/tags/%E5%86%B3%E7%AD%96%E6%A0%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SVM</title>
+    <link href="http://htfhxx.github.io/2019/11/28/ji-qi-xue-xi/svm-de-jian-ji-xiang-zheng-li/"/>
+    <id>http://htfhxx.github.io/2019/11/28/ji-qi-xue-xi/svm-de-jian-ji-xiang-zheng-li/</id>
+    <published>2019-11-27T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.886Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1&gt;&lt;span id=&quot;svm&quot;&gt;SVM&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-整体概览&quot;&gt;1 整体概览&lt;/span&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;什么是SVM&lt;br&gt;SVM
+        
+      
+    
+    </summary>
+    
+    
+      <category term="machine-learning" scheme="http://htfhxx.github.io/categories/machine-learning/"/>
+    
+    
+      <category term="SVM" scheme="http://htfhxx.github.io/tags/SVM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>机器学习/概率图模型-HMM</title>
+    <link href="http://htfhxx.github.io/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/"/>
+    <id>http://htfhxx.github.io/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/</id>
+    <published>2019-11-27T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.895Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;1-马尔可夫模型&quot;&gt;1 马尔可夫模型&lt;/span&gt;&lt;/h2&gt;&lt;h3&gt;&lt;span id=&quot;11-概念导入&quot;&gt;1.1 概念导入&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 -
+        
+      
+    
+    </summary>
+    
+    
+      <category term="machine-learning" scheme="http://htfhxx.github.io/categories/machine-learning/"/>
+    
+    
+      <category term="概率图模型-HMM" scheme="http://htfhxx.github.io/tags/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B-HMM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Transformer的简洁向解释</title>
+    <link href="http://htfhxx.github.io/2019/11/28/zi-ran-yu-yan-chu-li-ji-chu/transformer-de-jian-ji-xiang-jie-shi/"/>
+    <id>http://htfhxx.github.io/2019/11/28/zi-ran-yu-yan-chu-li-ji-chu/transformer-de-jian-ji-xiang-jie-shi/</id>
+    <published>2019-11-27T16:00:00.000Z</published>
+    <updated>2020-09-09T07:37:17.965Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/2019/11/28/zi-ran-yu-yan-chu-li-ji-chu/transformer-de-jian-ji-xiang-jie-shi/1574773800747.png&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="nlp基础" scheme="http://htfhxx.github.io/categories/nlp%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="Transformer的简洁向解释" scheme="http://htfhxx.github.io/tags/Transformer%E7%9A%84%E7%AE%80%E6%B4%81%E5%90%91%E8%A7%A3%E9%87%8A/"/>
+    
+  </entry>
+  
+</feed>

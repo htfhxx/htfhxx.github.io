@@ -1,0 +1,1262 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="机器学习/概率图模型-HMM, 长腿咚咚咚的个人博客">
+    <meta name="description" content="[TOC]
+1 马尔可夫模型1.1 概念导入在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。
+在某个星期天气的变化状态序列：晴朗 - 多云 - 雨天。
+像交通信号灯一样，某一个状态只由前一个状态决定，这就是一个">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>机器学习/概率图模型-HMM | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        机器学习/概率图模型-HMM
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B-HMM/">
+                                <span class="chip bg-color">概率图模型-HMM</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/machine-learning/" class="post-category">
+                                machine-learning
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-11-28
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    13 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>[TOC]</p>
+<h2><span id="1-马尔可夫模型">1 马尔可夫模型</span></h2><h3><span id="11-概念导入">1.1 概念导入</span></h3><p>在某段时间内，交通信号灯的颜色变化序列是：红色 - 黄色 - 绿色 - 红色。</p>
+<p>在某个星期天气的变化状态序列：晴朗 - 多云 - 雨天。</p>
+<p>像交通信号灯一样，某一个状态只由前一个状态决定，这就是一个一阶马尔可夫模型。而像天气这样，天气状态间的转移仅依赖于前n天天气的状态，即状态间的转移仅依赖于前n个状态的过程。这个过程就称为<strong>n阶马尔科夫模型</strong>。</p>
+<p>不通俗的讲，马尔可夫模型（Markovmodel）描述了一类重要的随机过程，随机过程又称随机函数，是随时间而随机变化的过程。</p>
+<h3><span id="12-马尔可夫模型定义">1.2 马尔可夫模型定义</span></h3><p>存在一类重要的随机过程：如果一个系统有N个状态$S_1$,$S_2$,$S_3$..$S_N$ 随着时间的推移，该系统从某一状态转移到另一状态。如果用$q_t$ 表示系统在时间t的状态变量，那么 t 时刻的状态取值为$S_j$(1&lt;=j&lt;=N)的概率取决于前t-1 个时刻(1, 2, …, t-1)的状态，该概率为：</p>
+<script type="math/tex; mode=display">
+p\left(q_{t}=S_{j} | q_{t-1}=S_{i}, q_{t-2}=S_{k}, \cdots\right)</script><ol>
+<li><strong>假设一：</strong>如果在特定情况下，系统在时间t 的状态只与其在时间t-1 的状态相关，则该系统构成一个<strong>离散的一阶马尔可夫链</strong>：</li>
+</ol>
+<script type="math/tex; mode=display">
+p\left(q_{t}=S_{j} | q_{t-1}=S_{i}, q_{t-2}=S_{k}, \cdots\right)=p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)</script><ol>
+<li><strong>假设二：</strong>如果只考虑独立于时间t的随机过程，状态与时间无关，那么<script type="math/tex; mode=display">
+p\left(q_{t}=S_{j} | q_{t-1}=S_{i}\right)=a_{i j}, \quad 1 \leq i, j \leq N</script>即：t时刻状态的概率取决于前t-1 个时刻(1, 2, …, t-1)的状态,且状态的转换与时间无关，则<strong>该随机过程</strong>就是<strong>马尔可夫模型</strong>。</li>
+</ol>
+<h2><span id="2-隐马尔可夫模型">2 隐马尔可夫模型</span></h2><h3><span id="21-概念导入">2.1 概念导入</span></h3><p>在马尔可夫模型中，每个状态代表了一个可观察的事件，所以，马尔可夫模型有时又称作可视马尔可夫模型（visibleMarkovmodel，VMM），这在某种程度上限制了模型的适应性。</p>
+<p>对于盲人来说也许不能够直接获取到天气的观察情况，但是他可以通过触摸树叶通过树叶的干燥程度判断天气的状态。于是天气就是一个隐藏的状态，树叶的干燥程度是一个可观察的状态，于是我们就有了两组状态，一个是不可观察、隐藏的状态（天气），一个是可观察的状态（树叶），我们希望设计一种算法，在不能够直接观察天气的情况下，通过树叶和马尔可夫假设来预测天气。</p>
+<p>以此为例，一个一阶的马尔可夫过程描述：  </p>
+<p> <img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/clip_image004-1573140263848.jpg" alt="clip_image004" style="zoom:67%;"></p>
+<p>在隐马尔可夫模型（HMM）中，我们<strong>不知道模型具体的状态序列</strong>，<strong>只知道状态转移的概率</strong>，即模型的状态转换过程是不可观察的。</p>
+<p>因此，该模型是一个<strong>双重随机过程</strong>，包括<strong>模型的状态转换</strong>和<strong>特定状态下可观察事件的随机</strong>。</p>
+<p><img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/1.png" alt="1" style="zoom: 50%;"></p>
+<h3><span id="22-hmm的组成">2.2 HMM的组成</span></h3><p>例如，N个袋子，每个袋子中有M种不同颜色的球。选择一个袋子，取出一个球，得到球的颜色。</p>
+<ol>
+<li>状态数为N(袋子的数量)</li>
+<li>每个状态可能的符号数M(不同颜色球的数目)</li>
+<li>状态转移概率矩阵A＝$a_{ij}$(从一只袋子(状态Si) 转向另一只袋子(状态Sj ) 取球的概率)</li>
+<li>从状态Sj 观察到某一特定符号vk 的概率分布矩阵为：$B=\betaj(k)$  (从第j个袋子中取出第k种颜色的球的概率)</li>
+<li>初始状态的概率分布为：$\pi=\pi_{i}$</li>
+</ol>
+<p><strong>一般将一个隐马尔可夫模型记为：$λ=[π, A,B]$</strong></p>
+<p>需要确定以下三方面内容（三要素）：</p>
+<ol>
+<li>初始状态概率π：模型在初始时刻各状态出现的概率，通常记为$π=(π_1,π_2,…,π_N)$，$π_i$表示模型的初始状态为$S_i$的概率.</li>
+<li>状态转移概率A：模型在各个状态间转换的概率，通常记为矩阵A[$a_{ij}$]，其中$a_{ij}$表示在任意时刻t，若状态为Si，则在下一时刻状态为Sj的概率.</li>
+<li>输出观测概率B：模型根据当前状态获得各个观测值的概率通常记为矩阵<br>B=[$(\beta{ij})$]。其中，$\beta{ij}$表示在任意时刻t，若状态为$S_j$，则观测值$O_j$被获取的概率.</li>
+</ol>
+<p>相对于马尔可夫模型，隐马尔可夫只是多了一个各状态的观测概率</p>
+<p>给定隐马尔可夫模型  $λ=[A, B, π]$，它按如下过程产生观测序列   ${X_1,X_2，…,X_n}$:</p>
+<p>(1)  设置t=1，并根据初始状态概率π选择初始状态$Y_1$;</p>
+<p>(2)  根据状态值和输出观测概率B选择观测变量取值$X_t$ ;</p>
+<p>(3)  根据状态值和状态转移矩阵A转移模型状态，即确定$Y_{t+1}$;</p>
+<h2><span id="3-三个问题">3 三个问题</span></h2><p>一旦一个系统可以作为HMM被描述，就可以用来解决三个基本问题。</p>
+<p><strong>1.</strong>  <strong>评估（Evaluation）</strong></p>
+<p>给定HMM，即$\lambda=[π, A,B]$，求某个观察序列的概率$p(x| \lambda)$。</p>
+<p>例如：给定一个天气的隐马尔可夫模型，包括第一天的天气概率分布，天气转移概率矩阵，特定天气下树叶的湿度概率分布。<strong>求第一天湿度为1，第二天湿度为2，第三天湿度为3的概率。</strong></p>
+<p><strong>2.</strong>  <strong>解码 or 推断（ Decoding）</strong></p>
+<p>给定HMM，即$\lambda=[π, A,B]$，以及某个观察序列，求得天气的序列y。</p>
+<p>例如：给定一个天气的隐马尔可夫模型，包括第一天的天气概率分布，天气转移概率矩阵，特定天气下树叶的湿度概率分布。并且已知第一天湿度为1，第二天湿度为2，第三天湿度为3。<strong>求得这三天的天气情况</strong>。</p>
+<p> 即：发现“最优”状态序列能够“最好地解释”观察序列</p>
+<p><strong>3.</strong>  <strong>学习（Learning）</strong></p>
+<p>给定一个观察序列，得到一个隐马尔可夫模型$\lambda=[π, A,B]$。</p>
+<p>例如：已知第一天湿度为1，第二天湿度为2，第三天湿度为3。<strong>求得一个天气的隐马尔可夫模型</strong>，包括第一天的天气，天气转移概率矩阵，特定天气下树叶的湿度概率分布。</p>
+<h3><span id="31-前向算法">3.1 前向算法</span></h3><p><strong>对于评估问题（Evaluation）</strong></p>
+<p>给定HMM，即$\lambda=[π, A,B]$，求某个观察序列的概率。</p>
+<p>例如：给定一个天气的隐马尔可夫模型，包括第一天的天气概率分布，天气转移概率矩阵，特定天气下树叶的湿度概率分布。<strong>求第一天湿度为1，第二天湿度为2，第三天湿度为3的概率。</strong></p>
+<p><strong>思路一：找到所有状态序列，得到各状态概率，得到每种状态概率对应的观察概率，求和。</strong> </p>
+<p><img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/clip_image006.png" alt="clip_image006" style="zoom:67%;"></p>
+<p>即：找到每一个可能的隐藏状态，并且将这些隐藏状态下的观察序列概率相加。</p>
+<p>对于上面那个（天气）例子，将有3^3 = 27种不同的天气序列可能性，因此，观察序列的概率是：Pr(dry,damp,soggy | HMM) = Pr(dry,damp,soggy | sunny,sunny,sunny) + Pr(dry,damp,soggy | sunny,sunny ,cloudy) + Pr(dry,damp,soggy | sunny,sunny ,rainy) + . . . . Pr(dry,damp,soggy | rainy,rainy ,rainy)</p>
+<p>用这种方式计算观察序列概率极为昂贵，特别对于大的模型或较长的序列，因此我们可以利用这些概率的时间不变性来减少问题的复杂度。</p>
+<p><strong>思路二：采用动态规划——前向算法</strong></p>
+<p> 基本思想：定义前向变量$α_t(i)$  ：t时刻状态为$S_i$且观察状态为$O_t$ 的概率</p>
+<script type="math/tex; mode=display">
+\alpha_{t}(i)=p\left(O_{1} O_{2} \cdots \underline{O_{t}}, q_{t}=S_{i} | \lambda\right)</script><p> 如果可以高效地计算$α_t(i)$，就可以高效地求得$p(O|\lambda)$。</p>
+<p> <img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/1571903774343.png" alt="1571903774343" style="zoom:50%;"></p>
+<p>蓝色部分是：从t时刻的各个状态$S_i$得到t时刻的观察状态$O_t$的概率</p>
+<p>黑色部分是：从t时刻的各个状态$S_i$得到t+1时刻的各个状态</p>
+<p> 即：</p>
+<ol>
+<li>初始化：$\alpha_{1}(i)=\pi_{i} \beta_{i}\left(O_{1}\right), \quad 1 \leq i \leq N$</li>
+<li>循环计算：$\alpha_{t+1}(j)=\left[\sum_{i=1}^{N} \alpha_{t}(i) a_{i j}\right] \times \beta{j}\left(O_{t+1}\right), \quad 1 \leq t \leq T-1$</li>
+<li>结束，输出：$p(O | \lambda)=\sum_{i=1}^{N} \alpha_{T}(i)$</li>
+</ol>
+<h3><span id="32-后向算法">3.2 后向算法</span></h3><p>定义后向变量$\beta_t(i)$是在给定了模型 $\lambda=[π, A,B]$和假定在时间t 状态为$S_i$的条件下，模型输出<br>观察序列$O_{t+1} O_{t+2} \cdots {O_{T}}$ 的概率：</p>
+<script type="math/tex; mode=display">
+\beta_{t}(i)=p\left(O_{t+1} O_{t+2} \cdots O_{T} | q_{t}=S_{i}, \mu\right)</script><p><img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/1571904725005.png" alt="1571904725005" style="zoom:50%;"></p>
+<p>蓝色部分是：从t+1时刻的各个状态$S_i$得到t+1时刻的观察状态$O_t$的概率</p>
+<p>黑色部分是：从t+1时刻的各个状态$S_i$得到t时刻的各个状态</p>
+<p> 即：</p>
+<ol>
+<li>初始化：$\beta_{T}(i)=1, \quad 1 \leq i \leq N$</li>
+<li>循环计算：$\beta_{t}(i)=\sum_{j=1}^{N} a_{i j} \beta{j}\left(O_{t+1}\right) \times \beta_{t+1}(j), \quad T-1 \geq t \geq 1, \quad 1 \leq i \leq N$</li>
+<li>结束，输出：$p(O | \lambda)=\sum_{i=1}^{N} \beta_{1}(i) \times \pi_{i} \times \beta{i}\left(O_{1}\right)$</li>
+</ol>
+<h3><span id="33-viterbi-搜索算法">3.3 Viterbi 搜索算法</span></h3><p><strong>对于解码问题（ Decoding）</strong></p>
+<p>给定HMM，即$\lambda=[π, A,B]$，以及某个观察序列，求得天气的序列。</p>
+<p>例如，给定一个天气的隐马尔可夫模型，包括第一天的天气，天气转移概率矩阵，特定天气下树叶的湿度概率分布。并且已知第一天湿度为1，第二天湿度为2，第三天湿度为3。求得这三天的天气情况。</p>
+<p> 即：发现“最优”状态序列能够“最好地解释”观察序列</p>
+<h4><span id="331-如何理解最优的状态序列">3.3.1 如何理解“最优”的状态序列？</span></h4><p>解释(1)：</p>
+<p>状态序列中的每个状态都单独地具有概率，对于每个时刻$t(1 \leq t \leq T)$, 寻找$q_t$ 使得$\gamma_{t}(i)=p\left(q_{t}=S_{i} | O, \lambda\right)$最大。——<strong>近似算法</strong></p>
+<p>问题：每一个状态单独最优不一定使整体的状态序列最优，两个最优的状态之间的转移概率可能为0</p>
+<p><img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/1571905343398.png" alt="1571905343398" style="zoom:50%;"></p>
+<p>解释(2)：在给定模型$\lambda$和观察序列O的条件下求概率最大的状态序列<strong>——Viterbi 算法: 动态搜索最优状态序</strong></p>
+<script type="math/tex; mode=display">
+\widehat{Q}=\underset{Q}{\arg \max } p(Q | O, \mu)</script><h4><span id="332-viterbi-搜索算法过程">3.3.2 Viterbi 搜索算法过程</span></h4><p>搜索过程大概如下：</p>
+<p><img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/1571905575248.png" alt="1571905575248" style="zoom:50%;"></p>
+<p><img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/1571905516366.png" alt="1571905516366" style="zoom:50%;"></p>
+<p><img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/1571905527009.png" alt="1571905527009" style="zoom:50%;"></p>
+<p><img src="/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/1571905543642.png" alt="1571905543642" style="zoom:50%;"></p>
+<p>每个时刻都求得每个状态的概率，并求得最大概率对应的上一时刻的状态。</p>
+<p><strong>算法描述</strong></p>
+<ol>
+<li><p>初始化：$\delta_{1}(i)=\pi_{i} \beta_{i}\left(O_{1}\right), \quad 1 \leq i \leq N$</p>
+<p>概率最大的路径变量：$\psi_{1}(i)=0$</p>
+</li>
+<li><p>递推计算：$t$ 是计算的顺序数（计算第 t 个），$j$  是计算过程中的第 j 个状态</p>
+<p>$\delta_{t}(j)=\max _{1 \leq i \leq N}\left[\delta_{t-1}(i) \cdot a_{i j}\right] \cdot \beta_{j}\left(O_{t}\right), \quad 2 \leq t \leq T, \quad 1 \leq j \leq N$</p>
+<p>$\psi_{t}(j)=\underset{1 \leq i \leq N}{\arg \max }\left[\delta_{t-1}(i) \cdot a_{i j}\right] \cdot \beta_{j}\left(O_{t}\right), 2 \leq t \leq T, 1 \leq i \leq N$</p>
+</li>
+<li><p>结束：</p>
+<p>$\widehat{Q}_{T}=\underset{1 \leq i \leq N}{\operatorname{argmax}}\left[\delta_{T}(i)\right], \quad \widehat{p}\left(\widehat{Q}_{T}\right)=\max _{1 \leq i \leq N} \delta_{T}(i)$</p>
+</li>
+<li><p>通过回溯得到路径（状态序列）：</p>
+<p>$\widehat{q}_{t}=\psi_{t+1}\left(\widehat{q}_{t+1}\right), \quad t=T-1, T-2, \cdots, 1$</p>
+</li>
+</ol>
+<h3><span id="34-参数学习">3.4 参数学习</span></h3><p><strong>对于学习问题（Learning）</strong></p>
+<p>给定一个观察序列，得到一个隐马尔可夫模型。</p>
+<p>已知第一天湿度为1，第二天湿度为2，第三天湿度为3。求得一个天气的隐马尔可夫模型，包括第一天的天气，天气转移概率矩阵，特定天气下树叶的湿度概率分布。</p>
+<p>如果产生观察序列O的状态已知(即存在大量标注的样本), 可以用最大似然估计来计算 $\lambda$ 的参数：Baum-Welch 算法(前向后向算法)描述</p>
+<p>如果不存在大量标注的样本：EM算法—期望值最大化算法(Expectation-Maximization, EM) </p>
+<h2><span id="4-hmm应用">4 HMM应用</span></h2><p>中文分词问题，从句子的序列标注问题解决。BMES</p>
+<p>如果有标注语料，则问题的解决过程：</p>
+<ol>
+<li>计算初始状态概率分布（初始字符的BMES概率）</li>
+<li>计算转移概率矩阵（BMES之间转移的概率）</li>
+<li>计算输出概率矩阵（BMES转为字符的概率）</li>
+<li>使用Viterbi算法解码</li>
+</ol>
+<p>如果没有标注语料，则问题的解决过程：</p>
+<ol>
+<li>获取词的个数</li>
+<li>确定状态的个数</li>
+<li>参数学习（利用EM迭代算法获取初始状态概率、状态转移概率和输出概率）</li>
+<li>使用Viterbi算法解码</li>
+</ol>
+<h2><span id="5-reference">5 Reference</span></h2><p>宗成庆：《自然语言处理》讲义</p>
+<p>《统计学习方法》</p>
+<p>其他网络资料（侵删）</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/">http://htfhxx.github.io/2019/11/28/ji-qi-xue-xi/gai-lu-tu-mo-xing-hmm/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B-HMM/">
+                                    <span class="chip bg-color">概率图模型-HMM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2019-11-28T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/11/28/ji-qi-xue-xi/svm-de-jian-ji-xiang-zheng-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="SVM">
+                        
+                        <span class="card-title">SVM</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            SVM[TOC]
+1 整体概览
+什么是SVMSVM 是一种二分类模型。它的基本思想是在特征空间中寻找间隔最大的分离超平面使数据二分类
+
+
+线性可分支持向量机——硬间隔支持向量机
+线性支持向量机——软间隔支持向量机
+非线性支持向量机——核技巧
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-11-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/machine-learning/" class="post-category">
+                                    machine-learning
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SVM/">
+                        <span class="chip bg-color">SVM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/11/28/zi-ran-yu-yan-chu-li-ji-chu/transformer-de-jian-ji-xiang-jie-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Transformer的简洁向解释">
+                        
+                        <span class="card-title">Transformer的简洁向解释</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            [TOC]
+
+1 主要结构​        1. 输入：Input Embedding——$(x_1,x_2,x_3,…,x_n)$ 进行Positional Encoding，投入Encoder；
+​        2. Encoder：
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/nlp%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    nlp基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Transformer%E7%9A%84%E7%AE%80%E6%B4%81%E5%90%91%E8%A7%A3%E9%87%8A/">
+                        <span class="chip bg-color">Transformer的简洁向解释</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">67.7k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

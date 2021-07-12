@@ -1,0 +1,1248 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Cmake由浅入深, 长腿咚咚咚的个人博客">
+    <meta name="description" content="[TOC]
+1. Windows 和linux下执行单文件在windows环境下，大家都熟悉怎么编写并执行一份代码：
+
+先打开编译器例如codeblocks编写源代码，例如一个c++文件；
+点击编译按钮，编译代码，生成.o的目标文件。
+点击">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Cmake由浅入深 | 长腿咚咚咚的个人博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="alternate" href="/atom.xml" title="长腿咚咚咚的个人博客" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">长腿咚咚咚的个人博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>文章汇总</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>文章分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>文章时间线</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About Me</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">长腿咚咚咚的个人博客</div>
+        <div class="logo-desc">
+            
+            美滋滋的生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			文章汇总
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			文章分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			文章时间线
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About Me
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Cmake由浅入深
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Cmake%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1/">
+                                <span class="chip bg-color">Cmake由浅入深</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E8%AF%AD%E8%A8%80%E5%B7%A5%E5%85%B7%E6%8A%80%E6%9C%AF%E7%AD%89%E6%96%87%E6%A1%A3/" class="post-category">
+                                语言工具技术等文档
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-12-12
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    5 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>[TOC]</p>
+<h3><span id="1-windows-和linux下执行单文件">1. Windows 和linux下执行单文件</span></h3><p>在windows环境下，大家都熟悉怎么编写并执行一份代码：</p>
+<ol>
+<li>先打开编译器例如codeblocks编写源代码，例如一个c++文件；</li>
+<li>点击编译按钮，编译代码，生成.o的目标文件。</li>
+<li>点击执行按钮，生成.exe的可执行文件，运行完毕。</li>
+</ol>
+<p>例如codeblocks下的build &amp; run：</p>
+<p><img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079026002.png" alt="1579079026002"></p>
+<p>在linux环境下呢？</p>
+<p>用vim编辑器编写代码，得到一个文本文件 main.cpp</p>
+<p><img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079040506.png" alt="1579079040506"></p>
+<ol>
+<li><p>使用g++编译main.cpp得到a.out文件<br><img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079080005.png" alt="1579079080005"></p>
+</li>
+<li><p>执行a.out文件，执行完毕得到结果<br><img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079074703.png" alt="1579079074703"></p>
+</li>
+</ol>
+<p>当然，更普遍的是使用-o来编译和执行的</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079089888.png" alt="1579079089888"></p>
+<h3><span id="2-windows-和linux下执行多文件or项目">2. Windows 和linux下执行多文件or项目</span></h3><p>Windows自不必多说，在编译器下编译运行main函数即可</p>
+<p>至于linux，有如下三个文件speak.h speak.cpp hellospeak.cpp</p>
+<p>​    <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079098670.png" alt="1579079098670"></p>
+<p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079114625.png" alt="1579079114625"></p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079124731.png" alt="1579079124731"></p>
+<p>编译执行多个文件：</p>
+<p> g++ hellospeak.cpp speak.cpp -o hellospeak</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079128351.png" alt="1579079128351"></p>
+<p>这个时候会发现，如果源文件太多，一个一个编译时就会特别麻烦。于是人们想到了制作一种类似批处理的程序，来批处理编译源文件，于是就有了make工具。它是一个自动化的编译工具，你可以使用一条命令实现完全编译。但是你需要编写一个规则文件，make依据它来批处理编译，这个文件就是makefile。</p>
+<h3><span id="3-解决多文件编译的困难makefile">3. 解决多文件编译的困难：makefile</span></h3><p>文件下包含一个头文件和两个cpp文件，以及一个写好的makefile：</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079133459.png" alt="1579079133459"></p>
+<p>Makefile大致内容就是要编译两个文件得到hellospeak.o和speak.o，再生成可执行文件hellospeak，最后删掉.o文件。</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079136368.png" alt="1579079136368"></p>
+<p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079141053.png" alt="1579079141053"></p>
+<p>对于一个大工程，编写makefile实在是件复杂的事，于是就出现了cmake工具，它能够输出各种各样的makefile或者project文件,从而帮助程序员减轻负担。但是随之而来也就是编写cmakelist文件，它是cmake所依据的规则。</p>
+<h3><span id="4-cmake工具编译运行文件">4. Cmake工具:编译运行文件</span></h3><p>如果没有安装的话就通过sudo apt-get install cmake命令安装cmake工具：</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079147001.png" alt="1579079147001"></p>
+<p>准备好cmakelist.txt文件和要执行的main.cpp，以及一个build文件，用于放入cmake编译的繁多的中间文件：</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079150587.png" alt="1579079150587"></p>
+<p>要执行的main.cpp：</p>
+<p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079154023.png" alt="1579079154023"></p>
+<p>cmakelist.txt文件（内容撰写待会再说）：</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079156649.png" alt="1579079156649"></p>
+<p>第一步，cmake + (cmakelists.txt所在文件夹)。</p>
+<p>此处“..”指的是上一级文件夹，会从文件夹中找到cmakelists.txt：</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079162873.png" alt="1579079162873"></p>
+<p>系统自动生成了：CMakeFiles, CMakeCache.txt, cmake_install.cmake 等文件，并且生成了Makefile</p>
+<p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079166055.png" alt="1579079166055"></p>
+<p>进行工程的实际构建，在这个目录输入<code>make</code> 命令，大概会得到如下的彩色输出：</p>
+<p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079171352.png" alt="1579079171352"></p>
+<p>到这里就已经编译完成了，接下来执行这个项目得到hello world的输出：</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079174053.png" alt="1579079174053"></p>
+<p>即，整个流程为（网图，侵删）：</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079177639.png" alt="1579079177639"></p>
+<h3><span id="5-使用cmake方便的编译执行单文件demo">5. 使用cmake方便的编译执行单文件Demo</span></h3><p>先分析上一例子中的cmakelists.txt：</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079183726.png" alt="1579079183726"></p>
+<p>cmake_minimum_required(VERSION 2.8) </p>
+<p>//指的是支持的cmake版本，可省略，但是为了方便后人，尽量加上自己所用的版本。</p>
+<p>project(HelloWorld)</p>
+<p>//指定项目名称，编译完成后生成的名字就是HelloWorld</p>
+<p>add_executable(HelloWorld main.cpp) </p>
+<p>//加入执行文件，此处是单文件，待会展开来讲</p>
+<h3><span id="6-使用cmake方便的编译执行多文件项目">6. 使用cmake方便的编译执行多文件项目</span></h3><p> 两个cpp文件一个.h文件和一个build，这次我们试着用cmake编译执行多文件。</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079188704.png" alt="1579079188704"></p>
+<p>这个example的cmakelists.txt里包含了之前讲的版本和项目名，加了一个include_directories，这个参数是把.h文件所在目录包含进去，可以是一堆的.h文件。其中cmake_source_dir是系统变量，可以通过set关键字来设置，默认来说是cmakelists.txt所在的文件。</p>
+<p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079192181.png" alt="1579079192181"></p>
+<p>接着就是执行两个cpp文件，当然两个cpp文件也可以通过set来设置成变量Sources_code.</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079196573.png" alt="1579079196573"></p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079199576.png" alt="1579079199576"></p>
+<h3><span id="7-一个复杂的例子关于cmakelists子目录-and-生成库">7. 一个复杂的例子：关于CMakelists子目录 and 生成库</span></h3><p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079203657.png" alt="1579079203657"></p>
+<p>这个文件夹下包含build文件、一个要执行的cpp文件和CMakelists.txt。除此之外，还有一个MathFunctions文件夹。</p>
+<p>先来看子目录MathFunctions：</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079206479.png" alt="1579079206479"></p>
+<p>这里的CMakeLists.txt只有几行，将speak.cpp中的函数生成一个MathFunctions库。</p>
+<p>   <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079211710.png" alt="1579079211710"></p>
+<p>在顶层目录下的CMakeLists.txt中，通过add_subdirectories加入子目录的CMakeLists.txt。</p>
+<p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079215728.png" alt="1579079215728"></p>
+<p>前两行是版本和项目名，五六行加入.h文件的目录，10行设置一个变量默认为ON,12行判断是否OK，如果OK为ON的话就可以执行13-23行。</p>
+<p>13-23行，是确定使用自己本地（即MathFunctions文件夹中的库），分别是加入.h文件、加入子目录（划重点，下面讲）、设置EXTRA_LIBS变量，如果未设置28行就不再链接这个库。</p>
+<p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079221077.png" alt="1579079221077"></p>
+<p> <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079224414.png" alt="1579079224414"></p>
+<p>  <img src="/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/1579079227552.png" alt="1579079227552"> </p>
+<h3><span id="8-总结cmakeliststxt的整理内容">8. 总结cmakelists.txt的整理内容</span></h3><p> cmakelists.txt内容不需区分大小写。</p>
+<p>一般的cmakelists.txt的编写，包括以下几部分：</p>
+<ol>
+<li><p>指定cmake版本，就像上面所说的：为了方便后人，尽量加上自己所用的版本cmake_minimum_required(VERSION 2.8) </p>
+</li>
+<li><p>指定项目的名称，一般和项目的文件夹名称对应</p>
+</li>
+</ol>
+<p>project(HelloWorld)</p>
+<ol>
+<li>设置环境变量 SET(变量名 变量值)<br>一般包括（但不仅仅包括）：</li>
+</ol>
+<pre><code>CMAKE_C_COMPILER：指定C编译器
+CMAKE_CXX_COMPILER：指定C++编译器
+CMAKE_C_FLAGS：编译C文件时的选项，如-g；也可以通过add_definitions添加编译选项
+EXECUTABLE_OUTPUT_PATH：可执行文件的存放路径
+LIBRARY_OUTPUT_PATH：库文件路径
+CMAKE_BUILD_TYPE:：build 的类型(Debug, Release, ...)
+</code></pre><p>变量很多很复杂，根据需要使用即可，可以从官方文档中查找：<a href="https://cmake.org/cmake/help/v3.0/manual/cmake-variables.7.html" target="_blank" rel="noopener">https://cmake.org/cmake/help/v3.0/manual/cmake-variables.7.html</a></p>
+<p>当然还有一些自己定义的变量名，也用set设置</p>
+<ol>
+<li><p>LINK_DIRECTORIES  添加需要链接的库文件目录,即链接库搜索路径<br>link_directories(directory1 directory2 …)</p>
+</li>
+<li><p>添加可执行文件要链接的库文件的名称<br>TARGET_LINK_LIBRARIES(PROJECT_NAME libname.so)</p>
+</li>
+</ol>
+<ol>
+<li><p>头文件目录</p>
+<pre><code>INCLUDE_DIRECTORIES( 
+ Include 
+)
+如果文件夹较多，则可以这样写：
+INCLUDE_DIRECTORIES(
+ ${CMAKE_SOURCE_DIR}/include/
+ ${CMAKE_SOURCE_DIR}/include/a/
+ ${CMAKE_SOURCE_DIR}/include/b/
+)
+</code></pre></li>
+</ol>
+<ol>
+<li><p>源文件目录<br>AUX_SOURCE_DIRECTORY(src DIR_SRCS)</p>
+</li>
+<li><p>添加要编译的可执行文件<br>ADD_EXECUTABLE(PROJECT_NAME TEST_CPP)</p>
+</li>
+<li><p>生成动态库or 静态库<br>这里多说两句，用cmake生成静态动态库，是将在cmakelists.txt文件中加入的源文件头文件等等，生成一个类似于.h/.a的文件<br>这与<8>中加入想要编译的可执行文件是二选一的关系。<br>add_library(person SHARED ${srcs})<br>add_library(person_static STATIC ${srcs})</8></p>
+</li>
+</ol>
+<p>install（TARGETS）<br>创建规则以将列出的目标安装到给定目录中。</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io" rel="external nofollow noreferrer">长腿咚咚咚</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://htfhxx.github.io/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/">http://htfhxx.github.io/2018/12/12/yu-yan-gong-ju-ji-zhu-deng-wen-dang/cmake-you-qian-ru-shen/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Cmake%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1/">
+                                    <span class="chip bg-color">Cmake由浅入深</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '0f55ef3d0a2699e72e81',
+        clientSecret: '94acec9c55d8c11b6495652efe90b5d03789f534',
+        repo: 'htfhxx.github.io',
+        owner: 'htfhxx',
+        admin: ["htfhxx"],
+        id: '2018-12-12T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/12/28/nlp-research/jin-wu-nian-2014-2018-zhong-wen-fen-ci-lun-wen-ji-qu-shi-zheng-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="近五年(2014-2018)中文分词论文及趋势整理">
+                        
+                        <span class="card-title">近五年(2014-2018)中文分词论文及趋势整理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            [TOC]
+1. 前言整理了近五年中文分词的文章，意图探索研究趋势。
+文章来源来自于几大nlp顶会：ACL、EMNLP、COLING、NAACL.
+在阅读16、17年文章的时候，发现了引用了这些文章的来自于AAAI、IJCAI的一些文章，也
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-12-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/nlp-Research/" class="post-category">
+                                    nlp_Research
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%BF%91%E4%BA%94%E5%B9%B4-2014-2018-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E8%AE%BA%E6%96%87%E5%8F%8A%E8%B6%8B%E5%8A%BF%E6%95%B4%E7%90%86/">
+                        <span class="chip bg-color">近五年(2014-2018)中文分词论文及趋势整理</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2017/07/20/jing-yan-fen-xiang/dong-bei-da-xue-shi-shang-zui-quan-zhuan-zhuan-ye-gong-lue/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="东北大学史上最全转专业攻略">
+                        
+                        <span class="card-title">东北大学史上最全转专业攻略</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            此文是大三时发在贴吧里的，博客建立后整理到这里，原帖链接：http://tieba.baidu.com/p/5233701747?fid=44908
+1. 背景介绍本人是15级转专业学生，非大神，因为大一结束后成绩较差，又很想转专业，所以研
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2017-07-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" class="post-category">
+                                    经验分享
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%B8%9C%E5%8C%97%E5%A4%A7%E5%AD%A6%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%85%A8%E8%BD%AC%E4%B8%93%E4%B8%9A%E6%94%BB%E7%95%A5/">
+                        <span class="chip bg-color">东北大学史上最全转专业攻略</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 长腿咚咚咚的个人博客<br />'
+            + '文章作者: 长腿咚咚咚<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="http://htfhxx.github.io" target="_blank">长腿咚咚咚</a>
+            <!-- |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
+            <!-- |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a> -->
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">67.7k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "11";
+                    var startDate = "7";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/htfhxx" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:htfhxx@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/bei-sheng-82-78/activities" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/bei-sheng-82-78/activities" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>
